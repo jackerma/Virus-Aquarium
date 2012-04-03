@@ -29,9 +29,7 @@ while running:
     screen.fill(background_colour)
 
     for pos in comps:
-        rectWidth, rectHeight = 100, 100
-        server = pygame.Rect(pos,(rectWidth,rectHeight))
+        server = pygame.Rect(pos, (20,20))
         pygame.draw.rect(screen, (0,0,0), server)
-   #     pygame.draw.circle(screen, (255,255,255), 
     
     pygame.display.flip()
