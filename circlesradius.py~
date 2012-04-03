@@ -8,7 +8,7 @@ class CirclesThing():
         self.width = width
         self.height = height
 
-        self.number_of_circles = 100
+        self.number_of_circles = 10
         self.radius = 80
 
         from random import randint
@@ -17,6 +17,11 @@ class CirclesThing():
 
         self.f = None
 
+        self.find_cut()
+
+
+    def find_cut(self):
+        G = networkx.Graph()
 
     def display(self):
         self.draw_circles()
@@ -24,7 +29,7 @@ class CirclesThing():
         lines = self.intersect_circles()
         self.draw_lines(lines)
 
-    def draw_circles(self,circle_radius=None,circle_colour=(255,255,255),circles=None):
+    def draw_circles(self,circle_radius=None,circle_colour=(0,0,255),circles=None):
         if circle_radius is None:
             circle_radius = self.radius
         if circles is None:
