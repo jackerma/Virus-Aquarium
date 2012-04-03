@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
 import pygame
-import networkx
+
 
 class CirclesThing():
     def __init__(self,width,height):
         self.width = width
         self.height = height
 
-        self.number_of_circles = 100
-        self.radius = 80
+        self.number_of_circles = 20
+        self.radius = 120
 
         from random import randint
         self.circles = sorted(set((randint(self.radius,width-self.radius),randint(self.radius,height-self.radius)) for i in range(self.number_of_circles)))
