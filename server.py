@@ -1,11 +1,19 @@
-!/usr/bin/env python
+#!/usr/bin/env python
+
+import pygame
 
 class Server(object):
-    self.player1= []
-    self.player2= []
 
     def __init__ (self):
         pass
+    
+    def draw(self, screen, (x,y)):
+        Rect_width, Rect_height = 160, 120
+        scrn_thick = 4
+        server = pygame.Rect((x,y), (Rect_width,Rect_height))
+        comp_screen =  pygame.Rect((x+scrn_thick, y+scrn_thick), (Rect_width-scrn_thick*2,Rect_height-scrn_thick*2))
+        pygame.draw.rect(screen, (0,0,0), server)
+        pygame.draw.rect(screen, (150,150,150), comp_screen)
 
     def onoff (self):
         pass
@@ -19,6 +27,6 @@ class Server(object):
     def player2app (self, virus):
         pass
     
-    def count (self, self.player1, self.player2):
+    def count (self):
         pass
 
