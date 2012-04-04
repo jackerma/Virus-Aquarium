@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+from server import Server
 import pygame
 from random import randint
 Rect_width= 160
 Rect_height= 120
 scrn_thick = 4
 x, y = 0,0
+
 #Globals
 width, height = 1300,700
 
@@ -30,13 +32,12 @@ while not done:
 
     screen.fill(background_colour)
 
+    #Drawing Circles
     for pos in comps:
-        #Draw Circle
         pygame.draw.circle(screen, (255,255,255), (x+Rect_width/2, y+Rect_height/2), radius, 1)
         
-        
+    #Drawing Lines    
     for pos in comps:
-        #Draw Lines
         colliding_circles = []
         for i in range(len(comps)-1):
             for j in range(i+1,len(comps)):
@@ -54,14 +55,17 @@ while not done:
             point1,point2 = point_pair
             pygame.draw.aaline(screen, (255,0,0), point1, point2, 5)
         
-
+    #Drawing Computers
     for pos in comps:
-        #Drawing Computers
         server = pygame.Rect(pos, (Rect_width,Rect_height))
         (x, y) = pos
         comp_screen =  pygame.Rect((x+scrn_thick, y+scrn_thick), (Rect_width-scrn_thick*2,Rect_height-scrn_thick*2))
         pygame.draw.rect(screen, (0,0,0), server)
         pygame.draw.rect(screen, (255,255,255), comp_screen)
+    
+    Player1 = Server()
+    Player1.draw(screen,(200,200))
+    
         
     
     pygame.display.flip()
