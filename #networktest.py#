@@ -6,6 +6,7 @@ Rect_width= 160
 Rect_height= 120
 scrn_thick = 4
 x, y = 0,0
+
 #Globals
 width, height = 1300,700
 

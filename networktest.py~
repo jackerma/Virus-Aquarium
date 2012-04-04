@@ -3,7 +3,10 @@
 import networkx as nx
 import pygame
 from random import randint
-
+Rect_width= 160
+Rect_height= 120
+scrn_thick = 4
+x, y = 0,0
 #Globals
 width, height = 1300,700
 
@@ -29,7 +32,17 @@ while running:
     screen.fill(background_colour)
 
     for pos in comps:
-        server = pygame.Rect(pos, (20,20))
+<<<<<<< HEAD
+        rectWidth, rectHeight = 100, 100
+        server = pygame.Rect(pos,(rectWidth,rectHeight))
         pygame.draw.rect(screen, (0,0,0), server)
+   #     pygame.draw.circle(screen, (255,255,255), 
+=======
+        server = pygame.Rect(pos, (Rect_width,Rect_height))
+        (x, y) = pos
+        comp_screen =  pygame.Rect((x+scrn_thick, y+scrn_thick), (Rect_width-scrn_thick*2,Rect_height-scrn_thick*2))
+        pygame.draw.rect(screen, (0,0,0), server)
+        pygame.draw.rect(screen, (255,255,255), comp_screen)
+>>>>>>> 8c38e0358a3f84175a995d406f72ed414b3adc1b
     
     pygame.display.flip()
