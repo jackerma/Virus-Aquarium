@@ -73,33 +73,32 @@ while not done:
    
 
     #Drawing Circles
-    for pos in comps:
-        pygame.draw.circle(screen, (255,255,255), (x+Rect_width/2, y+Rect_height/2), radius, 1)
+    screen.fill(background_colour)
+    for rect in rects:
+        pygame.draw.circle(screen, background_colour, rect.center, radius, 1)
         
     #Drawing Lines    
-    for pos in comps:
+    for rect in rects:
         colliding_circles = []
-        for i in range(len(comps)-1):
-            for j in range(i+1,len(comps)):
-                x1,y1 = comps[i]
-                x2,y2 = comps[j]
-                if x2-x1>2*radius:
-                    break #can't collide anymore.
-                if (x2-x1)**2 + (y2-y1)**2 <= (2*radius)**2:
-                    x1 = x1 + Rect_width/2
-                    y1 = y1 + Rect_height/2
-                    x2 = x2 + Rect_width/2
-                    y2 = y2 + Rect_height/2
+        rect_radius = radius
+        for i in range(len(rects)-1):
+            for j in range(i+1,len(rects)):
+                rect1 = rects[i]
+                rect2 = rects[j]
+                x1, y1 = rect1.center
+                x2, y2 = rect2.center
+                if (x2-x1)**2 + (y2-y1)**2 <= (2*rect_radius)**2:
                     colliding_circles.append(((x1,y1),(x2,y2)))
+
         for point_pair in colliding_circles:
             point1,point2 = point_pair
             pygame.draw.aaline(screen, (255,0,0), point1, point2, 5)
         
+        
+        
 
 
 #screen placement
-    screen.fill(background_colour)
-
     for server in rects:
         
         comp_screen =  pygame.Rect((0,0), (Rect_width-scrn_thick,Rect_height-scrn_thick))
@@ -117,8 +116,8 @@ while not done:
     for comp_screen in comp_screens:
         pygame.draw.rect(screen, (255,255,255), comp_screen)
     
-    Player1 = Server()
-    Player1.draw(screen,(200,200))
+#    Player1 = Server()
+ #   Player1.draw(screen,(200,200))
     
         
     

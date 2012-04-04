@@ -1,27 +1,22 @@
 #!/usr/bin/env python
 
-<<<<<<< HEAD
-=======
+
 from server import Server
->>>>>>> 9154a56999770d26f7a043cf707a8b804090d789
 import pygame
 from pygame.locals import *
 from random import randint
 import time
 
+
+
+#Globals
+
 Rect_width= 160
 Rect_height= 120
 scrn_thick = 10
 x, y = 0,0
-<<<<<<< HEAD
 rects = []
 comp_screens = []
-=======
-
-#Globals
-width, height = 1300,700
->>>>>>> 9154a56999770d26f7a043cf707a8b804090d789
-
 width, height = 1300,700
 i=0
 j=0
@@ -36,7 +31,7 @@ comps = sorted(set((randint(0,width-Rect_width),randint(0,height-Rect_height)) f
 background_colour = (200,200,200)
 screen = pygame.display.set_mode((width, height))
 
-<<<<<<< HEAD
+
 #setup game objects
 
 for pos in comps:
@@ -51,24 +46,19 @@ pygame.display.set_caption('Tutorial 2')
 
 
 done=False
-=======
 pygame.display.set_caption('Virus Aquarium')
 
 
 done = False
->>>>>>> 9154a56999770d26f7a043cf707a8b804090d789
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-<<<<<<< HEAD
         elif event.type == KEYDOWN and event.key== K_ESCAPE:
             done = True
 
 
 #collision
-=======
->>>>>>> 9154a56999770d26f7a043cf707a8b804090d789
 
     while j<100:
         j+=1
@@ -81,65 +71,55 @@ while not done:
             rects.insert(i,rect)
  
    
-   
 
-
-#            rect = rect.move(randint(radius,width-radius),randint(radius,height-radius))
-
-
-            
-#draw method
+    #Drawing Circles
     screen.fill(background_colour)
+    for rect in rects:
+        pygame.draw.circle(screen, background_colour, rect.center, radius, 1)
+        
+    #Drawing Lines    
+    for rect in rects:
+        colliding_circles = []
+        rect_radius = radius
+        for i in range(len(rects)-1):
+            for j in range(i+1,len(rects)):
+                rect1 = rects[i]
+                rect2 = rects[j]
+                x1, y1 = rect1.center
+                x2, y2 = rect2.center
+                if (x2-x1)**2 + (y2-y1)**2 <= (2*rect_radius)**2:
+                    colliding_circles.append(((x1,y1),(x2,y2)))
+                else:
+                    rect_radius += 1
 
-<<<<<<< HEAD
+        for point_pair in colliding_circles:
+            point1,point2 = point_pair
+            pygame.draw.aaline(screen, (255,0,0), point1, point2, 5)
+        
+        
+        
 
+
+#screen placement
     for server in rects:
         
         comp_screen =  pygame.Rect((0,0), (Rect_width-scrn_thick,Rect_height-scrn_thick))
         comp_screen.center = server.center
         comp_screens.append(comp_screen)
 
-=======
-    #Drawing Circles
-    for pos in comps:
-        pygame.draw.circle(screen, (255,255,255), (x+Rect_width/2, y+Rect_height/2), radius, 1)
-        
-    #Drawing Lines    
-    for pos in comps:
-        colliding_circles = []
-        for i in range(len(comps)-1):
-            for j in range(i+1,len(comps)):
-                x1,y1 = comps[i]
-                x2,y2 = comps[j]
-                if x2-x1>2*radius:
-                    break #can't collide anymore.
-                if (x2-x1)**2 + (y2-y1)**2 <= (2*radius)**2:
-                    x1 = x1 + Rect_width/2
-                    y1 = y1 + Rect_height/2
-                    x2 = x2 + Rect_width/2
-                    y2 = y2 + Rect_height/2
-                    colliding_circles.append(((x1,y1),(x2,y2)))
-        for point_pair in colliding_circles:
-            point1,point2 = point_pair
-            pygame.draw.aaline(screen, (255,0,0), point1, point2, 5)
-        
-    #Drawing Computers
-    for pos in comps:
-        server = pygame.Rect(pos, (Rect_width,Rect_height))
-        (x, y) = pos
-        comp_screen =  pygame.Rect((x+scrn_thick, y+scrn_thick), (Rect_width-scrn_thick*2,Rect_height-scrn_thick*2))
->>>>>>> 9154a56999770d26f7a043cf707a8b804090d789
+
+
+
+
+#draw method
+    for server in rects:
         pygame.draw.rect(screen, (0,0,0), server)
 
     for comp_screen in comp_screens:
         pygame.draw.rect(screen, (255,255,255), comp_screen)
-
-
-
-
     
-    Player1 = Server()
-    Player1.draw(screen,(200,200))
+#    Player1 = Server()
+ #   Player1.draw(screen,(200,200))
     
         
     
