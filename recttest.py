@@ -30,6 +30,7 @@ while not done:
 
     screen.fill(background_colour)
 
+#Connects computers
     for com1 in comps:
         for com2 in comps:
                 x1, y1 = com1.rect.center
@@ -37,6 +38,7 @@ while not done:
                 if (x2-x1)**2 + (y2-y1)**2 <= (2*com1.cnct_range)**2 and com2 not in com1.connected_list and com1 != com2:
                     com1.connected_list.append(com2)
     
+#Drawing
     for comp in comps:
       #  comp.draw_circle()
         comp.draw_lines()
@@ -47,13 +49,18 @@ while not done:
 
 
 
-#Keys
+##Keys
     for event in pygame.event.get():
-##Adding Virus
+
+#Adding Virus
         if event.type == KEYDOWN and event.key == K_w:
             Player1.add_virus(red_xvirus)
             print Player1.red_viruses
             print "sum =", sum(Player1.red_viruses.values())
+#Spreading Virus
+        if event.type == KEYDOWN and event.key == K_s:
+            for comp in comps:
+                red_xvirus.spread(comp)
 
 #Quitting
         if event.type == pygame.QUIT:

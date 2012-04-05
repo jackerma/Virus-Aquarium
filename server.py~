@@ -2,6 +2,10 @@
 
 import pygame
 from pygame.locals import *
+from virus import *
+
+pygame.font.init()
+smallfont = pygame.font.Font(None, 20)
 
 class Server(Rect):
 
@@ -15,8 +19,8 @@ class Server(Rect):
         self.scrn_colour = (255,255,255)
         self.cnct_range = 150
         self.connected_list = [] 
+        self.red_viruses = {'x':0}
         
-    
     def draw_rect(self):
         scrn_thick = 4
         comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
@@ -32,7 +36,16 @@ class Server(Rect):
             pygame.draw.aaline(self.screen, (255,0,0), self.rect.center, comp.rect.center, 5)
 
     def scrn_change(self):
-        pass
+        if sum(self.red_viruses.values()) > 0:
+            self.scrn_colour = (255,0,0)
+            text = smallfont.render(str(sum(self.red_viruses.values())), True, (0,0,0))
+            loc = text.get_rect()
+            loc.center = self.rect.center
+            self.screen.blit(text,loc)
+
+    def add_virus(self, virus):
+        if virus.team == 1:
+            self.red_viruses[virus.type] += 1
         
     def onoff (self):
         pass
@@ -51,18 +64,6 @@ class Server(Rect):
 
 class Home_server(Server):
 
-    def __init__ (self, screen, (x,y), team):
-        self.team = team
-        self.width = 160
-        self.height = 120
-        self.x = x
-        self.y = y
-        self.screen = screen
-        self.rect = Rect((x,y), (self.width, self.height))
-        self.scrn_colour = (255,255,255)
-        self.cnct_range = 150
-        self.connected_list = [] 
-    
     def team(self):
         pass
         
