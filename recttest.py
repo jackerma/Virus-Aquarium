@@ -2,7 +2,8 @@
 
 import pygame
 from pygame.locals import *
-from server import Server
+from server import *
+from virus import *
 
 done = False
 width = 1300
@@ -11,6 +12,7 @@ screen = pygame.display.set_mode((width, height))
 background_colour = (150,150,150)
 
 #Servers 
+Player1 = Home_server(screen, (20,20))
 comp1 = Server(screen, (150, 250))
 comp2 = Server(screen, (500, 400))
 comp3 = Server(screen, (410, 200))
@@ -19,7 +21,10 @@ comp5 = Server(screen, (800, 300))
 comp6 = Server(screen, (900, 100))
 comp7 = Server(screen, (250, 500))
 comp8 = Server(screen, (1000, 520))
-comps = [comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8]
+comps = [Player1, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8]
+
+#Virus
+red_xvirus = XVirus(1)
 
 while not done:
 
@@ -38,14 +43,19 @@ while not done:
         
     for comp in comps:
         comp.draw_rect()
-    
     pygame.display.flip()
 
 
 
+#Keys
+    for event in pygame.event.get():
+##Adding Virus
+        if event.type == KEYDOWN and event.key == K_w:
+            Player1.add_virus(red_xvirus)
+            print Player1.red_viruses
+            print "sum =", sum(Player1.red_viruses.values())
 
 #Quitting
-    for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
         elif event.type == KEYDOWN and event.key== K_ESCAPE:
