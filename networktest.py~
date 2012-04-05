@@ -38,11 +38,42 @@ for pos in comps:
 
     rects.append(pygame.Rect(pos, (Rect_width,Rect_height)))
 
+#collision
+
+while j<100:
+    j+=1
+    for rect in rects:
+        i +=1
+        rects.remove(rect)
+        if rect.collidelist(rects)!=-1:
+            pos = (randint(0,width-Rect_width),randint(0,height-Rect_height))
+            rect = pygame.Rect(pos, (Rect_width,Rect_height))
+        rects.insert(i,rect)
+
+for rect in rects:
+    colliding_circles = []
+    endbound = (2*radius)**2
+    for i in range(len(rects)-1):
+        z = 0
+    for j in range(i+1,len(rects)):
+        rect1 = rects[i]
+        rect2 = rects[j]
+        x1, y1 = rect1.center
+        x2, y2 = rect2.center
+        if (x2-x1)**2 + (y2-y1)**2 <= endbound:
+            colliding_circles.append(((x1,y1),(x2,y2)))
+            z += 1
+            
+        if z != 0:
+            while (x2-x1)**2 + (y2-y1)**2 > endbound:
+                endbound += 1
+                    
+        colliding_circles.append(((x1,y1),(x2,y2)))  
+        print colliding_circles
 
 #gets screen bounds
 bounds = screen.get_rect()
 
-pygame.display.set_caption('Tutorial 2')
 
 
 done=False
@@ -75,23 +106,7 @@ while not done:
     #Drawing Circles
     screen.fill(background_colour)
     for rect in rects:
-        pygame.draw.circle(screen, background_colour, rect.center, radius, 1)
-        
-    #Drawing Lines    
-    for rect in rects:
-        colliding_circles = []
-        rect_radius = radius
-        for i in range(len(rects)-1):
-            for j in range(i+1,len(rects)):
-                rect1 = rects[i]
-                rect2 = rects[j]
-                x1, y1 = rect1.center
-                x2, y2 = rect2.center
-                if (x2-x1)**2 + (y2-y1)**2 <= (2*rect_radius)**2:
-                    colliding_circles.append(((x1,y1),(x2,y2)))
-                else:
-                    rect_radius += 1
-
+    #    pygame.draw.circle(screen, background_colour, rect.center, radius, 1)
         for point_pair in colliding_circles:
             point1,point2 = point_pair
             pygame.draw.aaline(screen, (255,0,0), point1, point2, 5)

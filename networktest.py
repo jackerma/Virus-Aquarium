@@ -38,11 +38,43 @@ for pos in comps:
 
     rects.append(pygame.Rect(pos, (Rect_width,Rect_height)))
 
+#collision
+
+while j<100:
+    j+=1
+    for rect in rects:
+        i +=1
+        rects.remove(rect)
+        if rect.collidelist(rects)!=-1:
+            pos = (randint(0,width-Rect_width),randint(0,height-Rect_height))
+            rect = pygame.Rect(pos, (Rect_width,Rect_height))
+        rects.insert(i,rect)
+
+orphans = []
+connected = []
+colliding_circles = []
+for rect in rects:
+    endbound = (2*radius)**2
+    for i in range(len(rects)-1):
+        for j in range(i+1,len(rects)):
+            rect1 = rects[i]
+            rect2 = rects[j]
+            x1, y1 = rect1.center
+            x2, y2 = rect2.center
+            if (x2-x1)**2 + (y2-y1)**2 <= (2*radius)**2:
+                if ((x1,y1),(x2,y2)) not in colliding_circles:
+                    colliding_circles.append(((x1,y1),(x2,y2)))
+                    connected.append(rect1)
+                    connected.append(rect2)
+    if rect not in connected:
+        orphans.append(rect)
+
+         
+        
 
 #gets screen bounds
 bounds = screen.get_rect()
 
-pygame.display.set_caption('Tutorial 2')
 
 
 done=False
@@ -56,39 +88,12 @@ while not done:
             done = True
         elif event.type == KEYDOWN and event.key== K_ESCAPE:
             done = True
-
-
-#collision
-
-    while j<100:
-        j+=1
-        for rect in rects:
-            i +=1
-            rects.remove(rect)
-            if rect.collidelist(rects)!=-1:
-                pos = (randint(0,width-Rect_width),randint(0,height-Rect_height))
-                rect = pygame.Rect(pos, (Rect_width,Rect_height))
-            rects.insert(i,rect)
- 
    
 
     #Drawing Circles
     screen.fill(background_colour)
     for rect in rects:
-        pygame.draw.circle(screen, background_colour, rect.center, radius, 1)
-        
-    #Drawing Lines    
-    for rect in rects:
-        colliding_circles = []
-        rect_radius = radius
-        for i in range(len(rects)-1):
-            for j in range(i+1,len(rects)):
-                rect1 = rects[i]
-                rect2 = rects[j]
-                x1, y1 = rect1.center
-                x2, y2 = rect2.center
-                if (x2-x1)**2 + (y2-y1)**2 <= (2*rect_radius)**2:
-                    colliding_circles.append(((x1,y1),(x2,y2)))
+        pygame.draw.circle(screen, (0,0,255), rect.center, radius, 1)
 
         for point_pair in colliding_circles:
             point1,point2 = point_pair
