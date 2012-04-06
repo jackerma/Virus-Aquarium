@@ -27,6 +27,7 @@ class Server(Rect):
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
         pygame.draw.rect(self.screen, self.scrn_colour, comp_screen)
+        self.draw_text(comp_screen)
     
     def draw_circle(self):
         pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
@@ -37,10 +38,13 @@ class Server(Rect):
 
     def scrn_change(self):
         if sum(self.red_viruses.values()) > 0:
-            self.scrn_colour = (255,0,0)
-            text = smallfont.render(str(sum(self.red_viruses.values())), True, (0,0,0))
+            self.scrn_colour = (255,175,175)
+
+    def draw_text(self, comp_screen):
+        if sum(self.red_viruses.values()) > 0:
+            text = smallfont.render("Xvirus = " + str(sum(self.red_viruses.values())), True, (255,0,0))
             loc = text.get_rect()
-            loc.center = self.rect.center
+            loc.topleft = comp_screen.topleft
             self.screen.blit(text,loc)
 
     def add_virus(self, virus):

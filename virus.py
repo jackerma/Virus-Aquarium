@@ -10,7 +10,7 @@ class Virus(object):
 
     def __init__(self, team):
         self.team = team
-        self.spread_chance = 4
+        self.spread_chance = 9
 
         self.is_colour()
         self.is_type()
@@ -26,13 +26,13 @@ class Virus(object):
         chance_list = []
         total = server.red_viruses[self.type]
         while total >0:
-            chance = randint(0,9)
+            chance = randint(0,99)
             chance_list.append(chance)
             total -= 1
         for num in chance_list:
-            for server in server.connected_list:
+            for com in server.connected_list:
                 if num <= self.spread_chance:
-                    server.add_virus(self)
+                    com.add_virus(self)
 
 class XVirus(Virus):
 
