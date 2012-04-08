@@ -10,6 +10,7 @@ width = 1300
 height = 700
 screen = pygame.display.set_mode((width, height))
 background_colour = (150,150,150)
+score = 0
 
 #Servers 
 Player1 = Home_server(screen, (20,20))
@@ -40,7 +41,7 @@ while not done:
     
 #Drawing
     for comp in comps:
-      #  comp.draw_circle()
+        comp.draw_circle()
         comp.draw_lines()
         
     for comp in comps:
@@ -48,22 +49,29 @@ while not done:
     pygame.display.flip()
 
 
-
+#    for comp in comps:
+#        red_xvirus.spread(comp)
 ##Keys
     for event in pygame.event.get():
 
 #Adding Virus
         if event.type == KEYDOWN and event.key == K_w:
             Player1.add_virus(red_xvirus)
-            print Player1.red_viruses
-            print "sum =", sum(Player1.red_viruses.values())
+         #   print Player1.red_viruses
+        #    print "sum =", sum(Player1.red_viruses.values())
+           # print "sum =", sum(comp1.red_viruses.values())
 #Spreading Virus
         if event.type == KEYDOWN and event.key == K_s:
             for comp in comps:
                 red_xvirus.spread(comp)
+            #    print "sum =", sum(comp3.red_viruses.values())
 
 #Quitting
         if event.type == pygame.QUIT:
             done = True
         elif event.type == KEYDOWN and event.key== K_ESCAPE:
             done = True
+
+    for comp in comps:
+        score += comp.red_viruses['x']/100
+        print score

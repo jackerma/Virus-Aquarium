@@ -25,14 +25,14 @@ class Virus(object):
     def spread(self, server):
         chance_list = []
         total = server.red_viruses[self.type]
-        while total >0:
+        while total >0 and server.off_state == False:
             chance = randint(0,99)
             chance_list.append(chance)
             total -= 1
         for num in chance_list:
-            for com in server.connected_list:
+            for comp in server.connected_list:
                 if num <= self.spread_chance:
-                    com.add_virus(self)
+                    comp.add_virus(self)
 
 class XVirus(Virus):
 
