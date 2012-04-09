@@ -1,1 +1,21 @@
 Virus Aquarium
+
+By: John Sanders and Jon Ackerman
+
+Fight for control of the network! Introduce viruses into your home server and watch them spread to other computers.
+
+Controls:
+
+W = Introduce Red virus    (Player 1)
+
+U = Introduce Blue Virus (Player2)
+
+Features: 
+*Network made
+*Server/homeserver classes
+*Virus classes:
+    "X-Virus"
+*Spreading
+*Point System
+*Server wipes
+*Server on/offs
