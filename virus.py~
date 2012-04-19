@@ -18,6 +18,9 @@ class Virus(object):
     def is_type(self):
         pass
     
+    def target(self, server, target_dict):
+        pass
+    
     def has_spread_chance(self):
         pass
 
@@ -28,27 +31,29 @@ class Virus(object):
             self.colour = (0,0,255)
     
     def spread(self, server):
-        chance_list = []
-        total_red = server.red_viruses[self.type]
-        while total_red >0 and server.off_state == False:
-            chance = randint(0,99)
-            chance_list.append(chance)
-            total_red -= 1
-        for num in chance_list:
-            for comp in server.connected_list:
-                if num <= self.spread_chance:
-                    comp.add_virus(self)
-
-
-        total_blue = server.blue_viruses[self.type]
-        while total_blue > 0 and server.off_state == False:
-            chance = randint(0,99)
-            chance_list.append(chance)
-            total_blue -= 1
-        for num in chance_list:
-            for comp in server.connected_list:
-                if num <= self.spread_chance:
-                    comp.add_virus(self)
+        if self.team == 1:
+            red_chance_list = []
+            total_red = server.red_viruses[self.type]
+            while total_red >0 and server.off_state == False:
+                red_chance = randint(0,99)
+                red_chance_list.append(red_chance)
+                total_red -= 1
+            for num in red_chance_list:
+                for comp in server.connected_list:
+                    if num <= self.spread_chance:
+                        comp.add_virus(self)
+        
+        if self.team == 2:
+            blue_chance_list = []
+            total_blue = server.blue_viruses[self.type]
+            while total_blue > 0 and server.off_state == False:
+                blue_chance = randint(0,99)
+                blue_chance_list.append(blue_chance)
+                total_blue -= 1
+            for num in blue_chance_list:
+                for comp in server.connected_list:
+                    if num <= self.spread_chance:
+                        comp.add_virus(self)
 
 class XVirus(Virus):
 
@@ -58,3 +63,29 @@ class XVirus(Virus):
     def has_spread_chance(self):
         self.spread_chance = 9
 
+class YVirus(Virus):          ##All New Below
+    
+    def is_type(self):
+        self.type = 'y'
+        
+    def has_spread_chance(self):
+        self.spread_chance = 5
+
+    def target(self, server, target_dict):
+        i = randint(0,75)
+        j = randint(0,1)
+        if self.team == 1 and server.red_viruses['y'] > 0:
+            hit_chance = server.red_viruses['y'] * 2
+            if hit_chance <= i:
+                if j == 1:
+                    target_dict['x_blue']+=1
+                elif j == 0:
+                    target_dict['y_blue']+=1
+
+        if self.team == 2 and server.blue_viruses['y'] > 0:
+            hit_chance = server.blue_viruses['y'] * 2
+            if hit_chance <= i:
+                if j == 1:
+                    target_dict['x_red']+=1
+                elif j == 0:
+                    target_dict['y_red']+=1

@@ -18,6 +18,9 @@ class Virus(object):
     def is_type(self):
         pass
     
+    def target(self, server, target_dict):
+        pass
+    
     def has_spread_chance(self):
         pass
 
@@ -60,3 +63,29 @@ class XVirus(Virus):
     def has_spread_chance(self):
         self.spread_chance = 9
 
+class YVirus(Virus):          ##All New Below
+    
+    def is_type(self):
+        self.type = 'y'
+        
+    def has_spread_chance(self):
+        self.spread_chance = 5
+
+    def target(self, server, target_dict):
+        i = randint(0,9)
+        j = randint(0,1)
+        if self.team == 1 and server.red_viruses['y'] > 0:
+            hit_chance = 1
+            if hit_chance <= i:
+                if j == 1:
+                    target_dict['x_blue']+= server.red_viruses['y']
+                elif j == 0:
+                    target_dict['y_blue']+= server.red_viruses['y']
+
+        if self.team == 2 and server.blue_viruses['y'] > 0:
+            hit_chance =  1
+            if hit_chance <= i:
+                if j == 1:
+                    target_dict['x_red']+= server.blue_viruses['y']
+                elif j == 0:
+                    target_dict['y_red']+= server.blue_viruses['y']
