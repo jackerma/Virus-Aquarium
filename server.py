@@ -21,9 +21,9 @@ class Server(Rect):
         self.scrn_colour = (255,255,255)
         self.cnct_range = 150
         self.connected_list = [] 
-        self.red_viruses = {'x':0}
-        self.blue_viruses = {'x':0}
-        self.virus_max = 25
+        self.red_viruses = {'x':0, 'y':0}
+        self.blue_viruses = {'x':0, 'y':0}
+        self.virus_max = 50
         self.off_state = False
 
 
@@ -54,26 +54,41 @@ class Server(Rect):
 
     def draw_text(self, comp_screen):
         if sum(self.red_viruses.values()) > 0:
-            text = smallfont.render("Xvirus = " + str(sum(self.red_viruses.values())), True, (255,0,0))
+            text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0))
             loc = text.get_rect()
             loc.topleft = comp_screen.topleft
             self.screen.blit(text,loc)
 
+            text = smallfont.render("Yvirus = " + str(self.red_viruses['y']), True, (255,0,0))
+            loc = text.get_rect()
+            loc.bottomleft = comp_screen.bottomleft
+            self.screen.blit(text,loc)
+
             
         if sum(self.blue_viruses.values()) > 0:
-            text = smallfont.render("Xvirus = " + str(sum(self.blue_viruses.values())), True, (0,0,255))
+            text = smallfont.render("Xvirus = " + str(self.blue_viruses['x']), True, (0,0,255))
             loc = text.get_rect()
             loc.topright = comp_screen.topright
             self.screen.blit(text,loc)
 
+            text = smallfont.render("Yvirus = " + str(self.blue_viruses['y']), True, (0,0,255))
+            loc = text.get_rect()
+            loc.bottomright = comp_screen.bottomright
+            self.screen.blit(text,loc)
 
 
     def add_virus(self, virus):
         if virus.team == 1 and self.red_viruses['x']< self.virus_max and self.off_state == False:
             self.red_viruses[virus.type] += 1
 
+        if virus.team == 1 and self.red_viruses['y'] < self.virus_max and self.off_state == False:
+            self.red_viruses[virus.type] += 1
 
         if virus.team == 2 and self.blue_viruses['x'] < self.virus_max and self.off_state == False:
+            self.blue_viruses[virus.type] += 1
+
+
+        if virus.team == 2 and self.blue_viruses['y'] < self.virus_max and self.off_state == False:
             self.blue_viruses[virus.type] += 1
 
         
@@ -89,9 +104,11 @@ class Server(Rect):
     
     def wipe (self):
         
-        if self.red_viruses['x'] + self.blue_viruses['x'] >= 20 and randint(0,9) >5:
+        if sum(self.red_viruses.values()) + sum(self.blue_viruses.values()) >= 100 and randint(0,9) >5:
             self.red_viruses['x'] = 0
             self.blue_viruses['x'] = 0
+            self.red_viruses['y'] = 0
+            self.blue_viruses['y'] = 0
 
     
     def player1app (self, virus):

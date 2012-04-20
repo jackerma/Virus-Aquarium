@@ -10,7 +10,7 @@ class Virus(object):
 
     def __init__(self, team):
         self.team = team
-
+        self.target_dict = target_dict
         self.has_spread_chance()
         self.is_colour()
         self.is_type()
@@ -60,3 +60,21 @@ class XVirus(Virus):
     def has_spread_chance(self):
         self.spread_chance = 9
 
+class YVirus(Virus):
+    
+    def is_type(self):
+        self.type = 'y'
+        
+    def has_spread_chance(self):
+        self.spread_chance = 5
+
+    def target(self, server, target_dict):
+        i=randint(0-9)
+        if >= 4 and self.team == 1:
+            self.target_dict['x_blue']+=1
+        if <= 4 and self.team == 1:
+            self.target_dict['y_blue']+=1
+        if >= 4 and self.team == 1:
+            self.target_dict['x_red']+=1
+        if <= 4 and self.team == 1:
+            self.target_dict['y_blue']+=1

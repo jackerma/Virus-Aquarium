@@ -45,9 +45,9 @@ class Server(Rect):
 
     def scrn_change(self):
         if self.off_state == False:
-            if sum(self.red_viruses.values()) > 0:
+            if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
                 self.scrn_colour = (255,175,175)
-            elif sum(self.blue_viruses.values()) > 0:
+            elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                 self.scrn_colour = (175,175,255)
             else:
                 self.scrn_colour = (255,255,255)
@@ -58,20 +58,24 @@ class Server(Rect):
             loc = text.get_rect()
             loc.topleft = comp_screen.topleft
             self.screen.blit(text,loc)
+
             
-        elif sum(self.blue_viruses.values()) > 0:
+        if sum(self.blue_viruses.values()) > 0:
             text = smallfont.render("Xvirus = " + str(sum(self.blue_viruses.values())), True, (0,0,255))
             loc = text.get_rect()
             loc.topright = comp_screen.topright
             self.screen.blit(text,loc)
 
 
+
     def add_virus(self, virus):
         if virus.team == 1 and self.red_viruses['x']< self.virus_max and self.off_state == False:
             self.red_viruses[virus.type] += 1
 
-        elif virus.team == 2 and self.blue_viruses['x']< self.virus_max and self.off_state == False:
+
+        if virus.team == 2 and self.blue_viruses['x'] < self.virus_max and self.off_state == False:
             self.blue_viruses[virus.type] += 1
+
         
     def onoff (self):
         off_chance = randint(0,999)
@@ -84,8 +88,11 @@ class Server(Rect):
 
     
     def wipe (self):
-        if self.red_viruses['x'] + self.blue_viruses['x'] >= 50 and randint(0,9) >5:
+        
+        if self.red_viruses['x'] + self.blue_viruses['x'] >= 20 and randint(0,9) >5:
             self.red_viruses['x'] = 0
+            self.blue_viruses['x'] = 0
+
     
     def player1app (self, virus):
         pass
@@ -94,10 +101,6 @@ class Server(Rect):
         pass
     
     def count (self, score):
-#        if self.off_state == False:
-#            virus_count = self.red_viruses['x']
-
-#            return virus_count
         pass
 
 class Home_server(Server):

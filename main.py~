@@ -84,11 +84,11 @@ while not done:
                 Player2.add_virus(blue_xvirus)
                 score_blue -= 10
 
-#Spreading Virus
-        if event.type == KEYDOWN and event.key == K_s:
-            for comp in comps:
-                red_xvirus.spread(comp)
-                blue_xvirus.spread(comp)
+#Spreading Virus (Manual)
+    #    if event.type == KEYDOWN and event.key == K_s:
+     #       for comp in comps:
+      #          red_xvirus.spread(comp)
+       #         blue_xvirus.spread(comp)
 
 
 #Quitting
@@ -117,4 +117,4 @@ while not done:
 
 
 
-    time.sleep(.2)
+    time.sleep(.6)

@@ -15,6 +15,7 @@ score_red = 100
 score_blue = 100
 virus_count_red = 0
 virus_count_blue = 0
+target_dict= {'x_red':0, 'y_red':0, 'x_blue':0, "yblue":0}
 
 #Servers 
 Player1 = Home_server(screen, (20,20))
@@ -33,6 +34,13 @@ comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8
 #Virus
 red_xvirus = XVirus(1)
 blue_xvirus = XVirus(2)
+red_yvirus = YVirus(1)
+blue_yvirus = YVirus(2)
+
+
+red_virus_list = [red_xvirus, red_yvirus]
+blue_virus_list = [blue_xvirus, blue_yvirus]
+
 
 while not done:
 
@@ -84,11 +92,17 @@ while not done:
                 Player2.add_virus(blue_xvirus)
                 score_blue -= 10
 
-#Spreading Virus (Manual)
-    #    if event.type == KEYDOWN and event.key == K_s:
-     #       for comp in comps:
-      #          red_xvirus.spread(comp)
-       #         blue_xvirus.spread(comp)
+#Adding Virus red
+        if event.type == KEYDOWN and event.key == K_e:
+            if score_red >= 10 and (Player1.red_viruses['y'])+1 < 25:
+                Player1.add_virus(red_yvirus)
+                score_red -= 10
+
+#Adding Virus blue
+        if event.type == KEYDOWN and event.key == K_i:
+            if score_blue >= 10 and (Player2.blue_viruses['y'])+1 < 25:
+                Player2.add_virus(blue_yvirus)
+                score_blue -= 10
 
 
 #Quitting
@@ -102,10 +116,13 @@ while not done:
     for comp in comps:
         comp.wipe()
         comp.onoff()
-        red_xvirus.spread(comp)
-        blue_xvirus.spread(comp)
+        for virus in red_virus_list:
+            virus.spread(comp)
+            
+        for virus in blue_virus_list:
+            virus.spread(comp)
 
-#        comp.count(score)
+
         if comp.off_state == False:
             virus_count_red = comp.red_viruses['x']/10
         score_red += virus_count_red
@@ -117,4 +134,4 @@ while not done:
 
 
 
-    time.sleep(.6)
+    time.sleep(.2)
