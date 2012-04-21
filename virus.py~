@@ -6,11 +6,13 @@ from random import randint
 from server import *
 from time import *
 
+target_dict ={}
+
 class Virus(object):
 
     def __init__(self, team):
         self.team = team
-
+        self.target_dict = target_dict
         self.has_spread_chance()
         self.is_colour()
         self.is_type()
@@ -63,7 +65,9 @@ class XVirus(Virus):
     def has_spread_chance(self):
         self.spread_chance = 9
 
+
 class YVirus(Virus):          ##All New Below
+
     
     def is_type(self):
         self.type = 'y'
@@ -89,3 +93,22 @@ class YVirus(Virus):          ##All New Below
                     target_dict['x_red']+= server.blue_viruses['y']
                 elif j == 0:
                     target_dict['y_red']+= server.blue_viruses['y']
+
+<<<<<<< HEAD
+class Wall_Virus(Virus):
+    
+    def is_type(self):
+        self.type = 'w'
+
+    def spread(self, server):
+        pass
+
+class Bomb_Virus(Virus):
+    
+    def is_type(self):
+        self.type = 'b'
+
+    def spread(self, server):
+        pass
+=======
+>>>>>>> d0b381bfe2218f1b9ea662b9f930f643f7925e71
