@@ -135,7 +135,7 @@ class Home_server_Red(Server):
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
         pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
-        self.draw_text()
+
     
     def onoff(self):
         pass
@@ -153,8 +153,14 @@ class Home_server_Red(Server):
 
             elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                 self.scrn_colour = (175,175,255)
-                time.sleep(2)
-                exit(0)
+                time.sleep(.2)
+                text = bigfont.render("Blue Wins!", True, (0,0,255))
+                loc = text.get_rect()
+                loc.center = self.bounds.center
+                self.screen.blit(text,loc)
+
+#                exit(0)
+
             else:
                 self.scrn_colour = (255,255,255)
 
@@ -167,7 +173,6 @@ class Home_server_Blue(Server):
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
         pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
-        self.draw_text()
     
     def onoff(self):
         pass
@@ -182,15 +187,14 @@ class Home_server_Blue(Server):
         if self.off_state == False:
             if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
                 self.scrn_colour = (255,175,175)
-
+                time.sleep(.2)
                 text = bigfont.render("Red Wins!", True, (255,0,0))
                 loc = text.get_rect()
                 loc.center = self.bounds.center
                 self.screen.blit(text,loc)
 
-                time.sleep(2)
-                
-                
+#                exit(0)
+
             elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                 self.scrn_colour = (175,175,255)
 

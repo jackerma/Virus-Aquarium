@@ -86,13 +86,13 @@ while not done:
     loc.topleft = (800,0)
     screen.blit(text,loc)
     
-    for comp in comps:
-        comp.draw_text()
+
     
     Player1.scrn_change()
     Player2.scrn_change()
 
-
+    for comp in comps:
+        comp.draw_text()
     pygame.display.flip()
 
 
@@ -125,7 +125,6 @@ while not done:
                 Player2.add_virus(blue_yvirus)
                 score_blue -= 10
 
-
 #Quitting
         if event.type == pygame.QUIT:
             done = True
@@ -138,6 +137,7 @@ while not done:
         target_dict= {'x_red':0, 'y_red':0, 'x_blue':0, 'y_blue':0} 
         comp.wipe()
         comp.onoff()
+
 
         for virus in red_virus_list:# was red_xvirus.spread(comp)
             virus.spread(comp)
@@ -172,6 +172,8 @@ while not done:
             comp.blue_viruses['y'] = 0
 
     for comp in comps:
+        
+
 
         if comp.off_state == False:
             virus_count_red = comp.red_viruses['x']/10
@@ -180,6 +182,9 @@ while not done:
         if comp.off_state == False:
             virus_count_blue = comp.blue_viruses['x']/10
         score_blue += virus_count_blue
+
+
+        
 
 
 
