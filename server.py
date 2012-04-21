@@ -4,14 +4,18 @@ import pygame
 from pygame.locals import *
 from virus import *
 from random import randint
+import time
 
 pygame.font.init()
 smallfont = pygame.font.Font(None, 20)
+
+bigfont = pygame.font.Font(None, 250)
 
 class Server(Rect):
 
     def __init__ (self, screen, (x,y)):
 
+        scrn_thick = 4
         self.width = 160
         self.height = 120
         self.x = x
@@ -21,19 +25,20 @@ class Server(Rect):
         self.scrn_colour = (255,255,255)
         self.cnct_range = 150
         self.connected_list = [] 
-        self.red_viruses = {'x':0, 'y':0}
-        self.blue_viruses = {'x':0, 'y':0}
-        self.virus_max = 50
+        self.red_viruses = {'x':0, 'y':0}  #diff: y
+        self.blue_viruses = {'x':0, 'y':0}  # ditto
+        self.virus_max = 50                 
         self.off_state = False
-
+        self.bounds = self.screen.get_rect()
+        self.comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
 
     def draw_rect(self):
-        scrn_thick = 4
-        comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
+
+
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
-        pygame.draw.rect(self.screen, self.scrn_colour, comp_screen)
-        self.draw_text(comp_screen)
+        pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
+
     
     def draw_circle(self):
 #        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
@@ -52,44 +57,44 @@ class Server(Rect):
             else:
                 self.scrn_colour = (255,255,255)
 
-    def draw_text(self, comp_screen):
+    def draw_text(self):
         if sum(self.red_viruses.values()) > 0:
-            text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0))
+
+            text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0)) #str(self.red_viruses.values())
+
             loc = text.get_rect()
-            loc.topleft = comp_screen.topleft
+            loc.topleft = self.comp_screen.topleft
             self.screen.blit(text,loc)
 
             text = smallfont.render("Yvirus = " + str(self.red_viruses['y']), True, (255,0,0))
             loc = text.get_rect()
-            loc.bottomleft = comp_screen.bottomleft
+            loc.bottomleft = self.comp_screen.bottomleft
             self.screen.blit(text,loc)
 
             
         if sum(self.blue_viruses.values()) > 0:
             text = smallfont.render("Xvirus = " + str(self.blue_viruses['x']), True, (0,0,255))
             loc = text.get_rect()
-            loc.topright = comp_screen.topright
+            loc.topright = self.comp_screen.topright
             self.screen.blit(text,loc)
 
             text = smallfont.render("Yvirus = " + str(self.blue_viruses['y']), True, (0,0,255))
             loc = text.get_rect()
-            loc.bottomright = comp_screen.bottomright
+            loc.bottomright = self.comp_screen.bottomright
             self.screen.blit(text,loc)
 
 
     def add_virus(self, virus):
-        if virus.team == 1 and self.red_viruses['x']< self.virus_max and self.off_state == False:
+
+
+
+        if virus.team == 1 and self.red_viruses[virus.type]< self.virus_max and self.off_state == False:
             self.red_viruses[virus.type] += 1
 
-        if virus.team == 1 and self.red_viruses['y'] < self.virus_max and self.off_state == False:
-            self.red_viruses[virus.type] += 1
-
-        if virus.team == 2 and self.blue_viruses['x'] < self.virus_max and self.off_state == False:
+        if virus.team == 2 and self.blue_viruses[virus.type] < self.virus_max and self.off_state == False:
             self.blue_viruses[virus.type] += 1
 
 
-        if virus.team == 2 and self.blue_viruses['y'] < self.virus_max and self.off_state == False:
-            self.blue_viruses[virus.type] += 1
 
         
     def onoff (self):
@@ -104,7 +109,9 @@ class Server(Rect):
     
     def wipe (self):
         
-        if sum(self.red_viruses.values()) + sum(self.blue_viruses.values()) >= 100 and randint(0,9) >5:
+
+        if sum(self.red_viruses.values()) + sum(self.blue_viruses.values()) >= (self.virus_max)*4 and randint(0,9) >5:
+
             self.red_viruses['x'] = 0
             self.blue_viruses['x'] = 0
             self.red_viruses['y'] = 0
@@ -120,15 +127,15 @@ class Server(Rect):
     def count (self, score):
         pass
 
-class Home_server(Server):
+class Home_server_Red(Server):
 
     def draw_rect(self):
         scrn_thick = 7
         comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
-        pygame.draw.rect(self.screen, self.scrn_colour, comp_screen)
-        self.draw_text(comp_screen)
+        pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
+        self.draw_text()
     
     def onoff(self):
         pass
@@ -139,3 +146,53 @@ class Home_server(Server):
     def team(self):
         pass
         
+    def scrn_change(self):
+        if self.off_state == False:
+            if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
+                self.scrn_colour = (255,175,175)
+
+            elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
+                self.scrn_colour = (175,175,255)
+                time.sleep(2)
+                exit(0)
+            else:
+                self.scrn_colour = (255,255,255)
+
+
+class Home_server_Blue(Server):
+
+    def draw_rect(self):
+        scrn_thick = 7
+        comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
+        pygame.draw.rect(self.screen, (0,0,0), self.rect)
+        self.scrn_change()
+        pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
+        self.draw_text()
+    
+    def onoff(self):
+        pass
+
+    def wipe(self):
+        pass
+        
+    def team(self):
+        pass
+        
+    def scrn_change(self):
+        if self.off_state == False:
+            if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
+                self.scrn_colour = (255,175,175)
+
+                text = bigfont.render("Red Wins!", True, (255,0,0))
+                loc = text.get_rect()
+                loc.center = self.bounds.center
+                self.screen.blit(text,loc)
+
+                time.sleep(2)
+                
+                
+            elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
+                self.scrn_colour = (175,175,255)
+
+            else:
+                self.scrn_colour = (255,255,255)

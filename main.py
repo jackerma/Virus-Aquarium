@@ -17,9 +17,10 @@ virus_count_red = 0
 virus_count_blue = 0
 target_dict= {'x_red':0, 'y_red':0, 'x_blue':0, "yblue":0}
 
+
 #Servers 
-Player1 = Home_server(screen, (20,20))
-Player2 = Home_server(screen, (1130, 270))
+Player1 = Home_server_Red(screen, (20,20))
+Player2 = Home_server_Blue(screen, (1130, 270))
 comp1 = Server(screen, (150, 250))
 comp2 = Server(screen, (500, 400))
 comp3 = Server(screen, (410, 200))
@@ -34,6 +35,7 @@ comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8
 #Virus
 red_xvirus = XVirus(1)
 blue_xvirus = XVirus(2)
+
 red_yvirus = YVirus(1)
 blue_yvirus = YVirus(2)
 
@@ -41,10 +43,20 @@ blue_yvirus = YVirus(2)
 red_virus_list = [red_xvirus, red_yvirus]
 blue_virus_list = [blue_xvirus, blue_yvirus]
 
+red_yvirus = YVirus(1) #New
+blue_yvirus = YVirus(2) #New
+
+
+red_virus_list = [red_xvirus, red_yvirus]       
+blue_virus_list = [blue_xvirus, blue_yvirus]     
+
+
 
 while not done:
 
     screen.fill(background_colour)
+    
+
 
 #Connects computers
     for com1 in comps:
@@ -73,6 +85,13 @@ while not done:
     loc = text.get_rect()
     loc.topleft = (800,0)
     screen.blit(text,loc)
+    
+    for comp in comps:
+        comp.draw_text()
+    
+    Player1.scrn_change()
+    Player2.scrn_change()
+
 
     pygame.display.flip()
 
@@ -80,25 +99,27 @@ while not done:
 ##Keys
     for event in pygame.event.get():
 
-#Adding Virus red
+#Adding XVirus red
         if event.type == KEYDOWN and event.key == K_w:
             if score_red >= 10 and (Player1.red_viruses['x'])+1 < 25:
                 Player1.add_virus(red_xvirus)
                 score_red -= 10
 
-#Adding Virus blue
+#Adding XVirus blue
         if event.type == KEYDOWN and event.key == K_u:
             if score_blue >= 10 and (Player2.blue_viruses['x'])+1 < 25:
                 Player2.add_virus(blue_xvirus)
                 score_blue -= 10
 
-#Adding Virus red
+
+#Adding YVirus red
         if event.type == KEYDOWN and event.key == K_e:
             if score_red >= 10 and (Player1.red_viruses['y'])+1 < 25:
                 Player1.add_virus(red_yvirus)
                 score_red -= 10
 
-#Adding Virus blue
+
+#Adding YVirus blue
         if event.type == KEYDOWN and event.key == K_i:
             if score_blue >= 10 and (Player2.blue_viruses['y'])+1 < 25:
                 Player2.add_virus(blue_yvirus)
@@ -114,14 +135,43 @@ while not done:
 #Update
 
     for comp in comps:
+        target_dict= {'x_red':0, 'y_red':0, 'x_blue':0, 'y_blue':0} 
         comp.wipe()
         comp.onoff()
-        for virus in red_virus_list:
-            virus.spread(comp)
-            
-        for virus in blue_virus_list:
-            virus.spread(comp)
 
+        for virus in red_virus_list:# was red_xvirus.spread(comp)
+            virus.spread(comp)
+            if virus.type == 'y':#
+                virus.target(comp, target_dict)#
+                
+            
+        for virus in blue_virus_list:# was blue_yvirus.spread(comp)
+            virus.spread(comp)
+            if virus.type == 'y':#
+                virus.target(comp, target_dict)#
+                
+
+        
+        #Killing the target list (new)
+
+        comp.red_viruses['x'] -= target_dict['x_red']
+        if comp.red_viruses['x'] < 0:        #So minimum = 0
+            comp.red_viruses['x'] = 0
+            
+        comp.red_viruses['y'] -= target_dict['y_red']
+        if comp.red_viruses['y'] < 0:
+            comp.red_viruses['y'] = 0
+
+
+        comp.blue_viruses['x'] -= target_dict['x_blue']
+        if comp.blue_viruses['x'] < 0:
+            comp.blue_viruses['x'] = 0
+
+        comp.blue_viruses['y'] -= target_dict['y_blue']
+        if comp.blue_viruses['y'] < 0:
+            comp.blue_viruses['y'] = 0
+
+    for comp in comps:
 
         if comp.off_state == False:
             virus_count_red = comp.red_viruses['x']/10
@@ -133,5 +183,5 @@ while not done:
 
 
 
-
     time.sleep(.2)
+
