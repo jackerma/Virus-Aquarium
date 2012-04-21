@@ -34,12 +34,16 @@ comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8
 #Virus
 red_xvirus = XVirus(1)
 blue_xvirus = XVirus(2)
-red_yvirus = YVirus(1) #New
-blue_yvirus = YVirus(2) #New
+red_yvirus = YVirus(1)
+blue_yvirus = YVirus(2)
+red_wvirus =  Wall_Virus(1)
+blue_wvirus =  Wall_Virus(2)
+red_bvirus =  Bomb_Virus(1)
+blue_bvirus = Bomb_Virus(2)
 
 
-red_virus_list = [red_xvirus, red_yvirus]        #New
-blue_virus_list = [blue_xvirus, blue_yvirus]     #New
+red_virus_list = [red_xvirus, red_yvirus, red_wvirus, red_bvirus]       
+blue_virus_list = [blue_xvirus, blue_yvirus, blue_wvirus, blue_bvirus]    
 
 
 while not done:
@@ -118,20 +122,20 @@ while not done:
         comp.wipe()
         comp.onoff()
 
-        for virus in red_virus_list:# was red_xvirus.spread(comp)
+        for virus in red_virus_list:
             virus.spread(comp)
-            if virus.type == 'y':#
+            if virus.type == 'y':
                 virus.target(comp, target_dict)#
                 
             
-        for virus in blue_virus_list:# was blue_yvirus.spread(comp)
+        for virus in blue_virus_list:
             virus.spread(comp)
-            if virus.type == 'y':#
+            if virus.type == 'y':
                 virus.target(comp, target_dict)#
                 
 
         
-        #Killing the target list (new)
+        #Killing the target list 
 
         comp.red_viruses['x'] -= target_dict['x_red']
         if comp.red_viruses['x'] < 0:        #So minimum = 0

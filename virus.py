@@ -89,3 +89,19 @@ class YVirus(Virus):          ##All New Below
                     target_dict['x_red']+= server.blue_viruses['y']
                 elif j == 0:
                     target_dict['y_red']+= server.blue_viruses['y']
+
+class Wall_Virus(Virus):
+    
+    def is_type(self):
+        self.type = 'w'
+
+    def spread(self, server):
+        pass
+
+class Bomb_Virus(Virus):
+    
+    def is_type(self):
+        self.type = 'b'
+
+    def spread(self, server):
+        pass

@@ -132,14 +132,23 @@ while not done:
 
         
         #Killing the target list (new)
-        if comp.red_viruses['x'] >= target_dict ['x_red']:
-            comp.red_viruses['x'] -= target_dict['x_red']
-        if comp.red_viruses['y'] >= target_dict ['y_red']:
-            comp.red_viruses['y'] -= target_dict['y_red']
-        if comp.blue_viruses['x'] >= target_dict ['x_blue']:
-            comp.blue_viruses['x'] -= target_dict['x_blue']
-        if comp.blue_viruses['y'] >= target_dict ['y_blue']:
-            comp.blue_viruses['y'] -= target_dict['y_blue']
+
+        comp.red_viruses['x'] -= target_dict['x_red']
+        if comp.red_viruses['x'] < 0:        #So minimum = 0
+            comp.red_viruses['x'] = 0
+            
+        comp.red_viruses['y'] -= target_dict['y_red']
+        if comp.red_viruses['y'] < 0:
+            comp.red_viruses['y'] = 0
+
+
+        comp.blue_viruses['x'] -= target_dict['x_blue']
+        if comp.blue_viruses['x'] < 0:
+            comp.blue_viruses['x'] = 0
+
+        comp.blue_viruses['y'] -= target_dict['y_blue']
+        if comp.blue_viruses['y'] < 0:
+            comp.blue_viruses['y'] = 0
 
     for comp in comps:
         if comp.off_state == False:

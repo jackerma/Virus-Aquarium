@@ -55,7 +55,6 @@ class Server(Rect):
     def draw_text(self, comp_screen):
         if sum(self.red_viruses.values()) > 0:
             text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0)) #str(self.red_viruses.values())
-            print self.red_viruses['x']
             loc = text.get_rect()
             loc.topleft = comp_screen.topleft
             self.screen.blit(text,loc)
