@@ -25,16 +25,14 @@ class Server(Rect):
         self.scrn_colour = (255,255,255)
         self.cnct_range = 150
         self.connected_list = [] 
-        self.red_viruses = {'x':0, 'y':0}  #diff: y
-        self.blue_viruses = {'x':0, 'y':0}  # ditto
+        self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+        self.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}  
         self.virus_max = 50                 
         self.off_state = False
         self.bounds = self.screen.get_rect()
         self.comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
 
     def draw_rect(self):
-
-
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
         pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
@@ -57,36 +55,67 @@ class Server(Rect):
             else:
                 self.scrn_colour = (255,255,255)
 
+
     def draw_text(self):
-        if sum(self.red_viruses.values()) > 0:
 
-            text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0)) #str(self.red_viruses.values())
-
+        ##Red Virus numbers
+        if self.red_viruses['x'] > 0:
+            text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0))
             loc = text.get_rect()
             loc.topleft = self.comp_screen.topleft
             self.screen.blit(text,loc)
 
+        if self.red_viruses['y'] > 0:
+            x,y = self.comp_screen.topleft
             text = smallfont.render("Yvirus = " + str(self.red_viruses['y']), True, (255,0,0))
             loc = text.get_rect()
-            loc.bottomleft = self.comp_screen.bottomleft
+            loc.topleft = (x, y + loc.height)
             self.screen.blit(text,loc)
 
-            
-        if sum(self.blue_viruses.values()) > 0:
+        if self.red_viruses['w'] > 0:
+            x,y = self.comp_screen.topleft
+            text = smallfont.render("Firewall = " + str(self.red_viruses['w']), True, (255,0,0))
+            loc = text.get_rect()
+            loc.topleft = (x, y + loc.height*2)
+            self.screen.blit(text,loc)
+
+        if self.red_viruses['b'] > 0:
+            x,y = self.comp_screen.topleft
+            text = smallfont.render("Bomb = " + str(self.red_viruses['b']), True, (255,0,0))
+            loc = text.get_rect()
+            loc.topleft = (x, y + loc.height *3)
+            self.screen.blit(text,loc)
+
+        ##Blue Virus numbers    
+        if self.blue_viruses['x'] > 0:
             text = smallfont.render("Xvirus = " + str(self.blue_viruses['x']), True, (0,0,255))
             loc = text.get_rect()
             loc.topright = self.comp_screen.topright
             self.screen.blit(text,loc)
-
+        
+        if self.blue_viruses['y'] > 0:
+            x, y = self.comp_screen.topright
             text = smallfont.render("Yvirus = " + str(self.blue_viruses['y']), True, (0,0,255))
             loc = text.get_rect()
-            loc.bottomright = self.comp_screen.bottomright
+            loc.topright = (x, y+loc.height)
+            self.screen.blit(text,loc)
+
+        if self.blue_viruses['w'] > 0:
+            x,y = self.comp_screen.topright
+            text = smallfont.render("Firewall = " + str(self.blue_viruses['w']), True, (0,0,255))
+            loc = text.get_rect()
+            loc.topright = (x, y + loc.height*2)
+            self.screen.blit(text,loc)
+
+        if self.blue_viruses['b'] > 0:
+            x,y = self.comp_screen.topright
+            text = smallfont.render("Bomb = " + str(self.blue_viruses['b']), True, (0,0,255))
+            loc = text.get_rect()
+            loc.topright = (x, y + loc.height*3)
             self.screen.blit(text,loc)
 
 
     def add_virus(self, virus):
-
-
 
         if virus.team == 1 and self.red_viruses[virus.type]< self.virus_max and self.off_state == False:
             self.red_viruses[virus.type] += 1

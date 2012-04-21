@@ -35,21 +35,16 @@ comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8
 #Virus
 red_xvirus = XVirus(1)
 blue_xvirus = XVirus(2)
-
 red_yvirus = YVirus(1)
 blue_yvirus = YVirus(2)
+red_wvirus =  Wall_Virus(1)
+blue_wvirus =  Wall_Virus(2)
+red_bvirus =  Bomb_Virus(1)
+blue_bvirus = Bomb_Virus(2)
 
 
-red_virus_list = [red_xvirus, red_yvirus]
-blue_virus_list = [blue_xvirus, blue_yvirus]
-
-red_yvirus = YVirus(1) #New
-blue_yvirus = YVirus(2) #New
-
-
-red_virus_list = [red_xvirus, red_yvirus]       
-blue_virus_list = [blue_xvirus, blue_yvirus]     
-
+red_virus_list = [red_xvirus, red_yvirus, red_wvirus, red_bvirus]       
+blue_virus_list = [blue_xvirus, blue_yvirus, blue_wvirus, blue_bvirus]    
 
 
 while not done:
@@ -125,6 +120,34 @@ while not done:
                 Player2.add_virus(blue_yvirus)
                 score_blue -= 10
 
+
+#Adding Wall_Virus red
+        if event.type == KEYDOWN and event.key == K_q:
+            if score_red >= 10 and (Player1.red_viruses['w'])+1 < 25:
+                Player1.add_virus(red_wvirus)
+                score_red -= 10
+
+
+#Adding Wall_Virus blue
+        if event.type == KEYDOWN and event.key == K_y:
+            if score_blue >= 10 and (Player2.blue_viruses['w'])+1 < 25:
+                Player2.add_virus(blue_wvirus)
+                score_blue -= 10
+
+#Adding Bomb_Virus red
+        if event.type == KEYDOWN and event.key == K_r:
+            if score_red >= 10 and (Player1.red_viruses['b'])+1 < 25:
+                Player1.add_virus(red_bvirus)
+                score_red -= 10
+
+
+#Adding Bomb_Virus blue
+        if event.type == KEYDOWN and event.key == K_o:
+            if score_blue >= 10 and (Player2.blue_viruses['b'])+1 < 25:
+                Player2.add_virus(blue_bvirus)
+                score_blue -= 10
+
+
 #Quitting
         if event.type == pygame.QUIT:
             done = True
@@ -140,19 +163,20 @@ while not done:
 
 
         for virus in red_virus_list:# was red_xvirus.spread(comp)
+
             virus.spread(comp)
-            if virus.type == 'y':#
+            if virus.type == 'y':
                 virus.target(comp, target_dict)#
                 
             
-        for virus in blue_virus_list:# was blue_yvirus.spread(comp)
+        for virus in blue_virus_list:
             virus.spread(comp)
-            if virus.type == 'y':#
+            if virus.type == 'y':
                 virus.target(comp, target_dict)#
                 
 
         
-        #Killing the target list (new)
+        #Killing the target list 
 
         comp.red_viruses['x'] -= target_dict['x_red']
         if comp.red_viruses['x'] < 0:        #So minimum = 0
