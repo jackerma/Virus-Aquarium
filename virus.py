@@ -92,6 +92,7 @@ class YVirus(Virus):
             if hit_chance <= i:
                 if j == 1:
                     target_dict['x_blue']+= server.red_viruses['y']
+                    target_dict['w_blue']+= 1
                 elif j == 0:
                     target_dict['y_blue']+= server.red_viruses['y']
 
@@ -100,6 +101,7 @@ class YVirus(Virus):
             if hit_chance <= i:
                 if j == 1:
                     target_dict['x_red']+= server.blue_viruses['y']
+                    target_dict['w_red']+= 1
                 elif j == 0:
                     target_dict['y_red']+= server.blue_viruses['y']
 
@@ -122,7 +124,7 @@ class Wall_Virus(Virus):
         self.max = 10
             
     def has_spread_chance(self):
-        self.spread_chance = 5
+        self.spread_chance = 1
 
 class Bomb_Virus(Virus):
     
