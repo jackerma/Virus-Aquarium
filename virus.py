@@ -16,8 +16,12 @@ class Virus(object):
         self.has_spread_chance()
         self.is_colour()
         self.is_type()
+        self.has_max()
 
     def is_type(self):
+        pass
+
+    def has_max(self):
         pass
     
     def target(self, server, target_dict):
@@ -62,15 +66,20 @@ class XVirus(Virus):
     def is_type(self):
         self.type = 'x'
 
+    def has_max(self):
+        self.max = 50
+
     def has_spread_chance(self):
         self.spread_chance = 9
 
 
-class YVirus(Virus):          ##All New Below
+class YVirus(Virus):
 
-    
     def is_type(self):
         self.type = 'y'
+
+    def has_max(self):
+        self.max = 30
         
     def has_spread_chance(self):
         self.spread_chance = 5
@@ -97,16 +106,31 @@ class YVirus(Virus):          ##All New Below
 
 class Wall_Virus(Virus):
     
+    def __init__(self, team, home):
+        self.team = team
+        self.home = home
+        self.target_dict = target_dict
+        self.has_spread_chance()
+        self.is_colour()
+        self.is_type()
+        self.has_max()
+
     def is_type(self):
         self.type = 'w'
-
-    def spread(self, server):
-        pass
+    
+    def has_max(self):
+        self.max = 10
+            
+    def has_spread_chance(self):
+        self.spread_chance = 5
 
 class Bomb_Virus(Virus):
     
     def is_type(self):
         self.type = 'b'
+
+    def has_max(self):
+        self.max = 1
 
     def spread(self, server):
         pass
