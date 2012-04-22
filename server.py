@@ -36,6 +36,7 @@ class Server(Rect):
         self.bounds = self.screen.get_rect()
         self.comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
 
+
     def draw_rect(self):
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
