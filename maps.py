@@ -18,9 +18,9 @@ class Map(object):
 
     def drawmap(self):
         screen = self.screen
-
+         
     #Line
-        if self.num == 1:
+        if self.num == '1':
             self.Player1 = Home_server(screen, (50,350))
             self.Player1.is_team(1)
             self.Player2 = Home_server(screen, (1100, 350))
@@ -30,23 +30,21 @@ class Map(object):
             comp3 = Server(screen, (850, 350))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3]
       
-    #Classic
-        elif self.num == 2:
+    #X-R0ads
+        elif self.num == '2':
             self.Player1 = Home_server(self.screen, (20,20))
             self.Player1.is_team(1)
-            self.Player2 = Home_server(self.screen, (1130, 270))
+            self.Player2 = Home_server(self.screen, (1120, 550))
             self.Player2.is_team(2)
-            comp1 = Server(screen, (150, 250))
-            comp2 = Server(screen, (500, 400))
-            comp3 = Server(screen, (410, 200))
-            comp4 = Server(screen, (700, 500))
-            comp5 = Server(screen, (800, 300))
-            comp6 = Server(screen, (900, 100))
-            comp7 = Server(screen, (250, 500))
-            comp8 = Server(screen, (1000, 520))
-            comp9 = Server(screen, (600, 100))
-            self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
+            comp1 = Server(screen, (100, 305))
+            comp2 = Server(screen, (550, 325))
+            comp3 = Server(screen, (350, 160))
+            comp4 = Server(screen, (750, 160))
+            comp5 = Server(screen, (750, 470))
+            comp6 = Server(screen, (1000, 305))
+            comp7 = Server(screen, (350, 470))
+            self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7]
             
         else:
-            self.num = randint(1,2)
+            self.num = str(randint(1,2))
             self.drawmap()

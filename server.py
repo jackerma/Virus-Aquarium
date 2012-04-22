@@ -44,8 +44,8 @@ class Server(Rect):
 
     
     def draw_circle(self):
-#        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
-        pass
+        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+
 
     def draw_lines(self):
         for comp in self.connected_list:

@@ -8,12 +8,14 @@ import time
 from maps import *
 
 #Choosing Map
+print ""
 print "Initializing: Virus Aquarium"
 print "________________________________________________________"
 print "1. Linear"
-print "2. Classic"
+print "2. X-R0ads"
 print "_________________________________________________________"
 network_map = raw_input("Select map number: ")
+
 
 if network_map == str(1) or network_map == str(2):
     print "Loading..."
