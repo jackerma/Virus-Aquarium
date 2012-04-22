@@ -19,20 +19,29 @@ target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':
 
 
 #Servers 
-Player1 = Home_server(screen, (20,20))
+#Player1 = Home_server(screen, (20,20))
+#Player1.is_team(1)
+#Player2 = Home_server(screen, (1130, 270))
+#Player2.is_team(2)
+#comp1 = Server(screen, (150, 250))
+#comp2 = Server(screen, (500, 400))
+#comp3 = Server(screen, (410, 200))
+#comp4 = Server(screen, (700, 500))
+#comp5 = Server(screen, (800, 300))
+#comp6 = Server(screen, (900, 100))
+#comp7 = Server(screen, (250, 500))
+#comp8 = Server(screen, (1000, 520))
+#comp9 = Server(screen, (600, 100))
+#comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
+
+Player1 = Home_server(screen, (50,350))
 Player1.is_team(1)
-Player2 = Home_server(screen, (1130, 270))
+Player2 = Home_server(screen, (1100, 350))
 Player2.is_team(2)
-comp1 = Server(screen, (150, 250))
-comp2 = Server(screen, (500, 400))
-comp3 = Server(screen, (410, 200))
-comp4 = Server(screen, (700, 500))
-comp5 = Server(screen, (800, 300))
-comp6 = Server(screen, (900, 100))
-comp7 = Server(screen, (250, 500))
-comp8 = Server(screen, (1000, 520))
-comp9 = Server(screen, (600, 100))
-comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
+comp1 = Server(screen, (300, 350))
+comp2 = Server(screen, (575, 350))
+comp3 = Server(screen, (850, 350))
+comps = [Player1, Player2, comp1,comp2, comp3]
 
 
 #Virus
