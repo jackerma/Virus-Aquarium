@@ -9,15 +9,24 @@ from time import *
 target_dict ={}
 last_comp_red = 0
 last_comp_blue = 0
+
 class Virus(object):
 
-    def __init__(self, team):
+    def __init__(self, team, home):
         self.team = team
+        self.home = home
         self.target_dict = target_dict
         self.has_spread_chance()
         self.is_colour()
         self.is_type()
-        self.has_max()
+        self.check_home()
+
+    def check_home(self):
+        if self.team == 1:
+            self.home_number = self.home.red_viruses[self.type]
+        if self.team == 2:
+            self.home_number = self.home.blue_viruses[self.type]
+        self.max = self.home_number
 
     def is_type(self):
         pass
@@ -48,7 +57,8 @@ class Virus(object):
             for num in red_chance_list:
                 for comp in server.connected_list:
                     if num <= self.spread_chance:
-                        comp.add_virus(self)
+                        if comp != self.home:  
+                            comp.add_virus(self)
         
         if self.team == 2:
             blue_chance_list = []
@@ -60,7 +70,8 @@ class Virus(object):
             for num in blue_chance_list:
                 for comp in server.connected_list:
                     if num <= self.spread_chance:
-                        comp.add_virus(self)
+                        if comp != self.home:  
+                            comp.add_virus(self)
 
 class XVirus(Virus):
 
@@ -108,18 +119,6 @@ class YVirus(Virus):
 
 
 class Wall_Virus(Virus):
-    
-    def __init__(self, team, home):
-        self.team = team
-        self.home = home
-        self.target_dict = target_dict
-        self.has_spread_chance()
-        self.is_colour()
-        self.is_type()
-        self.has_max()
-        self.z = 0
-        self.bomb_red_is = False
-        self.bomb_blue_is = False
 
     def is_type(self):
         self.type = 'w'
@@ -131,27 +130,26 @@ class Wall_Virus(Virus):
         self.spread_chance = 1
 
 
-
-
 class Bomb_Virus(Virus):
 
-    def __init__(self, team):
+    def __init__(self, team, home):
         self.team = team
+        self.home = home
         self.target_dict = target_dict
         self.has_spread_chance()
         self.is_colour()
         self.is_type()
-        self.has_max()
+        self.max = 1   
+
         self.z_red = 0
         self.z_blue = 0
 #        self.bomb_red_is = False
 #        self.bomb_blue_is = False
 
+
     def is_type(self):
         self.type = 'b'
 
-    def has_max(self):
-        self.max = 1
 
     def has_spread_chance(self):
         self.spread_chance = 10

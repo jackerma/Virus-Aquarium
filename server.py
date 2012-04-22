@@ -44,7 +44,8 @@ class Server(Rect):
 
     
     def draw_circle(self):
-        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+ #       pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+        pass
 
 
     def draw_lines(self):
@@ -121,8 +122,6 @@ class Server(Rect):
 
 
     def add_virus(self, virus):
-
-        
 
         if virus.team == 1 and self.red_viruses[virus.type]< virus.max and self.off_state == False: 
 #and virus.bomb_red_is == False:
