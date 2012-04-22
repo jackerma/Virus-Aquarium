@@ -15,6 +15,8 @@ score_red = 100
 score_blue = 100
 virus_count_red = 0
 virus_count_blue = 0
+bomb_count_red = 0
+bomb_count_blue = 0
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
 
 
@@ -127,9 +129,14 @@ while not done:
 
 #Adding Bomb_Virus red
             if event.type == KEYDOWN and event.key == K_r:
-                if score_red >= 10 and (Player1.red_viruses['b']) < red_bvirus.max:
+                if score_red >= 10 and bomb_count_red == 0:
                     Player1.add_virus(red_bvirus)
                     score_red -= 10
+                else:
+                    for comp in comps:
+                        if comp.red_viruses['b'] == 1:
+                            comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+                            comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
 
 #Adding XVirus blue
         if not Player2.lose:
@@ -152,9 +159,14 @@ while not done:
 
 #Adding Bomb_Virus blue
             if event.type == KEYDOWN and event.key == K_o:
-                if score_blue >= 10 and (Player2.blue_viruses['b']) < blue_bvirus.max:
+                if score_blue >= 10 and bomb_count_blue == 0:
                     Player2.add_virus(blue_bvirus)
                     score_blue -= 10
+                else:
+                    for comp in comps:
+                        if comp.blue_viruses['b'] == 1:
+                            comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+                            comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
 
 
 #Quitting
@@ -220,8 +232,16 @@ while not done:
             if comp.blue_viruses['b'] < 0:
                 comp.blue_viruses['b'] = 0
 
+    bred = 0
+    bblue = 0
     for comp in comps:
-        
+        bred += comp.red_viruses['b']
+        bblue += comp.blue_viruses['b']
+    bomb_count_red = bred
+    bomb_count_blue = bblue
+                
+    for comp in comps:
+
         if comp.off_state == False:
             virus_count_red = comp.red_viruses['x']/10
         score_red += virus_count_red
