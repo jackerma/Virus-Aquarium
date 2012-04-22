@@ -31,7 +31,8 @@ comp5 = Server(screen, (800, 300))
 comp6 = Server(screen, (900, 100))
 comp7 = Server(screen, (250, 500))
 comp8 = Server(screen, (1000, 520))
-comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8]
+comp9 = Server(screen, (600, 100))
+comps = [Player1, Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
 
 
 #Virus
@@ -175,39 +176,40 @@ while not done:
                 virus.target(comp, target_dict)
                 
         #Killing the target list 
-
-        comp.red_viruses['x'] -= target_dict['x_red']
-        if comp.red_viruses['x'] < 0:        #So minimum = 0
-            comp.red_viruses['x'] = 0
+        
+        if comp.off_state == False:
+            comp.red_viruses['x'] -= target_dict['x_red']
+            if comp.red_viruses['x'] < 0:        #So minimum = 0
+                comp.red_viruses['x'] = 0
             
-        comp.red_viruses['y'] -= target_dict['y_red']
-        if comp.red_viruses['y'] < 0:
-            comp.red_viruses['y'] = 0
+            comp.red_viruses['y'] -= target_dict['y_red']
+            if comp.red_viruses['y'] < 0:
+                comp.red_viruses['y'] = 0
 
-        comp.red_viruses['w'] -= target_dict['w_red']
-        if comp.red_viruses['w'] < 0:        
-            comp.red_viruses['w'] = 0
+            comp.red_viruses['w'] -= target_dict['w_red']
+            if comp.red_viruses['w'] < 0:        
+                comp.red_viruses['w'] = 0
             
-        comp.red_viruses['b'] -= target_dict['b_red']
-        if comp.red_viruses['b'] < 0:
-            comp.red_viruses['b'] = 0
+            comp.red_viruses['b'] -= target_dict['b_red']
+            if comp.red_viruses['b'] < 0:
+                comp.red_viruses['b'] = 0
 
 
-        comp.blue_viruses['x'] -= target_dict['x_blue']
-        if comp.blue_viruses['x'] < 0:
-            comp.blue_viruses['x'] = 0
+            comp.blue_viruses['x'] -= target_dict['x_blue']
+            if comp.blue_viruses['x'] < 0:
+                comp.blue_viruses['x'] = 0
 
-        comp.blue_viruses['y'] -= target_dict['y_blue']
-        if comp.blue_viruses['y'] < 0:
-            comp.blue_viruses['y'] = 0
+            comp.blue_viruses['y'] -= target_dict['y_blue']
+            if comp.blue_viruses['y'] < 0:
+                comp.blue_viruses['y'] = 0
 
-        comp.blue_viruses['w'] -= target_dict['w_blue']
-        if comp.blue_viruses['w'] < 0:
-            comp.blue_viruses['w'] = 0
+            comp.blue_viruses['w'] -= target_dict['w_blue']
+            if comp.blue_viruses['w'] < 0:
+                comp.blue_viruses['w'] = 0
 
-        comp.blue_viruses['b'] -= target_dict['b_blue']
-        if comp.blue_viruses['b'] < 0:
-            comp.blue_viruses['b'] = 0
+            comp.blue_viruses['b'] -= target_dict['b_blue']
+            if comp.blue_viruses['b'] < 0:
+                comp.blue_viruses['b'] = 0
 
     for comp in comps:
         
