@@ -36,6 +36,7 @@ class Server(Rect):
         self.bounds = self.screen.get_rect()
         self.comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
 
+
     def draw_rect(self):
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
@@ -43,8 +44,8 @@ class Server(Rect):
 
     
     def draw_circle(self):
-#        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
-        pass
+        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+
 
     def draw_lines(self):
         for comp in self.connected_list:
@@ -126,12 +127,12 @@ class Server(Rect):
         if virus.team == 1 and self.red_viruses[virus.type]< virus.max and self.off_state == False: 
 #and virus.bomb_red_is == False:
             self.red_viruses[virus.type] += 1
-            print 1
+           # print 1
 
         if virus.team == 2 and self.blue_viruses[virus.type] < virus.max and self.off_state == False:
 # and virus.bomb_blue_is == False:
             self.blue_viruses[virus.type] += 1
-            print 1
+         #   print 1
 
         
     def onoff (self):

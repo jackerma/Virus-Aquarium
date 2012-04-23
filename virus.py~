@@ -130,6 +130,9 @@ class Wall_Virus(Virus):
     def has_spread_chance(self):
         self.spread_chance = 1
 
+
+
+
 class Bomb_Virus(Virus):
 
     def __init__(self, team):

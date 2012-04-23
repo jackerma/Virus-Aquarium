@@ -8,12 +8,14 @@ import time
 from maps import *
 
 #Choosing Map
+print ""
 print "Initializing: Virus Aquarium"
 print "________________________________________________________"
 print "1. Linear"
-print "2. Classic"
+print "2. X-R0ads"
 print "_________________________________________________________"
 network_map = raw_input("Select map number: ")
+
 
 if network_map == str(1) or network_map == str(2):
     print "Loading..."
@@ -28,8 +30,8 @@ width = 1300
 height = 700
 screen = pygame.display.set_mode((width, height))
 background_colour = (150,150,150)
-score_red = 100
-score_blue = 100
+score_red = 200
+score_blue = 200
 virus_count_red = 0
 virus_count_blue = 0
 bomb_count_red = 0
@@ -42,6 +44,7 @@ gamemap = Map(screen, network_map)
 Player1 = gamemap.Player1
 Player2 = gamemap.Player2
 comps = gamemap.comps
+
 
 #Virus
 red_xvirus = XVirus(1)
@@ -56,6 +59,8 @@ blue_bvirus = Bomb_Virus(2)
 
 red_virus_list = [red_xvirus, red_yvirus, red_wvirus, red_bvirus]       
 blue_virus_list = [blue_xvirus, blue_yvirus, blue_wvirus, blue_bvirus]    
+
+              
 
 
 while not done:
@@ -80,19 +85,18 @@ while not done:
     for comp in comps:
         comp.draw_rect()
 
-    pygame.draw.rect(screen, (150, 150, 150), pygame.Rect((350,0), (200,50)))
-    text = smallfont.render("Score = " + str(score_red), True, (255,0,0))
+
+    pygame.draw.rect(screen, background_colour, pygame.Rect((350,0), (200,50)))
+    text = scorefont.render("Score = " + str(score_red), True, (255,0,0))
     loc = text.get_rect()
-    loc.topleft = (350,0)
+    loc.topleft = (300,0)
     screen.blit(text,loc)
 
-    pygame.draw.rect(screen, (150, 150, 150), pygame.Rect((800,0), (200,50)))
-    text = smallfont.render("Score = " + str(score_blue), True, (0,0,255))
+    pygame.draw.rect(screen, background_colour, pygame.Rect((800,0), (200,50)))
+    text = scorefont.render("Score = " + str(score_blue), True, (0,0,255))
     loc = text.get_rect()
-    loc.topleft = (800,0)
+    loc.topleft = (750,0)
     screen.blit(text,loc)
-    
-
     
     Player1.scrn_change()
     Player2.scrn_change()
@@ -108,7 +112,7 @@ while not done:
 #Adding XVirus red
         if not Player1.lose:
             if event.type == KEYDOWN and event.key == K_w:
-                if score_red >= 10 and (Player1.red_viruses['x']) <red_xvirus.max:
+                if score_red >= 100 and (Player1.red_viruses['x']) <red_xvirus.max:
                     Player1.add_virus(red_xvirus)
                     score_red -= 10
 
@@ -126,7 +130,7 @@ while not done:
 
 #Adding Bomb_Virus red
             if event.type == KEYDOWN and event.key == K_r:
-                if score_red >= 10 and bomb_count_red == 0:
+                if score_red >= 00 and bomb_count_red == 0:
                     Player1.add_virus(red_bvirus)
                     score_red -= 10
                 else:
@@ -138,7 +142,7 @@ while not done:
 #Adding XVirus blue
         if not Player2.lose:
             if event.type == KEYDOWN and event.key == K_u:
-                if score_blue >= 10 and (Player2.blue_viruses['x']) < blue_xvirus.max:
+                if score_blue >= 00 and (Player2.blue_viruses['x']) < blue_xvirus.max:
                     Player2.add_virus(blue_xvirus)
                     score_blue -= 10
 
@@ -179,21 +183,21 @@ while not done:
         comp.wipe()
         comp.onoff()
 
-        if comp.blue_viruses['w'] == 0 and not Player1.lose: #NEW
+        if comp.blue_viruses['w'] == 0 and not Player1.lose:
             for virus in red_virus_list:
                 virus.spread(comp)
         for virus in red_virus_list:
             if virus.type == 'y' and not Player1.lose:
                 virus.target(comp, target_dict)
 
-        if comp.red_viruses['w'] == 0 and not Player2.lose: #NEW
+        if comp.red_viruses['w'] == 0 and not Player2.lose:
             for virus in blue_virus_list:
                 virus.spread(comp)
         for virus in blue_virus_list:
             if virus.type == 'y' and not Player2.lose:
                 virus.target(comp, target_dict)
                 
-        #Killing the target list 
+#Killing the target list 
         
         if comp.off_state == False:
             comp.red_viruses['x'] -= target_dict['x_red']
@@ -236,20 +240,16 @@ while not done:
         bblue += comp.blue_viruses['b']
     bomb_count_red = bred
     bomb_count_blue = bblue
-                
+    
+
     for comp in comps:
-
         if comp.off_state == False:
-            virus_count_red = comp.red_viruses['x']/10
-        score_red += virus_count_red
 
-        if comp.off_state == False:
-            virus_count_blue = comp.blue_viruses['x']/10
-        score_blue += virus_count_blue
-
-
-        
-
+            part_score_red, part_score_blue = comp.score_check()
+            
+            score_red += part_score_red
+            score_blue += part_score_blue
+            
 
 
     time.sleep(.2)

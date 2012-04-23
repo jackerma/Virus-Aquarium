@@ -6,9 +6,10 @@ from virus import *
 from random import randint
 import time
 
+
 pygame.font.init()
 smallfont = pygame.font.Font(None, 20)
-
+scorefont = pygame.font.Font(None, 50)
 bigfont = pygame.font.Font(None, 250)
 
 class Server(Rect):
@@ -35,6 +36,18 @@ class Server(Rect):
 
         self.bounds = self.screen.get_rect()
         self.comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
+        self.score_blue = 0
+        self.score_red = 0
+        self.spread_occ_red = 0
+        self.spread_occ_blue = 0
+        
+    def score_check(self):
+        self.score_red = self.red_viruses['x']
+        self.score_blue = self.blue_viruses['x']
+
+        return self.score_red, self.score_blue
+        
+
 
 
     def draw_rect(self):
@@ -44,8 +57,8 @@ class Server(Rect):
 
     
     def draw_circle(self):
-#        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
-        pass
+        pygame.draw.circle(self.screen, (150,150,150), self.rect.center, self.cnct_range, 1)
+
 
     def draw_lines(self):
         for comp in self.connected_list:
@@ -122,17 +135,17 @@ class Server(Rect):
 
     def add_virus(self, virus):
 
-        
-
         if virus.team == 1 and self.red_viruses[virus.type]< virus.max and self.off_state == False: 
-#and virus.bomb_red_is == False:
             self.red_viruses[virus.type] += 1
-           # print 1
+
+
+
 
         if virus.team == 2 and self.blue_viruses[virus.type] < virus.max and self.off_state == False:
-# and virus.bomb_blue_is == False:
             self.blue_viruses[virus.type] += 1
-         #   print 1
+
+
+
 
         
     def onoff (self):

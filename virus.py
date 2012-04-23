@@ -9,6 +9,8 @@ from time import *
 target_dict ={}
 last_comp_red = 0
 last_comp_blue = 0
+
+
 class Virus(object):
 
     def __init__(self, team):
@@ -18,6 +20,7 @@ class Virus(object):
         self.is_colour()
         self.is_type()
         self.has_max()
+
 
     def is_type(self):
         pass
@@ -144,8 +147,7 @@ class Bomb_Virus(Virus):
         self.has_max()
         self.z_red = 0
         self.z_blue = 0
-#        self.bomb_red_is = False
-#        self.bomb_blue_is = False
+
 
     def is_type(self):
         self.type = 'b'
@@ -165,7 +167,7 @@ class Bomb_Virus(Virus):
 
             total_red = server.red_viruses[self.type]
             while total_red >0 and server.off_state == False:
-#                self.bomb_red_is = True
+
                 red_chance = randint(0,99)
                 red_chance_list.append(red_chance)
                 total_red -= 1
@@ -189,7 +191,7 @@ class Bomb_Virus(Virus):
                                 self.z_red =+1
 
 
-#            self.bomb_red_is = False
+
 
 ###########
 
@@ -198,7 +200,7 @@ class Bomb_Virus(Virus):
 
             total_blue = server.blue_viruses[self.type]
             while total_blue > 0 and server.off_state == False:
-#                self.bomb_blue_is = True
+
                 blue_chance = randint(0,99)
                 blue_chance_list.append(blue_chance)
                 total_blue -= 10
@@ -223,4 +225,3 @@ class Bomb_Virus(Virus):
                                      self.z_blue =+1
 
 
-#            self.bomb_blue_is = False
