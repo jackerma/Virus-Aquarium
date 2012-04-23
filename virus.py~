@@ -35,7 +35,10 @@ class Virus(object):
         
     def costs(self):
         pass
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c4ba38c70a183da4f26e5fa3b29688940aae1b3
 
     def is_type(self):
         pass

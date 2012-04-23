@@ -160,6 +160,8 @@ class Bomb_Virus(Virus):
         self.z_red = 0
         self.z_blue = 0
 
+    def check_home(self):
+        pass
 
     def check_home(self):
         pass

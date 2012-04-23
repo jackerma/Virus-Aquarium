@@ -134,13 +134,12 @@ class Server(Rect):
 
     def add_virus(self, virus):
 
-        if virus.team == 1 and self.red_viruses[virus.type]< virus.max and self.off_state == False: 
+
+        if virus.team == 1 and self.red_viruses[virus.type] < virus.max and self.off_state == False: 
             self.red_viruses[virus.type] += 1
 
         if virus.team == 2 and self.blue_viruses[virus.type] < virus.max and self.off_state == False:
             self.blue_viruses[virus.type] += 1
-
-
 
 
         
