@@ -36,14 +36,13 @@ class Server(Rect):
 
         self.bounds = self.screen.get_rect()
         self.comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
-        self.score_blue = 0
-        self.score_red = 0
-        self.spread_occ_red = 0
-        self.spread_occ_blue = 0
+        self.score_blue = 0.0
+        self.score_red = 0.0
+
         
     def score_check(self):
-        self.score_red = self.red_viruses['x']
-        self.score_blue = self.blue_viruses['x']
+        self.score_red = float((self.red_viruses['x']))/10
+        self.score_blue = float((self.blue_viruses['x']))/10
 
         return self.score_red, self.score_blue
 
@@ -55,7 +54,7 @@ class Server(Rect):
     
     def draw_circle(self):
 
- #       pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+#        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
         pass
 
 

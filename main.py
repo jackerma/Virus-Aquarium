@@ -13,11 +13,12 @@ print "Initializing: Virus Aquarium"
 print "________________________________________________________"
 print "1. Linear"
 print "2. X-R0ads"
+print "3. Bridge"
 print "_________________________________________________________"
 network_map = raw_input("Select map number: ")
 
 
-if network_map == str(1) or network_map == str(2):
+if network_map == str(1) or network_map == str(2) or network_map == str(3):
     print "Loading..."
     time.sleep(.6)
 else:
@@ -37,6 +38,12 @@ virus_count_blue = 0
 bomb_count_red = 0
 bomb_count_blue = 0
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
+score_red_t = 0
+score_blue_t = 0
+score_dec_b = 0
+score_dec_r = 0
+
+
 
 #Map init
 gamemap = Map(screen, network_map)
@@ -269,9 +276,8 @@ while not done:
 
             part_score_red, part_score_blue = comp.score_check()
             
-            score_red += part_score_red
-            score_blue += part_score_blue
-            
+            score_red += part_score_red 
+            score_blue += part_score_blue 
 
 
     time.sleep(.2)
