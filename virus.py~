@@ -19,6 +19,7 @@ class Virus(object):
         self.has_spread_chance()
         self.is_colour()
         self.is_type()
+        self.costs()
         self.check_home()
 
     def check_home(self):
@@ -27,6 +28,9 @@ class Virus(object):
         if self.team == 2:
             self.home_number = self.home.blue_viruses[self.type]
         self.max = self.home_number
+        
+    def costs(self):
+        pass
 
     def is_type(self):
         pass
@@ -84,6 +88,9 @@ class XVirus(Virus):
     def has_spread_chance(self):
         self.spread_chance = 9
 
+    def costs(self):
+        self.cost = 10
+
 
 class YVirus(Virus):
 
@@ -95,6 +102,9 @@ class YVirus(Virus):
         
     def has_spread_chance(self):
         self.spread_chance = 5
+
+    def costs(self):
+        self.cost = 20
 
     def target(self, server, target_dict):
         i = randint(0,9)
@@ -125,6 +135,9 @@ class Wall_Virus(Virus):
     
     def has_max(self):
         self.max = 10
+    
+    def costs(self):
+        self.cost = 30
             
     def has_spread_chance(self):
         self.spread_chance = 1
@@ -139,7 +152,8 @@ class Bomb_Virus(Virus):
         self.has_spread_chance()
         self.is_colour()
         self.is_type()
-        self.max = 1   
+        self.max = 1
+        self.costs()
 
         self.z_red = 0
         self.z_blue = 0
@@ -149,7 +163,9 @@ class Bomb_Virus(Virus):
 
     def is_type(self):
         self.type = 'b'
-
+    
+    def costs(self):
+        self.cost = 40
 
     def has_spread_chance(self):
         self.spread_chance = 10

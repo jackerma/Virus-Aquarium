@@ -129,7 +129,7 @@ while not done:
 #Adding Bomb_Virus red
             if event.type == KEYDOWN and event.key == K_r:
                 if score_red >= red_bvirus.cost and bomb_count_red == 0:
-                    Player1.red_viruses['b'] += 1
+                    Player1.add_virus(red_bvirus)
                     score_red -= red_bvirus.cost
                 else:
                     for comp in comps:
@@ -159,7 +159,7 @@ while not done:
 #Adding Bomb_Virus blue
             if event.type == KEYDOWN and event.key == K_o:
                 if score_blue >= blue_bvirus.cost and bomb_count_blue == 0:
-                    Player2.blue_viruses['b'] +=1
+                    Player2.add_virus(blue_bvirus)
                     score_blue -= blue_bvirus.cost
                 else:
                     for comp in comps:
@@ -248,11 +248,11 @@ while not done:
     for comp in comps:
 
         if comp.off_state == False:
-            virus_count_red = comp.red_viruses['x']/4
+            virus_count_red = comp.red_viruses['x']/10
         score_red += virus_count_red
 
         if comp.off_state == False:
-            virus_count_blue = comp.blue_viruses['x']/4
+            virus_count_blue = comp.blue_viruses['x']/10
         score_blue += virus_count_blue
         
 
