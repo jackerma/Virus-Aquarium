@@ -13,11 +13,13 @@ print "Initializing: Virus Aquarium"
 print "________________________________________________________"
 print "1. Linear"
 print "2. X-R0ads"
+print "3. Bridge"
+print "4. Centipede"
 print "_________________________________________________________"
 network_map = raw_input("Select map number: ")
 
 
-if network_map == str(1) or network_map == str(2):
+if network_map == str(1) or network_map == str(2) or network_map == str(3) or network_map == str(4):
     print "Loading..."
     time.sleep(.6)
 else:
