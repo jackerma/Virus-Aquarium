@@ -15,7 +15,6 @@ bigfont = pygame.font.Font(None, 250)
 class Server(Rect):
 
     def __init__ (self, screen, (x,y)):
-
         scrn_thick = 4
         self.width = 160
         self.height = 120
@@ -29,7 +28,7 @@ class Server(Rect):
 
         self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
         self.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}  
-        self.virus_max = 150
+        self.virus_max = 30
                  
         self.off_state = False
         self.lose = False
@@ -153,7 +152,6 @@ class Server(Rect):
 
     
     def wipe (self):
-
         if sum(self.red_viruses.values()) >= self.virus_max and sum(self.blue_viruses.values()) >= self.virus_max and randint(0,99) < 5:
 
             self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
