@@ -46,9 +46,6 @@ class Server(Rect):
         self.score_blue = self.blue_viruses['x']
 
         return self.score_red, self.score_blue
-        
-
-
 
     def draw_rect(self):
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
@@ -57,7 +54,9 @@ class Server(Rect):
 
     
     def draw_circle(self):
-        pygame.draw.circle(self.screen, (150,150,150), self.rect.center, self.cnct_range, 1)
+
+ #       pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+        pass
 
 
     def draw_lines(self):
@@ -138,9 +137,6 @@ class Server(Rect):
         if virus.team == 1 and self.red_viruses[virus.type]< virus.max and self.off_state == False: 
             self.red_viruses[virus.type] += 1
 
-
-
-
         if virus.team == 2 and self.blue_viruses[virus.type] < virus.max and self.off_state == False:
             self.blue_viruses[virus.type] += 1
 
@@ -160,7 +156,7 @@ class Server(Rect):
     
     def wipe (self):
 
-        if sum(self.red_viruses.values()) + sum(self.blue_viruses.values()) >= self.virus_max and randint(0,9) >5:
+        if sum(self.red_viruses.values()) >= self.virus_max and sum(self.blue_viruses.values()) >= self.virus_max and randint(0,99) < 5:
 
             self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
             self.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
@@ -210,7 +206,7 @@ class Home_server(Server):
                     loc.center = self.bounds.center
                     self.screen.blit(text,loc)
 
-#                exit(0)
+
 
                 else:
                     self.scrn_colour = (255,255,255)
@@ -225,7 +221,7 @@ class Home_server(Server):
                     loc.center = self.bounds.center
                     self.screen.blit(text,loc)
 
-#                exit(0)
+
 
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                     self.scrn_colour = (175,175,255)
@@ -233,3 +229,8 @@ class Home_server(Server):
                 else:
                     self.scrn_colour = (255,255,255)
 
+    def onoff (self):
+        off_chance = randint(0,999)
+        if off_chance >= 9 and self.off_state == True:
+            self.off_state = False
+            self.scrn_change()

@@ -47,14 +47,14 @@ comps = gamemap.comps
 
 
 #Virus
-red_xvirus = XVirus(1)
-blue_xvirus = XVirus(2)
-red_yvirus = YVirus(1)
-blue_yvirus = YVirus(2)
+red_xvirus = XVirus(1, Player1)
+blue_xvirus = XVirus(2, Player2)
+red_yvirus = YVirus(1, Player1)
+blue_yvirus = YVirus(2, Player2)
 red_wvirus =  Wall_Virus(1, Player1)
 blue_wvirus =  Wall_Virus(2, Player2)
-red_bvirus =  Bomb_Virus(1)
-blue_bvirus = Bomb_Virus(2)
+red_bvirus =  Bomb_Virus(1, Player1)
+blue_bvirus = Bomb_Virus(2, Player2)
 
 
 red_virus_list = [red_xvirus, red_yvirus, red_wvirus, red_bvirus]       
@@ -112,62 +112,74 @@ while not done:
 #Adding XVirus red
         if not Player1.lose:
             if event.type == KEYDOWN and event.key == K_w:
-                if score_red >= 100 and (Player1.red_viruses['x']) <red_xvirus.max:
-                    Player1.add_virus(red_xvirus)
-                    score_red -= 10
+
+                if score_red >= red_xvirus.cost:
+                    Player1.red_viruses['x'] +=1
+                    score_red -= red_xvirus.cost
+
 
 #Adding YVirus red
             if event.type == KEYDOWN and event.key == K_e:
-                if score_red >= 10 and (Player1.red_viruses['y']) <red_yvirus.max:
-                    Player1.add_virus(red_yvirus)
-                    score_red -= 10
+                if score_red >= red_yvirus.cost:
+                    Player1.red_viruses['y'] += 1
+                    score_red -= red_yvirus.cost
 
 #Adding Wall_Virus red
             if event.type == KEYDOWN and event.key == K_q:
-                if score_red >= 10 and (Player1.red_viruses['w']) < 10:
-                    Player1.add_virus(red_wvirus)
-                    score_red -= 10
+                if score_red >= red_wvirus.cost:
+                    Player1.red_viruses['w'] += 1
+                    score_red -= red_wvirus.cost
 
 #Adding Bomb_Virus red
             if event.type == KEYDOWN and event.key == K_r:
-                if score_red >= 00 and bomb_count_red == 0:
-                    Player1.add_virus(red_bvirus)
-                    score_red -= 10
+
+                if score_red >= red_bvirus.cost and bomb_count_red == 0:
+                    Player1.red_viruses['b'] += 1
+                    score_red -= red_bvirus.cost
+
                 else:
                     for comp in comps:
-                        if comp.red_viruses['b'] == 1:
-                            comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
-                            comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
+                        if comp.red_viruses['b'] == 1 and comp.off_state == False:
+                            comp.off_state = True
+                            comp.scrn_colour = (100,100,100)
+                            comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+                            comp.red_viruses ['b'] = 0
+
 
 #Adding XVirus blue
         if not Player2.lose:
             if event.type == KEYDOWN and event.key == K_u:
-                if score_blue >= 00 and (Player2.blue_viruses['x']) < blue_xvirus.max:
-                    Player2.add_virus(blue_xvirus)
-                    score_blue -= 10
+
+                if score_blue >= blue_xvirus.cost:
+                    Player2.blue_viruses['x'] +=1
+                    score_blue -= blue_xvirus.cost
+
 
 #Adding YVirus blue
             if event.type == KEYDOWN and event.key == K_i:
-                if score_blue >= 10 and (Player2.blue_viruses['y']) < blue_yvirus.max:
-                    Player2.add_virus(blue_yvirus)
-                    score_blue -= 10
+                if score_blue >= blue_yvirus.cost:
+                    Player2.blue_viruses['y'] +=1
+                    score_blue -= blue_yvirus.cost
 
 #Adding Wall_Virus blue
             if event.type == KEYDOWN and event.key == K_y:
-                if score_blue >= 10 and (Player2.blue_viruses['w']) < 10:
-                    Player2.add_virus(blue_wvirus)
-                    score_blue -= 10
+                if score_blue >= blue_wvirus.cost:
+                    Player2.blue_viruses['w'] +=1
+                    score_blue -= blue_wvirus.cost
 
 #Adding Bomb_Virus blue
             if event.type == KEYDOWN and event.key == K_o:
-                if score_blue >= 10 and bomb_count_blue == 0:
-                    Player2.add_virus(blue_bvirus)
-                    score_blue -= 10
+                if score_blue >= blue_bvirus.cost and bomb_count_blue == 0:
+                    Player2.blue_viruses['b'] +=1
+                    score_blue -= blue_bvirus.cost
                 else:
                     for comp in comps:
-                        if comp.blue_viruses['b'] == 1:
+                        if comp.blue_viruses['b'] == 1 and comp.off_state == False:
+                            comp.off_state = True
+                            comp.scrn_colour = (100,100,100)
                             comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
-                            comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
+                            comp.blue_viruses['b'] = 0
+
 
 
 #Quitting
@@ -240,10 +252,20 @@ while not done:
         bblue += comp.blue_viruses['b']
     bomb_count_red = bred
     bomb_count_blue = bblue
-    
+
+
+    for virus in red_virus_list:
+        virus.check_home()
+    for virus in blue_virus_list:
+        virus.check_home()
+
+                
+
+
 
     for comp in comps:
         if comp.off_state == False:
+
 
             part_score_red, part_score_blue = comp.score_check()
             
