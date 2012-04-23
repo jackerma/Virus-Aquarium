@@ -14,11 +14,13 @@ print "________________________________________________________"
 print "1. Linear"
 print "2. X-R0ads"
 print "3. Bridge"
+print "4. Centipede"
+
 print "_________________________________________________________"
 network_map = raw_input("Select map number: ")
 
 
-if network_map == str(1) or network_map == str(2) or network_map == str(3):
+if network_map == str(1) or network_map == str(2) or network_map == str(3) or network_map == str(4):
     print "Loading..."
     time.sleep(.6)
 else:
@@ -289,10 +291,6 @@ while not done:
         virus.check_home()
     for virus in blue_virus_list:
         virus.check_home()
-
-                
-
-
 
 
     for comp in comps:

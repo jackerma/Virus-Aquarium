@@ -14,11 +14,19 @@ print "________________________________________________________"
 print "1. Linear"
 print "2. X-R0ads"
 print "3. Bridge"
+<<<<<<< HEAD
+print "4. Centipede"
+=======
+>>>>>>> b58759bfe6627cf8b527ef53a7bb08fd09c0a46e
 print "_________________________________________________________"
 network_map = raw_input("Select map number: ")
 
 
+<<<<<<< HEAD
+if network_map == str(1) or network_map == str(2) or network_map == str(3) or network_map == str(4):
+=======
 if network_map == str(1) or network_map == str(2) or network_map == str(3):
+>>>>>>> b58759bfe6627cf8b527ef53a7bb08fd09c0a46e
     print "Loading..."
     time.sleep(.6)
 else:
@@ -51,7 +59,6 @@ gamemap = Map(screen, network_map)
 Player1 = gamemap.Player1
 Player2 = gamemap.Player2
 comps = gamemap.comps
-
 
 #Virus
 red_xvirus = XVirus(1, Player1)
