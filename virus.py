@@ -106,7 +106,7 @@ class YVirus(Virus):
         self.spread_chance = 5
 
     def costs(self):
-        self.cost = 200
+        self.cost = 150
 
     def target(self, server, target_dict):
         i = randint(0,9)

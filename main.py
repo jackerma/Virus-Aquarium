@@ -15,6 +15,7 @@ print "1. Linear"
 print "2. X-R0ads"
 print "3. Bridge"
 print "4. Centipede"
+
 print "_________________________________________________________"
 network_map = raw_input("Select map number: ")
 
@@ -39,6 +40,12 @@ virus_count_blue = 0
 bomb_count_red = 0
 bomb_count_blue = 0
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
+score_red_t = 0
+score_blue_t = 0
+score_dec_b = 0
+score_dec_r = 0
+
+
 
 #Map init
 gamemap = Map(screen, network_map)
@@ -46,7 +53,6 @@ gamemap = Map(screen, network_map)
 Player1 = gamemap.Player1
 Player2 = gamemap.Player2
 comps = gamemap.comps
-
 
 #Virus
 red_xvirus = XVirus(1, Player1)
@@ -285,19 +291,14 @@ while not done:
     for virus in blue_virus_list:
         virus.check_home()
 
-                
-
-
-
 
     for comp in comps:
         if comp.off_state == False:
 
             part_score_red, part_score_blue = comp.score_check()
             
-            score_red += part_score_red
-            score_blue += part_score_blue
-            
+            score_red += part_score_red 
+            score_blue += part_score_blue 
 
 
     time.sleep(.2)
