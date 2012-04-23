@@ -30,7 +30,7 @@ class Map(object):
             comp3 = Server(screen, (850, 350))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3]
       
-    #X-R0ads
+    #X-Roads
         elif self.num == '2':
             self.Player1 = Home_server(self.screen, (20,20))
             self.Player1.is_team(1)

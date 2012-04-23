@@ -10,6 +10,7 @@ target_dict ={}
 last_comp_red = 0
 last_comp_blue = 0
 
+
 class Virus(object):
 
     def __init__(self, team, home):
@@ -31,6 +32,7 @@ class Virus(object):
         
     def costs(self):
         pass
+
 
     def is_type(self):
         pass
@@ -55,7 +57,7 @@ class Virus(object):
             red_chance_list = []
             total_red = server.red_viruses[self.type]
             while total_red >0 and server.off_state == False:
-                red_chance = randint(0,99)
+                red_chance = randint(0,999)
                 red_chance_list.append(red_chance)
                 total_red -= 1
             for num in red_chance_list:
@@ -68,7 +70,7 @@ class Virus(object):
             blue_chance_list = []
             total_blue = server.blue_viruses[self.type]
             while total_blue > 0 and server.off_state == False:
-                blue_chance = randint(0,99)
+                blue_chance = randint(0,999)
                 blue_chance_list.append(blue_chance)
                 total_blue -= 1
             for num in blue_chance_list:
@@ -104,7 +106,7 @@ class YVirus(Virus):
         self.spread_chance = 5
 
     def costs(self):
-        self.cost = 20
+        self.cost = 200
 
     def target(self, server, target_dict):
         i = randint(0,9)
@@ -134,10 +136,10 @@ class Wall_Virus(Virus):
         self.type = 'w'
     
     def has_max(self):
-        self.max = 10
+        self.max = 50
     
     def costs(self):
-        self.cost = 30
+        self.cost = 500
             
     def has_spread_chance(self):
         self.spread_chance = 1
@@ -157,8 +159,9 @@ class Bomb_Virus(Virus):
 
         self.z_red = 0
         self.z_blue = 0
-#        self.bomb_red_is = False
-#        self.bomb_blue_is = False
+
+    def check_home(self):
+        pass
 
     def check_home(self):
         pass
@@ -167,7 +170,7 @@ class Bomb_Virus(Virus):
         self.type = 'b'
     
     def costs(self):
-        self.cost = 40
+        self.cost = 1000
 
     def has_spread_chance(self):
         self.spread_chance = 10
@@ -181,7 +184,7 @@ class Bomb_Virus(Virus):
 
             total_red = server.red_viruses[self.type]
             while total_red >0 and server.off_state == False:
-#                self.bomb_red_is = True
+
                 red_chance = randint(0,99)
                 red_chance_list.append(red_chance)
                 total_red -= 1
@@ -205,7 +208,7 @@ class Bomb_Virus(Virus):
                                 self.z_red =+1
 
 
-#            self.bomb_red_is = False
+
 
 ###########
 
@@ -214,7 +217,7 @@ class Bomb_Virus(Virus):
 
             total_blue = server.blue_viruses[self.type]
             while total_blue > 0 and server.off_state == False:
-#                self.bomb_blue_is = True
+
                 blue_chance = randint(0,99)
                 blue_chance_list.append(blue_chance)
                 total_blue -= 10
@@ -239,4 +242,3 @@ class Bomb_Virus(Virus):
                                      self.z_blue =+1
 
 
-#            self.bomb_blue_is = False
