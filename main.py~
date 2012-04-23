@@ -261,23 +261,11 @@ while not done:
 
                 
 
-<<<<<<< HEAD
-=======
-        if comp.off_state == False:
-            virus_count_red = comp.red_viruses['x']/10
-        score_red += virus_count_red
->>>>>>> 0c4ba38c70a183da4f26e5fa3b29688940aae1b3
+
 
 
     for comp in comps:
         if comp.off_state == False:
-<<<<<<< HEAD
-=======
-            virus_count_blue = comp.blue_viruses['x']/10
-        score_blue += virus_count_blue
-        
->>>>>>> 0c4ba38c70a183da4f26e5fa3b29688940aae1b3
-
 
             part_score_red, part_score_blue = comp.score_check()
             

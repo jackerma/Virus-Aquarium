@@ -112,28 +112,40 @@ while not done:
 #Adding XVirus red
         if not Player1.lose:
             if event.type == KEYDOWN and event.key == K_w:
-
-                if score_red >= red_xvirus.cost:
+                if score_red >= red_xvirus.cost and sum(Player1.red_viruses.values()) < Player1.virus_max:
                     Player1.red_viruses['x'] +=1
                     score_red -= red_xvirus.cost
+#Subtracting XVirus red
+            if event.type == KEYDOWN and event.key == K_s:
+                if Player1.red_viruses['x'] > 0:
+                    Player1.red_viruses['x'] -=1
 
 
 #Adding YVirus red
             if event.type == KEYDOWN and event.key == K_e:
-                if score_red >= red_yvirus.cost:
+                if score_red >= red_yvirus.cost and sum(Player1.red_viruses.values()) < Player1.virus_max:
                     Player1.red_viruses['y'] += 1
                     score_red -= red_yvirus.cost
+#Subtracting YVirus red
+            if event.type == KEYDOWN and event.key == K_d:
+                if Player1.red_viruses['y'] > 0:
+                    Player1.red_viruses['y'] -=1
+
 
 #Adding Wall_Virus red
             if event.type == KEYDOWN and event.key == K_q:
-                if score_red >= red_wvirus.cost:
+                if score_red >= red_wvirus.cost and sum(Player1.red_viruses.values()) < Player1.virus_max:
                     Player1.red_viruses['w'] += 1
                     score_red -= red_wvirus.cost
+#Subtracting Wall_Virus red
+            if event.type == KEYDOWN and event.key == K_a:
+                if red_viruses['w'] > 0:
+                    Player1.red_viruses['w'] -=1
+
 
 #Adding Bomb_Virus red
             if event.type == KEYDOWN and event.key == K_r:
-
-                if score_red >= red_bvirus.cost and bomb_count_red == 0:
+                if score_red >= red_bvirus.cost and bomb_count_red == 0 and sum(Player1.red_viruses.values()) < Player1.virus_max:
                     Player1.add_virus(red_bvirus)
                     score_red -= red_bvirus.cost
 
@@ -149,27 +161,39 @@ while not done:
 #Adding XVirus blue
         if not Player2.lose:
             if event.type == KEYDOWN and event.key == K_u:
-
-                if score_blue >= blue_xvirus.cost:
+                if score_blue >= blue_xvirus.cost and sum(Player2.blue_viruses.values()) < Player2.virus_max:
                     Player2.blue_viruses['x'] +=1
                     score_blue -= blue_xvirus.cost
+#Subtracting XVirus blue
+            if event.type == KEYDOWN and event.key == K_j:
+                if Player2.blue_viruses['x'] > 0:
+                    Player2.blue_viruses['x'] -=1
 
 
 #Adding YVirus blue
             if event.type == KEYDOWN and event.key == K_i:
-                if score_blue >= blue_yvirus.cost:
+                if score_blue >= blue_yvirus.cost and sum(Player2.blue_viruses.values()) < Player2.virus_max:
                     Player2.blue_viruses['y'] +=1
                     score_blue -= blue_yvirus.cost
+#Subtracting YVirus blue
+            if event.type == KEYDOWN and event.key == K_k:
+                if Player2.blue_viruses['y'] > 0:
+                    Player2.blue_viruses['y'] -=1
+
 
 #Adding Wall_Virus blue
             if event.type == KEYDOWN and event.key == K_y:
-                if score_blue >= blue_wvirus.cost:
+                if score_blue >= blue_wvirus.cost and sum(Player2.blue_viruses.values()) < Player2.virus_max:
                     Player2.blue_viruses['w'] +=1
                     score_blue -= blue_wvirus.cost
+#Subtracting Wall_Virus blue
+            if event.type == KEYDOWN and event.key == K_h:
+                if Player2.blue_viruses['w'] > 0:
+                    Player2.blue_viruses['w'] -=1
 
 #Adding Bomb_Virus blue
             if event.type == KEYDOWN and event.key == K_o:
-                if score_blue >= blue_bvirus.cost and bomb_count_blue == 0:
+                if score_blue >= blue_bvirus.cost and bomb_count_blue == 0 and sum(Player2.blue_viruses.values()) < Player2.virus_max:
                     Player2.add_virus(blue_bvirus)
                     score_blue -= blue_bvirus.cost
                 else:
