@@ -40,10 +40,10 @@ virus_count_blue = 0
 bomb_count_red = 0
 bomb_count_blue = 0
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
-score_red_t = 0
-score_blue_t = 0
-score_dec_b = 0
-score_dec_r = 0
+score_red_t = 0.0
+score_blue_t = 0.0
+score_dec_b = 0.0
+score_dec_r = 0.0
 
 
 
@@ -53,6 +53,7 @@ gamemap = Map(screen, network_map)
 Player1 = gamemap.Player1
 Player2 = gamemap.Player2
 comps = gamemap.comps
+
 
 #Virus
 red_xvirus = XVirus(1, Player1)
@@ -297,9 +298,22 @@ while not done:
 
             part_score_red, part_score_blue = comp.score_check()
             
-            score_red += part_score_red 
-            score_blue += part_score_blue 
+            score_red_t += part_score_red
+            score_blue_t += part_score_blue
 
+    score_dec_r += (score_red_t - int(score_red_t))
+    score_dec_b += (score_blue_t - int(score_blue_t))
+
+    score_red += int(score_red_t + score_dec_r)
+    score_blue += int(score_blue_t + score_dec_b)
+
+    score_blue_t = 0
+    score_red_t = 0
+
+    if score_dec_r >= .9:
+        score_dec_r = 0
+    if score_dec_b >= .9:
+        score_dec_b = 0
 
     time.sleep(.2)
 

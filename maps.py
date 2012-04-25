@@ -61,7 +61,7 @@ class Map(object):
             comp9 = Server(screen, (990, 505))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
             
-    #Line of Fire
+    #Centipede
         elif self.num == '4':
             self.Player1 = Home_server(self.screen, (100,50))
             self.Player1.is_team(1)
