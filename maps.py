@@ -20,7 +20,7 @@ class Map(object):
         screen = self.screen
          
     #Line
-        if self.num == '1':
+        if self.num == 0:
             self.Player1 = Home_server(screen, (50,350))
             self.Player1.is_team(1)
             self.Player2 = Home_server(screen, (1100, 350))
@@ -31,7 +31,7 @@ class Map(object):
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3]
       
     #X-R0ads
-        elif self.num == '2':
+        elif self.num == 1:
             self.Player1 = Home_server(self.screen, (20,20))
             self.Player1.is_team(1)
             self.Player2 = Home_server(self.screen, (1120, 550))
@@ -45,7 +45,7 @@ class Map(object):
             comp7 = Server(screen, (350, 470))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7]
     #Bridge
-        elif self.num == '3':
+        elif self.num == 2:
             self.Player1 = Home_server(self.screen, (20,20))
             self.Player1.is_team(1)
             self.Player2 = Home_server(self.screen, (1120,20))
@@ -62,17 +62,17 @@ class Map(object):
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
             
     #Centipede
-        elif self.num == '4':
-            self.Player1 = Home_server(self.screen, (100,50))
+        elif self.num == 3:
+            self.Player1 = Home_server(self.screen, (100,70))
             self.Player1.is_team(1)
-            self.Player2 = Home_server(self.screen, (1003, 50))
+            self.Player2 = Home_server(self.screen, (1003, 70))
             self.Player2.is_team(2)
             comp1 = Server(screen, (100, 300))
             comp2 = Server(screen, (100, 500))
             comp3 = Server(screen, (400, 500))
             comp4 = Server(screen, (401, 300))
-            comp5 = Server(screen, (401, 50))
-            comp6 = Server(screen, (701, 50))
+            comp5 = Server(screen, (401, 70))
+            comp6 = Server(screen, (701, 70))
             comp7 = Server(screen, (702, 300))
             comp8 = Server(screen, (702, 500))
             comp9 = Server(screen, (1002, 500))

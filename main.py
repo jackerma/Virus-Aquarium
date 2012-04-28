@@ -4,28 +4,10 @@ import pygame
 from pygame.locals import *
 from server import *
 from virus import *
+from menu import *
 import time
 from maps import *
 
-#Choosing Map
-print ""
-print "Initializing: Virus Aquarium"
-print "________________________________________________________"
-print "1. Linear"
-print "2. X-R0ads"
-print "3. Bridge"
-print "4. Centipede"
-
-print "_________________________________________________________"
-network_map = raw_input("Select map number: ")
-
-
-if network_map == str(1) or network_map == str(2) or network_map == str(3) or network_map == str(4):
-    print "Loading..."
-    time.sleep(.6)
-else:
-    print "Randomizing..."
-    time.sleep(1)
 
 #Globals
 done = False
@@ -45,10 +27,11 @@ score_blue_t = 0.0
 score_dec_b = 0.0
 score_dec_r = 0.0
 
-
+#Menu
+menu = Menu(screen)
 
 #Map init
-gamemap = Map(screen, network_map)
+gamemap = Map(screen, menu.map)
 
 Player1 = gamemap.Player1
 Player2 = gamemap.Player2
@@ -106,12 +89,31 @@ while not done:
     loc = text.get_rect()
     loc.topleft = (750,0)
     screen.blit(text,loc)
-    
+
+    ##Costs
+    pygame.draw.rect(screen, (0,0,0), pygame.Rect((515, 0),(215,65)), 2)
+    cost_list = ["Costs:","X-Virus = " + str(red_xvirus.cost), "Y-Virus = " + str(red_yvirus.cost), "Increase Virus Limit = 2000","Firewall = " + str(red_wvirus.cost), "Ad Bomb = " + str(red_bvirus.cost)]
+    for cost in cost_list:
+        text = smallfont.render(cost, True, (0, 0, 0))
+        loc = text.get_rect()
+        if cost_list.index(cost) == 0:
+            x,y = 620, 10
+            loc.center = (x, y)
+        elif cost_list.index(cost)<4 and cost_list.index(cost)>0:
+            x, y = 520, 5
+            loc.topleft = (x, y + loc.height*cost_list.index(cost))        
+        else:
+            x,y = 620, 5
+            loc.topleft = (x, y + loc.height*(cost_list.index(cost)-3))
+        screen.blit(text, loc)
+        
+
     Player1.scrn_change()
     Player2.scrn_change()
 
     for comp in comps:
         comp.draw_text()
+        comp.draw_limits()
     pygame.display.flip()
 
 
@@ -148,7 +150,7 @@ while not done:
                     score_red -= red_wvirus.cost
 #Subtracting Wall_Virus red
             if event.type == KEYDOWN and event.key == K_a:
-                if red_viruses['w'] > 0:
+                if Player1.red_viruses['w'] > 0:
                     Player1.red_viruses['w'] -=1
 
 
@@ -166,6 +168,11 @@ while not done:
                             comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
                             comp.red_viruses ['b'] = 0
 
+#Limit Up Red
+            if event.type == KEYDOWN and event.key == K_f:
+                if score_red >= 2000:
+                    Player1.virus_max += 1
+                    score_red -= 2000
 
 #Adding XVirus blue
         if not Player2.lose:
@@ -213,6 +220,11 @@ while not done:
                             comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
                             comp.blue_viruses['b'] = 0
 
+#Up Limit blue
+            if event.type == KEYDOWN and event.key == K_l:
+                if score_blue >= 2000:
+                    Player2.virus_max += 1
+                    score_blue -= 2000
 
 
 #Quitting

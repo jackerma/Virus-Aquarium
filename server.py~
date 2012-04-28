@@ -52,10 +52,6 @@ class Server(Rect):
 
     
     def draw_circle(self):
-<<<<<<< HEAD
-=======
-
->>>>>>> b58759bfe6627cf8b527ef53a7bb08fd09c0a46e
 #        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
         pass
         
