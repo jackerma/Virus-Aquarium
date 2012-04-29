@@ -20,7 +20,7 @@ class Map(object):
         screen = self.screen
          
     #Line
-        if self.num == '1':
+        if self.num == 0:
             self.Player1 = Home_server(screen, (50,350))
             self.Player1.is_team(1)
             self.Player2 = Home_server(screen, (1100, 350))
@@ -31,7 +31,7 @@ class Map(object):
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3]
       
     #X-R0ads
-        elif self.num == '2':
+        elif self.num == 1:
             self.Player1 = Home_server(self.screen, (20,20))
             self.Player1.is_team(1)
             self.Player2 = Home_server(self.screen, (1120, 550))
@@ -45,7 +45,11 @@ class Map(object):
             comp7 = Server(screen, (350, 470))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7]
     #Bridge
+<<<<<<< HEAD
         elif self.num == '3':
+=======
+        elif self.num == 2:
+>>>>>>> d8b9f3efc5b035d318ba08c94a06a9d3bb4a0793
             self.Player1 = Home_server(self.screen, (20,20))
             self.Player1.is_team(1)
             self.Player2 = Home_server(self.screen, (1120,20))
@@ -61,8 +65,13 @@ class Map(object):
             comp9 = Server(screen, (990, 505))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
             
+<<<<<<< HEAD
     #Line of Fire
         elif self.num == '4':
+=======
+    #Centipede
+        elif self.num == 3:
+>>>>>>> d8b9f3efc5b035d318ba08c94a06a9d3bb4a0793
             self.Player1 = Home_server(self.screen, (100,50))
             self.Player1.is_team(1)
             self.Player2 = Home_server(self.screen, (1003, 50))
