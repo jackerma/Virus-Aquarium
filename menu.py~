@@ -76,7 +76,7 @@ class Menu(object):
         elif self.controls == True:
             self.screen.fill(self.background_colour)
             self.draw_back()
-            draw_controls(self.screen, self.background_colour, (0,255,0))
+            draw_controls(self.screen, self.background_colour, (0,255,0), "Controls")
 
         elif self.rules == True:
             self.screen.fill(self.background_colour)
@@ -144,7 +144,7 @@ class Menu(object):
 
 
 
-def draw_controls(screen, back_color, font_color):
+def draw_controls(screen, back_color, font_color, title):
     cfont = pygame.font.Font(None, 60)
     cbigfont = pygame.font.Font(None, 170)
     csmallfont = pygame.font.Font(None, 30)
@@ -171,7 +171,7 @@ def draw_controls(screen, back_color, font_color):
     pygame.draw.rect(screen, font_color, box2, 2)
 
     #Title
-    title = cbigfont.render("Controls", True, font_color)
+    title = cbigfont.render(title, True, font_color)
     loc = title.get_rect()
     loc.center = (x, y - 245)
     screen.blit(title,loc)

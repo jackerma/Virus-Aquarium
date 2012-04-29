@@ -2,6 +2,7 @@
 
 import pygame
 import sys
+from resource import *
 from pygame.locals import *
 from server import *
 from virus import *
@@ -9,6 +10,7 @@ from menu import *
 import time
 from maps import *
 
+pygame.init()
 
 #Globals
 done = False
@@ -119,7 +121,7 @@ while not done:
         comp.draw_limits()
 
     if paused:
-        draw_controls(screen, background_colour, (0,0,0))
+        draw_controls(screen, background_colour, (0,0,0), "<Paused>")
     
 
     pygame.display.flip()

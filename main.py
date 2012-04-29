@@ -2,6 +2,7 @@
 
 import pygame
 import sys
+from resource import *
 from pygame.locals import *
 from server import *
 from virus import *
@@ -9,6 +10,7 @@ from menu import *
 import time
 from maps import *
 
+pygame.init()
 
 #Globals
 done = False
@@ -18,16 +20,24 @@ screen = pygame.display.set_mode((width, height))
 background_colour = (150,150,150)
 score_red = 200
 score_blue = 200
+
 virus_count_red = 0
 virus_count_blue = 0
 bomb_count_red = 0
 bomb_count_blue = 0
+
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
+
 score_red_t = 0.0
 score_blue_t = 0.0
 score_dec_b = 0.0
 score_dec_r = 0.0
+
 paused = False
+
+sfx_boom = load_sfx("explosion")
+sfx_add = load_sfx("addvirus")
+sfx_minus = load_sfx("minusvirus")
 
 #Menu
 menu = Menu(screen)
@@ -140,11 +150,15 @@ while not done:
             if not Player1.lose:
                 if event.type == KEYDOWN and event.key == K_w:
                     if score_red >= red_xvirus.cost and sum(Player1.red_viruses.values()) < Player1.virus_max:
+                     #   sfx_add.stop()
+                      #  sfx_add.play()
                         Player1.red_viruses['x'] +=1
                         score_red -= red_xvirus.cost
 #Subtracting XVirus red
                 if event.type == KEYDOWN and event.key == K_s:
                     if Player1.red_viruses['x'] > 0:
+                       # sfx_minus.stop()
+                       # sfx_minus.play()
                         Player1.red_viruses['x'] -=1
 
 
@@ -179,9 +193,11 @@ while not done:
                     else:
                         for comp in comps:
                             if comp.red_viruses['b'] == 1 and comp.off_state == False:
+                                sfx_boom.stop()
+                                sfx_boom.play()
                                 comp.off_state = True
                                 comp.scrn_colour = (100,100,100)
-                                comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+                                comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
                                 comp.red_viruses ['b'] = 0
 
 #Limit Up Red
@@ -232,6 +248,8 @@ while not done:
                         for comp in comps:
                             if comp.blue_viruses['b'] == 1 and comp.off_state == False:
                                 comp.off_state = True
+                                sfx_boom.stop()
+                                sfx_boom.play()
                                 comp.scrn_colour = (100,100,100)
                                 comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
                                 comp.blue_viruses['b'] = 0
