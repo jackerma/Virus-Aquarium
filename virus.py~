@@ -5,6 +5,7 @@ from pygame.locals import *
 from random import randint
 from server import *
 from time import *
+from resource import load_sfx
 
 target_dict ={}
 last_comp_red = 0
@@ -178,6 +179,8 @@ class Bomb_Virus(Virus):
     def spread(self, server):
         global last_comp_red
         global last_comp_blue
+        sfx_move = load_sfx("bombmove")
+
 
         if self.team == 1:
             red_chance_list = []
@@ -200,6 +203,8 @@ class Bomb_Virus(Virus):
                                     server.red_viruses[self.type] = 0
                                     comp.add_virus(self)
                                     self.z_red =+1
+                                    sfx_move.stop()
+                                    sfx_move.play()
 
                             else:
                                 last_comp_red = server   
@@ -234,6 +239,8 @@ class Bomb_Virus(Virus):
                                          server.blue_viruses[self.type] = 0
                                          comp.add_virus(self)
                                          self.z_blue =+1
+                                         sfx_move.stop()
+                                         sfx_move.play()
 
                                  else:
                                      last_comp_blue = server 

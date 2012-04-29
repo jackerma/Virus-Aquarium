@@ -203,8 +203,8 @@ class Bomb_Virus(Virus):
                                     server.red_viruses[self.type] = 0
                                     comp.add_virus(self)
                                     self.z_red =+1
-                                    sfx_move.stop()
-                                    sfx_move.play()
+                                   # sfx_move.stop()
+                                   # sfx_move.play()
 
                             else:
                                 last_comp_red = server   
@@ -239,8 +239,8 @@ class Bomb_Virus(Virus):
                                          server.blue_viruses[self.type] = 0
                                          comp.add_virus(self)
                                          self.z_blue =+1
-                                         sfx_move.stop()
-                                         sfx_move.play()
+                                      #   sfx_move.stop()
+                                       #  sfx_move.play()
 
                                  else:
                                      last_comp_blue = server 
