@@ -70,7 +70,6 @@ class Server(Rect):
             else:
                 self.scrn_colour = (255,255,255)
 
-
     def draw_text(self):
 
         ##Red Virus numbers
@@ -129,18 +128,13 @@ class Server(Rect):
             loc.topright = (x, y + loc.height*3)
             self.screen.blit(text,loc)
 
-
     def add_virus(self, virus):
-
-
         if virus.team == 1 and self.red_viruses[virus.type] < virus.max and self.off_state == False: 
             self.red_viruses[virus.type] += 1
 
         if virus.team == 2 and self.blue_viruses[virus.type] < virus.max and self.off_state == False:
             self.blue_viruses[virus.type] += 1
-
-
-        
+     
     def onoff (self):
         off_chance = randint(0,999)
         if off_chance <= 1 and self.off_state == False:
@@ -156,17 +150,12 @@ class Server(Rect):
 
             self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
             self.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
-
-    
-    def player1app (self, virus):
-        pass
-    
-    def player2app (self, virus):
-        pass
     
     def count (self, score):
         pass
 
+    def draw_limits(self):
+        pass
 
 
 class Home_server(Server):
@@ -186,6 +175,10 @@ class Home_server(Server):
         
     def is_team(self, num):
         self.team = num
+        if self.team == 1:
+            self.color = (255,0,0)
+        elif self.team == 2:
+            self.color = (0,0,255)
         
     def scrn_change(self):
         if self.off_state == False:
@@ -230,3 +223,20 @@ class Home_server(Server):
         if off_chance >= 9 and self.off_state == True:
             self.off_state = False
             self.scrn_change()
+
+    def draw_limits(self):
+        if self.team == 1: 
+            p,q = self.comp_screen.bottomleft
+            j,k = self.comp_screen.center
+            limit = smallfont.render("Total: " + str(sum(self.red_viruses.values())) + " / " + str(self.virus_max), True, (255,0,0))
+            lim_rect = limit.get_rect()
+            lim_rect.center = j, q - 5
+            self.screen.blit(limit,lim_rect)
+        if self.team == 2: 
+            p,q = self.comp_screen.bottomleft
+            j,k = self.comp_screen.center
+            limit = smallfont.render("Total: " + str(sum(self.blue_viruses.values())) + " / " + str(self.virus_max), True, (0,0,255))
+            lim_rect = limit.get_rect()
+            lim_rect.center = j, q - 5
+            self.screen.blit(limit,lim_rect)
+

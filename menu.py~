@@ -1,6 +1,9 @@
 #!usr/bin/env python
 
+import os
+
 import pygame
+from resource import load_image, play_song, load_sfx
 from pygame.locals import *
 from server import *
 from virus import *
@@ -22,11 +25,13 @@ class Menu(object):
         self.map = None
         self.controls = False
         self.rules = False
+        play_song("Chopin")
 
         self.items = ["Play", "Controls","Rules"]
         self.rects = []
         while self.menu_off == False:
             self.update()
+        pygame.mixer.music.stop()
 
     def update(self):
         self.draw()

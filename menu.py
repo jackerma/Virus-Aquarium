@@ -1,6 +1,9 @@
 #!usr/bin/env python
 
+import os
+
 import pygame
+from resource import load_image, play_song, load_sfx
 from pygame.locals import *
 from server import *
 from virus import *
@@ -22,11 +25,13 @@ class Menu(object):
         self.map = None
         self.controls = False
         self.rules = False
+        play_song("Chopin")
 
         self.items = ["Play", "Controls","Rules"]
         self.rects = []
         while self.menu_off == False:
             self.update()
+        pygame.mixer.music.stop()
 
     def update(self):
         self.draw()
@@ -62,7 +67,7 @@ class Menu(object):
             self.draw_back()
             self.screen.blit(title, loc) 
             self.rects =[]
-            self.items = ["1.Linear", "2.X-R0ADS", "3.Bridge", "4.Centipede"]
+            self.items = ["1.Linear", "2.X-Roads", "3.Bridge", "4.Centipede"]
             
             for item in self.items:
                 option = self.maps_font.render(item, True, (0, 255, 0))

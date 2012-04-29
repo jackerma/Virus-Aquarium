@@ -81,7 +81,7 @@ class Map(object):
 
 
    #Neighbors
-        elif self.num == '5':
+        elif self.num == 4:
             self.Player1 = Home_server(self.screen, (320,20))
             self.Player1.is_team(1)
             self.Player2 = Home_server(self.screen, (820,20))
@@ -100,5 +100,5 @@ class Map(object):
 
 
         else:
-            self.num = str(randint(1,4))
+            self.num = str(randint(0,4))
             self.drawmap()
