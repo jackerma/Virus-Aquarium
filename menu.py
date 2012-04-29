@@ -19,6 +19,7 @@ class Menu(object):
         self.menu_off = False
         self.main = True
         self.maps = False
+        self.map = None
         self.controls = False
         self.rules = False
 
@@ -37,7 +38,7 @@ class Menu(object):
             title = self.title_font.render("VIRUS AQUARIUM", True, (0, 255, 0))
             centerx, centery = self.bounds.center
             loc = title.get_rect()
-            loc.center = (centerx, centery -200)
+            loc.center = (centerx, centery - 200)
             self.screen.blit(title, loc)
             self.items = ["Play", "Controls", "Rules"]
             self.rects = []
@@ -75,7 +76,7 @@ class Menu(object):
         elif self.controls == True:
             self.screen.fill(self.background_colour)
             self.draw_back()
-            draw_controls(self.screen, self.background_colour, (0,255,0))
+            draw_controls(self.screen, self.background_colour, (0,255,0), "Controls")
 
         elif self.rules == True:
             self.screen.fill(self.background_colour)
@@ -143,38 +144,80 @@ class Menu(object):
 
 
 
-def draw_controls(screen, back_color, font_color):
+def draw_controls(screen, back_color, font_color, title):
+    cfont = pygame.font.Font(None, 60)
+    cbigfont = pygame.font.Font(None, 170)
+    csmallfont = pygame.font.Font(None, 30)
+    control_list = ["","Add Firewall:", "Subtract Firewall:",
+                   "Add X-Virus:", "Subtract X-Virus:",
+                   "Add Y-Virus:", "Subtract Y-Virus:",
+                   "Add/Detonate Bomb:", "Increase Virus Limit:",
+                   "Pause:", "Quit:"]
+    p1_list = ["","Q", "A", "W", "S", "E", "D", "R", "F", "Spacebar", "Escape"]
+    p2_list = ["","Y", "H", "U", "J", "I", "K", "O", "L", "Spacebar", "Escape"]
+                   
     backrect = pygame.Rect((0,0),(700,600))
     bounds = screen.get_rect()
     x,y = bounds.center
     backrect.center = x, y
+
     box1 = pygame.Rect((x, y), (backrect.width/3+30, backrect.height-150))
     box2 = pygame.Rect((x, y), (backrect.width/3+30, backrect.height-150))
     box1.bottomleft = backrect.bottomleft
     box2.bottomright = backrect.bottomright
 
     pygame.draw.rect(screen, back_color, backrect) 
-    pygame.draw.rect(screen, font_color, box1, 3)
-    pygame.draw.rect(screen, font_color, box2, 3)
+    pygame.draw.rect(screen, font_color, box1, 2)
+    pygame.draw.rect(screen, font_color, box2, 2)
 
-    cfont = pygame.font.Font(None, 60)
-    bigfont = pygame.font.Font(None, 170)
-
-    title = bigfont.render("Controls", True, (0, 255, 0))
+    #Title
+    title = cbigfont.render(title, True, font_color)
     loc = title.get_rect()
     loc.center = (x, y - 245)
     screen.blit(title,loc)
 
-    title = cfont.render("Player 1", True, (0,255,0))
+    #P1 Title
+    title = cfont.render("Player 1", True, font_color)
     loc = title.get_rect()
     x,y = box1.center
     p, q = box1.topleft
     loc.center = x, q - loc.height/2
     screen.blit(title, loc)
 
-    title = cfont.render("Player 2", True, (0,255,0))
+    #P2 Title
+    title = cfont.render("Player 2", True, font_color)
     loc = title.get_rect()
     x,y = box2.center
     p, q = box2.topleft
     loc.center = x, q - loc.height/2
     screen.blit(title,loc)
+    
+    #Draw Texts
+    for item in control_list:
+        text1 = csmallfont.render(item, True, font_color)
+        x,y = box1.topleft
+        loc = text1.get_rect()
+        loc.topleft = (x+5, y + (loc.height+5)*1.5*control_list.index(item))
+        screen.blit(text1, loc)
+        text2 = csmallfont.render(item, True, font_color)
+        x,y = box2.topleft
+        loc = text2.get_rect()
+        loc.topleft = (x+5, y + (loc.height+5)*1.5*control_list.index(item))
+        screen.blit(text2, loc)
+
+    for button in p1_list:
+        text = csmallfont.render(button, True, font_color)
+        x,y = box1.topright
+        loc = text.get_rect()
+        loc.topright = (x-5, y + (loc.height+5)*1.5*p1_list.index(button))
+        screen.blit(text, loc)
+        
+    for button in p2_list:
+        text = csmallfont.render(button, True, font_color)
+        x,y = box2.topright
+        loc = text.get_rect()
+        loc.topright = (x-5, y + (loc.height+5)*1.5*p2_list.index(button))
+        screen.blit(text, loc)
+        
+
+    
