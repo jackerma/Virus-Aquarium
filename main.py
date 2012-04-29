@@ -35,6 +35,7 @@ score_dec_b = 0.0
 score_dec_r = 0.0
 
 paused = False
+victory = False
 
 sfx_boom = load_sfx("explosion")
 sfx_add = load_sfx("addvirus")
@@ -71,9 +72,6 @@ while not quitting:
 
 
     while not done:
-
-
-        
 
         screen.fill(background_colour)
 
@@ -138,6 +136,15 @@ while not quitting:
 
         pygame.display.flip()
 
+##Music
+        if Player1.lose or Player2.lose:
+            if victory == False:
+                pygame.mixer.music.stop()
+                play_song("Epic Sax")
+                victory = True
+  
+        elif pygame.mixer.music.get_busy() == False:
+                play_song("Requiem")
 
 ##Keys
         for event in pygame.event.get():

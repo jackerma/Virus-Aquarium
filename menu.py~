@@ -1,6 +1,9 @@
 #!usr/bin/env python
 
+import os
+
 import pygame
+from resource import load_image, play_song, load_sfx
 from pygame.locals import *
 from server import *
 from virus import *
@@ -22,11 +25,13 @@ class Menu(object):
         self.map = None
         self.controls = False
         self.rules = False
+        play_song("Chopin")
 
         self.items = ["Play", "Controls","Rules"]
         self.rects = []
         while self.menu_off == False:
             self.update()
+        pygame.mixer.music.stop()
 
     def update(self):
         self.draw()
@@ -152,7 +157,7 @@ def draw_controls(screen, back_color, font_color, title):
                    "Add X-Virus:", "Subtract X-Virus:",
                    "Add Y-Virus:", "Subtract Y-Virus:",
                    "Add/Detonate Bomb:", "Increase Virus Limit:",
-                   "Pause:", "Quit:"]
+                   "Pause:", "Quit Game:"]
     p1_list = ["","Q", "A", "W", "S", "E", "D", "R", "F", "Spacebar", "Escape"]
     p2_list = ["","Y", "H", "U", "J", "I", "K", "O", "L", "Spacebar", "Escape"]
                    

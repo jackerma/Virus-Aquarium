@@ -67,7 +67,7 @@ class Menu(object):
             self.draw_back()
             self.screen.blit(title, loc) 
             self.rects =[]
-            self.items = ["1.Linear", "2.X-R0ADS", "3.Bridge", "4.Centipede"]
+            self.items = ["1.Linear", "2.X-Roads", "3.Bridge", "4.Centipede"]
             
             for item in self.items:
                 option = self.maps_font.render(item, True, (0, 255, 0))
