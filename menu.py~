@@ -152,7 +152,7 @@ def draw_controls(screen, back_color, font_color, title):
                    "Add X-Virus:", "Subtract X-Virus:",
                    "Add Y-Virus:", "Subtract Y-Virus:",
                    "Add/Detonate Bomb:", "Increase Virus Limit:",
-                   "Pause:", "Quit:"]
+                   "Pause:", "Quit Game:"]
     p1_list = ["","Q", "A", "W", "S", "E", "D", "R", "F", "Spacebar", "Escape"]
     p2_list = ["","Y", "H", "U", "J", "I", "K", "O", "L", "Spacebar", "Escape"]
                    
