@@ -92,7 +92,7 @@ class XVirus(Virus):
         self.spread_chance = 9
 
     def costs(self):
-        self.cost = 10
+        self.cost = 50
 
 
 class YVirus(Virus):

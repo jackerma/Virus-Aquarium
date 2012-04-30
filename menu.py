@@ -95,20 +95,39 @@ class Menu(object):
             self.draw_next()
             draw_rules2(self.screen, self.background_colour, (0,255,0), "Rules Part 2")
 
+        elif self.rules3 == True:
+            self.screen.fill(self.background_colour)
+            self.draw_back()
+            self.draw_next()
+            draw_rules3(self.screen, self.background_colour, (0,255,0), "Viruses")
+
+        elif self.rules4 == True:
+            self.screen.fill(self.background_colour)
+            self.draw_back()
+            self.draw_home()
+            draw_rules4(self.screen, self.background_colour, (0,255,0), "Viruses Part 2")
+
         
         pygame.display.flip()
 
     def draw_back(self):
         back = self.menu_font.render("Back", True, (0, 255, 0))
         self.back = back.get_rect()
-        self.back.bottomright = self.bounds.bottomright
+        self.back.bottomleft = self.bounds.bottomleft
         self.screen.blit(back, self.back)
 
     def draw_next(self):
         next = self.menu_font.render("Next", True, (0, 255, 0))
         self.next = next.get_rect()
-        self.next.bottomleft = self.bounds.bottomleft
+        self.next.bottomright = self.bounds.bottomright
         self.screen.blit(next, self.next)
+
+    def draw_home(self):
+        home = self.menu_font.render("Home", True, (0, 255, 0))
+        self.home = home.get_rect()
+        self.home.bottomright = self.bounds.bottomright
+        self.screen.blit(home, self.home)
+
 
     def buttonize(self,rect):
         x, y = rect.topleft
@@ -155,11 +174,26 @@ class Menu(object):
                     elif self.rules2:
                         if self.back.collidepoint(pygame.mouse.get_pos()):
                             self.rules2 = False
-                            self.main = True
+                            self.rules = True
                         elif self.next.collidepoint(pygame.mouse.get_pos()):
-                            self.rules = False
-                            self.rules2 = True
+                            self.rules2 = False
+                            self.rules3 = True
 
+                    elif self.rules3:
+                        if self.back.collidepoint(pygame.mouse.get_pos()):
+                            self.rules3 = False
+                            self.rules2 = True
+                        elif self.next.collidepoint(pygame.mouse.get_pos()):
+                            self.rules3 = False
+                            self.rules4 = True
+
+                    elif self.rules4:
+                        if self.back.collidepoint(pygame.mouse.get_pos()):
+                            self.rules4 = False
+                            self.rules3 = True
+                        elif self.home.collidepoint(pygame.mouse.get_pos()):
+                            self.rules4 = False
+                            self.main = True
 
                 elif event.type == KEYDOWN and event.key == K_l:
                     self.background_colour = (0,0,0)
@@ -251,12 +285,12 @@ def draw_rules(screen, back_color, font_color, title):
     cfont = pygame.font.Font(None, 60)
     cbigfont = pygame.font.Font(None, 170)
     csmallfont = pygame.font.Font(None, 30)
-    rules_list = ["You play as a hacker attempting to control a network by introducing various viruses.These viruses", 
+    rules_list = ["You are a hacker attempting to control a network by introducing various viruses.These viruses", 
                   "will spread from computer to computer, multiplying over time. But you are not alone: other hackers",
                   "are vying for control of the network. It's a race to see who can control the network and sabotage",
                   "their competitors' home systems.",
                   " ",
-                  "Every virus in the network sends back pings (points), representing the vulnerability of the network.",
+                  "Some virus in the network sends back pings (points), representing the vulnerability of the network.",
                   "The more viruses you have, the more pings you accumulate, and the more viruses you can introduce.", 
                   "At your disposal, you have multiple types of viruses -- the more insidious the virus, the more pings ",  
                   "it requires. Once introduced, to the system, your viruses will spread to connected computers and ",
@@ -292,7 +326,7 @@ def draw_rules2(screen, back_color, font_color, title):
     cbigfont = pygame.font.Font(None, 170)
     csmallfont = pygame.font.Font(None, 30)
     rules_list = ["The unsuspecting network users will be turning their computers on and off, freezing the spread of",
-                  " viruses and limiting the number of pings you receive from the network. As in any well-run network,",
+                  "viruses and limiting the number of pings you receive from the network. As in any well-run network,",
                   "the users will also sporadically run anti-virus software in hopes of saving their precious machines,",
                   "wiping out all but the most tenacious of viruses. If they fail to do so and their computer becomes",
                   "inundated with viruses, the computer will crash and the user will have no choice but to wipe their",
@@ -300,6 +334,86 @@ def draw_rules2(screen, back_color, font_color, title):
                   " ",
                   "Your ultimate goal is to sabotage the well-defended home systems of other hackers. The last hacker", 
                   "standing wins."]
+                   
+    backrect = pygame.Rect((0,0),(700,600))
+    bounds = screen.get_rect()
+    x,y = bounds.center
+    backrect.center = x, y
+
+    pygame.draw.rect(screen, back_color, backrect) 
+
+    #Title
+    title = cbigfont.render(title, True, font_color)
+    loc = title.get_rect()
+    loc.center = (x, y - 245)
+    screen.blit(title,loc)
+    
+    #Draw Texts
+    for item in rules_list:
+
+        text1 = csmallfont.render(item, True, font_color)
+        x,y = backrect.topleft
+        x = x - 150
+        y = y + 150
+        loc = text1.get_rect()
+        loc.topleft = (x+5, y + (loc.height+5)*1.5*rules_list.index(item))
+        screen.blit(text1, loc)
+
+
+def draw_rules3(screen, back_color, font_color, title):
+    cfont = pygame.font.Font(None, 60)
+    cbigfont = pygame.font.Font(None, 170)
+    csmallfont = pygame.font.Font(None, 30)
+    rules_list = ["X-Viruses:",
+                  "These Viruses only generate points which you can use to create new viruses. While they do spread very quickly,",
+                  "they are easy prey for Y-viruses.",
+                  "",
+                  "Y-Viruses:",
+                  "These clever viruses form the backbone of the hackers fight force. Taking inspiration from antivirus software,",
+                  "they seek out and destroy the opponents viruses.",
+                  "",
+                  "Firewalls:",
+                  "Based on a standard tool of any network, these little buggers block the EGRESS of enemy viruses."]
+                   
+    backrect = pygame.Rect((0,0),(700,600))
+    bounds = screen.get_rect()
+    x,y = bounds.center
+    backrect.center = x, y
+
+    pygame.draw.rect(screen, back_color, backrect) 
+
+    #Title
+    title = cbigfont.render(title, True, font_color)
+    loc = title.get_rect()
+    loc.center = (x, y - 245)
+    screen.blit(title,loc)
+    
+    #Draw Texts
+    for item in rules_list:
+
+        text1 = csmallfont.render(item, True, font_color)
+        x,y = backrect.topleft
+        x = x - 150
+        y = y + 150
+        loc = text1.get_rect()
+        loc.topleft = (x+5, y + (loc.height+5)*1.5*rules_list.index(item))
+        screen.blit(text1, loc)
+
+
+
+def draw_rules4(screen, back_color, font_color, title):
+    cfont = pygame.font.Font(None, 60)
+    cbigfont = pygame.font.Font(None, 170)
+    csmallfont = pygame.font.Font(None, 30)
+    rules_list = ["",
+                  "Bombs:",
+                  "The most powerful, but most difficult to construct, Bombs are slow to spread, but devastating once unleashed.",
+                  "Not only can they not be killed, but once in place, the hacker can 'detonate' it removing every single enemy"
+                  "virus (including bombs) and temporarily crashing the computer.",
+                  "",
+                  "Increasing virus limit:",
+                  "Eventually any good hacker will find that they just need more viruses than their server can support. While",
+                  "it may be expensive, a hardware upgrade often pays off in the long run."]
                    
     backrect = pygame.Rect((0,0),(700,600))
     bounds = screen.get_rect()

@@ -211,7 +211,6 @@ class Home_server(Server):
                     self.screen.blit(text,loc)
 
 
-
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                     self.scrn_colour = (175,175,255)
 
