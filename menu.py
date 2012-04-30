@@ -408,7 +408,7 @@ def draw_rules4(screen, back_color, font_color, title):
     rules_list = ["",
                   "Bombs:",
                   "The most powerful, but most difficult to construct, Bombs are slow to spread, but devastating once unleashed.",
-                  "Not only can they not be killed, but once in place, the hacker can 'detonate' it removing every single enemy"
+                  "Not only can they not be killed, but once in place, the hacker can 'detonate' it removing every single enemy",
                   "virus (including bombs) and temporarily crashing the computer.",
                   "",
                   "Increasing virus limit:",

@@ -144,7 +144,7 @@ while not quitting:
                 victory = True
   
         elif pygame.mixer.music.get_busy() == False:
-                play_song("Requiem")
+                play_song("Shadows_Vigilante")
 
 ##Keys
         for event in pygame.event.get():

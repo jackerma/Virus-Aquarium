@@ -5,17 +5,19 @@ from pygame.locals import *
 from virus import *
 from random import randint
 import time
-
+from resources import load_image
 
 pygame.font.init()
 smallfont = pygame.font.Font(None, 20)
 scorefont = pygame.font.Font(None, 50)
 bigfont = pygame.font.Font(None, 250)
+midfont = pygame.font.Font(None, 80)
+
 
 class Server(Rect):
 
     def __init__ (self, screen, (x,y)):
-        scrn_thick = 4
+        scrn_thick = 6
         self.width = 160
         self.height = 120
         self.x = x
@@ -39,6 +41,9 @@ class Server(Rect):
         self.score_red = 0.0
 
         
+        self.screen_img = load_image("mac1")
+        
+
     def score_check(self):
         self.score_red = float((self.red_viruses['x']))/10
         self.score_blue = float((self.blue_viruses['x']))/10
@@ -49,7 +54,7 @@ class Server(Rect):
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
         pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
-
+        self.screen.blit(self.screen_img, (self.x+4,self.y+4))
     
     def draw_circle(self):
 #        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
@@ -64,9 +69,9 @@ class Server(Rect):
     def scrn_change(self):
         if self.off_state == False:
             if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
-                self.scrn_colour = (255,175,175)
+                self.screen_img = load_image("macred")
             elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
-                self.scrn_colour = (175,175,255)
+                self.screen_img = load_image("macblue")
             else:
                 self.scrn_colour = (255,255,255)
 
@@ -161,12 +166,14 @@ class Server(Rect):
 class Home_server(Server):
 
     def draw_rect(self):
-        scrn_thick = 7
+        scrn_thick = 8
         comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
         pygame.draw.rect(self.screen, (0,0,0), self.rect)
         self.scrn_change()
         pygame.draw.rect(self.screen, self.scrn_colour, self.comp_screen)
-    
+        self.screen.blit(self.screen_img, (self.x+(scrn_thick/2),self.y+(scrn_thick/2)))
+
+
     def onoff(self):
         pass
 
@@ -184,10 +191,10 @@ class Home_server(Server):
         if self.off_state == False:
             if self.team == 1:
                 if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
-                    self.scrn_colour = (255,175,175)
+                    self.screen_img = load_image("macred")
 
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
-                    self.scrn_colour = (175,175,255)
+                    self.screen_img = load_image("macblue")
                     time.sleep(.2)
                     self.lose = True
                     text = bigfont.render("Blue Wins!", True, (0,0,255))
@@ -195,14 +202,19 @@ class Home_server(Server):
                     loc.center = self.bounds.center
                     self.screen.blit(text,loc)
 
+                    text = midfont.render("Press 'esc' to return to menu", True, (0,0,255))
+                    loc = text.get_rect()
+                    (x, y)= self.bounds.center
+                    loc.center = (x, y + 100)
+                    self.screen.blit(text,loc)
 
 
                 else:
-                    self.scrn_colour = (255,255,255)
+                    self.screen_img = load_image("mac1")
 
             if self.team == 2:
                 if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
-                    self.scrn_colour = (255,175,175)
+                    self.screen_img = load_image("macred")
                     time.sleep(.2)
                     self.lose = True
                     text = bigfont.render("Red Wins!", True, (255,0,0))
@@ -210,12 +222,16 @@ class Home_server(Server):
                     loc.center = self.bounds.center
                     self.screen.blit(text,loc)
 
+                    text = midfont.render("Press 'esc' to return to menu", True, (255,0,0))
+                    loc = text.get_rect()
+                    (x, y)= self.bounds.center
+                    loc.center = (x, y + 100)
+                    self.screen.blit(text,loc)
 
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
-                    self.scrn_colour = (175,175,255)
-
+                    self.screen_img = load_image("macblue")
                 else:
-                    self.scrn_colour = (255,255,255)
+                    self.screen_img = load_image("mac1")
 
     def onoff (self):
         off_chance = randint(0,999)
