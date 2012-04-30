@@ -288,16 +288,16 @@ while not quitting:
                 if comp.blue_viruses['w'] == 0 and not Player1.lose:
                     for virus in red_virus_list:
                         virus.spread(comp)
-                    for virus in red_virus_list:
-                        if virus.type == 'y' and not Player1.lose:
-                            virus.target(comp, target_dict)
+                for virus in red_virus_list:
+                    if virus.type == 'y' and not Player1.lose:
+                        virus.target(comp, target_dict)
 
                 if comp.red_viruses['w'] == 0 and not Player2.lose:
                     for virus in blue_virus_list:
                         virus.spread(comp)
-                    for virus in blue_virus_list:
-                        if virus.type == 'y' and not Player2.lose:
-                            virus.target(comp, target_dict)
+                for virus in blue_virus_list:
+                    if virus.type == 'y' and not Player2.lose:
+                        virus.target(comp, target_dict)
                 
 #Killing the target list 
         
