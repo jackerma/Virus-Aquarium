@@ -211,7 +211,7 @@ def draw_controls(screen, back_color, font_color, title):
     control_list = ["","Add Firewall:", "Subtract Firewall:",
                    "Add X-Virus:", "Subtract X-Virus:",
                    "Add Y-Virus:", "Subtract Y-Virus:",
-                   "Add/Detonate Bomb:", "Increase Virus Limit:",
+                   "Add/Detonate Bomb:", "Hardware Upgrade:",
                    "Pause:", "Quit Game:"]
     p1_list = ["","Q", "A", "W", "S", "E", "D", "R", "F", "Spacebar", "Escape"]
     p2_list = ["","Y", "H", "U", "J", "I", "K", "O", "L", "Spacebar", "Escape"]
@@ -237,7 +237,7 @@ def draw_controls(screen, back_color, font_color, title):
     screen.blit(title,loc)
 
     #P1 Title
-    title = cfont.render("Player 1", True, font_color)
+    title = cfont.render("Player 1 (Red)", True, font_color)
     loc = title.get_rect()
     x,y = box1.center
     p, q = box1.topleft
@@ -245,7 +245,7 @@ def draw_controls(screen, back_color, font_color, title):
     screen.blit(title, loc)
 
     #P2 Title
-    title = cfont.render("Player 2", True, font_color)
+    title = cfont.render("Player 2 (Blue)", True, font_color)
     loc = title.get_rect()
     x,y = box2.center
     p, q = box2.topleft
@@ -365,15 +365,16 @@ def draw_rules3(screen, back_color, font_color, title):
     cbigfont = pygame.font.Font(None, 170)
     csmallfont = pygame.font.Font(None, 30)
     rules_list = ["X-Viruses:",
-                  "These Viruses only generate points which you can use to create new viruses. While they do spread very quickly,",
+                  "Essential to any hacker, X-Viruses are the ONLY viruses that send back pings. While they do spread very quickly,",
                   "they are easy prey for Y-viruses.",
                   "",
                   "Y-Viruses:",
-                  "These clever viruses form the backbone of the hackers fight force. Taking inspiration from antivirus software,",
-                  "they seek out and destroy the opponents viruses.",
+                  "These clever viruses form the backbone of the hacker's fight force. Taking inspiration from antivirus software,",
+                  "they seek out and destroy the opponent's viruses.",
                   "",
-                  "Firewalls:",
-                  "Based on a standard tool of any network, these little buggers block the EGRESS of enemy viruses."]
+                  "Fyrewalls:",
+                  "Twisted versions of standard virus defense, these clever buggers trap enemy viruses in the system, ",
+                  "preventing them from spreading."]
                    
     backrect = pygame.Rect((0,0),(700,600))
     bounds = screen.get_rect()
@@ -406,14 +407,15 @@ def draw_rules4(screen, back_color, font_color, title):
     cbigfont = pygame.font.Font(None, 170)
     csmallfont = pygame.font.Font(None, 30)
     rules_list = ["",
-                  "Bombs:",
-                  "The most powerful, but most difficult to construct, Bombs are slow to spread, but devastating once unleashed.",
-                  "Not only can they not be killed, but once in place, the hacker can 'detonate' it removing every single enemy",
-                  "virus (including bombs) and temporarily crashing the computer.",
+                  "Ad Bombs:",
+                  "The most powerful, but most difficult to construct, Ad Bombs are slow to spread, but devastating once unleashed.",
+                  "Not only can they not be killed, but once in place, the hacker can 'detonate' it, flooding the system with pop-ups.",
+                  "This removes every single enemy virus (including other Bombs) and temporarily crashes the computer.",
                   "",
-                  "Increasing virus limit:",
+                  "Hardware Upgrade:",
                   "Eventually any good hacker will find that they just need more viruses than their server can support. While",
-                  "it may be expensive, a hardware upgrade often pays off in the long run."]
+                  "it may be expensive, a hardware upgrade often pays off in the long run, which increases the maximum number",
+                  "of viruses the home server can support."]
                    
     backrect = pygame.Rect((0,0),(700,600))
     bounds = screen.get_rect()
