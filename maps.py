@@ -82,23 +82,44 @@ class Map(object):
 
    #Neighbors
         elif self.num == 4:
-            self.Player1 = Home_server(self.screen, (320,20))
+            self.Player1 = Home_server(self.screen, (390, 250))
             self.Player1.is_team(1)
-            self.Player2 = Home_server(self.screen, (820,20))
+            self.Player2 = Home_server(self.screen, (760, 250))
             self.Player2.is_team(2)
             comp1 = Server(screen, (100, 305))
-#            comp2 = Server(screen, (390, 325))
-            comp3 = Server(screen, (290, 120))
+            comp2 = Server(screen, (100, 100))
+            comp3 = Server(screen, (310, 420))
             comp4 = Server(screen, (580, 500))
-            comp5 = Server(screen, (750, 325))
-            comp6 = Server(screen, (850, 120))
+            comp5 = Server(screen, (1050, 100))
+            comp6 = Server(screen, (850, 420))
             comp7 = Server(screen, (1040, 305))
-            comp8 = Server(screen, (150, 505))
-            comp9 = Server(screen, (990, 505))
-            comp10 = Server(screen, (520, 50))
-            self.comps = [self.Player1, self.Player2, comp1, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10]
+            comp8 = Server(screen, (150, 550))
+            comp9 = Server(screen, (990, 550))
+            comp10 = Server(screen, (820,80))
+            comp11 = Server(screen, (360,80))
+            comp12 = Server(screen, (580,80))
+            self.comps = [self.Player1, self.Player2, comp1,comp2,  comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10, comp11, comp12]
+
+
+   #Circle
+        elif self.num == 5:
+            self.Player1 = Home_server(self.screen, (50, 320))
+            self.Player1.is_team(1)
+            self.Player2 = Home_server(self.screen, (1100, 320))
+            self.Player2.is_team(2)
+            comp2 = Server(screen, (150, 150))
+            comp3 = Server(screen, (360, 520))
+            comp4 = Server(screen, (580, 550))
+            comp5 = Server(screen, (1000, 150))
+            comp6 = Server(screen, (820, 520))
+            comp8 = Server(screen, (150, 480))
+            comp9 = Server(screen, (1000, 480))
+            comp10 = Server(screen, (820, 100))
+            comp11 = Server(screen, (360, 100))
+            comp12 = Server(screen, (580, 80))
+            self.comps = [self.Player1, self.Player2, comp2,  comp3, comp4, comp5, comp6, comp8, comp9, comp10, comp11, comp12]
 
 
         else:
-            self.num = str(randint(0,4))
+            self.num = str(randint(0,5))
             self.drawmap()
