@@ -334,8 +334,9 @@ while not quitting:
                     if comp.blue_viruses['b'] < 0:
                         comp.blue_viruses['b'] = 0
 
-            bred = 0
-            bblue = 0
+                bred = 0
+                bblue = 0
+
             for comp in comps:
                 bred += comp.red_viruses['b']
                 bblue += comp.blue_viruses['b']
