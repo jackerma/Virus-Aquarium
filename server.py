@@ -146,11 +146,12 @@ class Server(Rect):
 
     
     def wipe (self):
-        if randint(0,999) < 4:
+        #if randint(0,999) < 4:
 
-            self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
-            self.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
-    
+         #   self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+          #  self.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
+        pass
+
     def count (self, score):
         pass
 

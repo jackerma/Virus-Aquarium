@@ -12,8 +12,6 @@ from maps import *
 
 pygame.init()
 
-
-
 #Globals
 quitting = False
 done = False
@@ -37,20 +35,12 @@ score_dec_b = 0.0
 score_dec_r = 0.0
 
 paused = False
+victory = False
 
-<<<<<<< HEAD
 sfx_boom = load_sfx("explosion")
 sfx_add = load_sfx("addvirus")
 sfx_minus = load_sfx("minusvirus")
 
-#Menu
-menu = Menu(screen)
-if menu.map == None:
-    sys.exit()
-#Map init
-gamemap = Map(screen, menu.map)
-=======
->>>>>>> b688ef028c50933e45928f854267218484ed200c
 
 while not quitting:
     #Menu
@@ -82,9 +72,6 @@ while not quitting:
 
 
     while not done:
-
-
-        
 
         screen.fill(background_colour)
 
@@ -149,6 +136,15 @@ while not quitting:
 
         pygame.display.flip()
 
+##Music
+        if Player1.lose or Player2.lose:
+            if victory == False:
+                pygame.mixer.music.stop()
+                play_song("Epic Sax")
+                victory = True
+  
+        elif pygame.mixer.music.get_busy() == False:
+                play_song("Requiem")
 
 ##Keys
         for event in pygame.event.get():
@@ -162,32 +158,19 @@ while not quitting:
     
             if not paused:
 #Adding XVirus red
-<<<<<<< HEAD
-            if not Player1.lose:
-                if event.type == KEYDOWN and event.key == K_w:
-                    if score_red >= red_xvirus.cost and sum(Player1.red_viruses.values()) < Player1.virus_max:
-                     #   sfx_add.stop()
-                      #  sfx_add.play()
-                        Player1.red_viruses['x'] +=1
-                        score_red -= red_xvirus.cost
-#Subtracting XVirus red
-                if event.type == KEYDOWN and event.key == K_s:
-                    if Player1.red_viruses['x'] > 0:
-                       # sfx_minus.stop()
-                       # sfx_minus.play()
-                        Player1.red_viruses['x'] -=1
-=======
                 if not Player1.lose:
                     if event.type == KEYDOWN and event.key == K_w:
                         if score_red >= red_xvirus.cost and sum(Player1.red_viruses.values()) < Player1.virus_max:
+                            #  sfx_add.stop()
+                            #  sfx_add.play()
                             Player1.red_viruses['x'] +=1
                             score_red -= red_xvirus.cost
 #Subtracting XVirus red
                     if event.type == KEYDOWN and event.key == K_s:
                         if Player1.red_viruses['x'] > 0:
+                            # sfx_minus.stop()
+                            # sfx_minus.play()
                             Player1.red_viruses['x'] -=1
->>>>>>> b688ef028c50933e45928f854267218484ed200c
-
 
 #Adding YVirus red
                     if event.type == KEYDOWN and event.key == K_e:

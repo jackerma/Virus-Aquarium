@@ -58,7 +58,7 @@ class Virus(object):
             red_chance_list = []
             total_red = server.red_viruses[self.type]
             while total_red >0 and server.off_state == False:
-                red_chance = randint(0,999)
+                red_chance = randint(0,900)
                 red_chance_list.append(red_chance)
                 total_red -= 1
             for num in red_chance_list:
@@ -71,7 +71,7 @@ class Virus(object):
             blue_chance_list = []
             total_blue = server.blue_viruses[self.type]
             while total_blue > 0 and server.off_state == False:
-                blue_chance = randint(0,999)
+                blue_chance = randint(0,900)
                 blue_chance_list.append(blue_chance)
                 total_blue -= 1
             for num in blue_chance_list:
@@ -104,30 +104,34 @@ class YVirus(Virus):
         self.max = 30
         
     def has_spread_chance(self):
-        self.spread_chance = 5
+        self.spread_chance = 6
 
     def costs(self):
         self.cost = 150
 
     def target(self, server, target_dict):
-        i = randint(0,9)
-        j = randint(0,1)
+        i = randint(0,599)
+        j = randint(0,4)
         if self.team == 1 and server.red_viruses['y'] > 0:
             hit_chance = 1
             if hit_chance <= i:
-                if j == 1:
+                if j > 2:
+                    target_dict['x_blue']+= server.red_viruses['y']
+                elif j == 2:
                     target_dict['x_blue']+= server.red_viruses['y']
                     target_dict['w_blue']+= 1
-                elif j == 0:
+                elif j < 2:
                     target_dict['y_blue']+= server.red_viruses['y']
 
         if self.team == 2 and server.blue_viruses['y'] > 0:
             hit_chance =  1
             if hit_chance <= i:
-                if j == 1:
+                if j > 2:
+                    target_dict['x_red']+= server.blue_viruses['y']
+                if j == 2:
                     target_dict['x_red']+= server.blue_viruses['y']
                     target_dict['w_red']+= 1
-                elif j == 0:
+                elif j <2:
                     target_dict['y_red']+= server.blue_viruses['y']
 
 
@@ -143,7 +147,7 @@ class Wall_Virus(Virus):
         self.cost = 500
             
     def has_spread_chance(self):
-        self.spread_chance = 1
+        self.spread_chance = 4
 
 
 class Bomb_Virus(Virus):
