@@ -28,7 +28,7 @@ background_colour = (150,150,150)
 score_red = 200
 score_blue = 200
 
-score_win = 10000
+score_win = 1000
 
 virus_count_red = 0
 virus_count_blue = 0
@@ -94,39 +94,8 @@ while not quitting:
 
     while not done:
 
-
-        #Victory by points
         screen.fill(background_colour)
-        if score_red >= score_win:
-            victory = True
-            Player1.lose = True
-            Player2.lose = True
-            text = bigfont.render("Red Wins!", True, (255,0,0))
-            loc = text.get_rect()
-            loc.center = bounds.center
-            screen.blit(text,loc)
-
-            text = midfont.render("Press 'esc' to return to menu", True, (255,0,0))
-            loc = text.get_rect()
-            (x, y)= bounds.center
-            loc.center = (x, y + 100)
-            screen.blit(text,loc)
-
-        if score_blue >= score_win:
-            victory = True
-            Player2.lose = True
-            Player1.lose = True
-            text = bigfont.render("Blue Wins!", True, (0,0,255))
-            loc = text.get_rect()
-            loc.center = bounds.center
-            screen.blit(text,loc)
-
-            text = midfont.render("Press 'esc' to return to menu", True, (0,0,255))
-            loc = text.get_rect()
-            (x, y)= bounds.center
-            loc.center = (x, y + 100)
-            screen.blit(text,loc)
-
+       
 
         #Connects computers
         for com1 in comps:
@@ -186,6 +155,38 @@ while not quitting:
         if paused:
             draw_controls(screen, background_colour, (0,0,0), "<Paused>")
     
+ #Victory by points
+
+        if score_red >= score_win:
+            victory = True
+            Player1.lose = True
+            Player2.lose = True
+            text = bigfont.render("Red Wins!", True, (255,0,0))
+            loc = text.get_rect()
+            loc.center = bounds.center
+            screen.blit(text,loc)
+
+            text = midfont.render("Press 'esc' to return to menu", True, (255,0,0))
+            loc = text.get_rect()
+            (x, y)= bounds.center
+            loc.center = (x, y + 100)
+            screen.blit(text,loc)
+
+        if score_blue >= score_win:
+            victory = True
+            Player2.lose = True
+            Player1.lose = True
+            text = bigfont.render("Blue Wins!", True, (0,0,255))
+            loc = text.get_rect()
+            loc.center = bounds.center
+            screen.blit(text,loc)
+
+            text = midfont.render("Press 'esc' to return to menu", True, (0,0,255))
+            loc = text.get_rect()
+            (x, y)= bounds.center
+            loc.center = (x, y + 100)
+            screen.blit(text,loc)
+
 
         pygame.display.flip()
 
@@ -223,7 +224,22 @@ while not quitting:
                     paused = True
                 elif paused == True:
                     paused = False
-    
+
+#Quitting
+            if event.type == pygame.QUIT:
+                done = True
+                quitting = True
+            elif event.type == KEYDOWN and event.key== K_ESCAPE:
+                done = True
+
+#Muting
+            if event.type == KEYDOWN and event.key== K_m:
+                if mute == False:
+                    mute = True
+                elif mute == True:
+                    mute = False    
+
+
             if not paused:
 #Adding XVirus red
                 if not Player1.lose:
@@ -339,19 +355,7 @@ while not quitting:
                             score_blue -= 2000
 
 
-#Quitting
-                if event.type == pygame.QUIT:
-                    done = True
-                    quitting = True
-                elif event.type == KEYDOWN and event.key== K_ESCAPE:
-                    done = True
 
-#Muting
-                if event.type == KEYDOWN and event.key== K_m:
-                    if mute == False:
-                        mute = True
-                    elif mute == True:
-                        mute = False
 
 #Update
         if not paused:
