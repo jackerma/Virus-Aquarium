@@ -22,6 +22,8 @@ background_colour = (150,150,150)
 score_red = 200
 score_blue = 200
 
+score_win = 1000
+
 virus_count_red = 0
 virus_count_blue = 0
 bomb_count_red = 0
@@ -361,8 +363,20 @@ while not quitting:
                     score_dec_r += (score_red_t - int(score_red_t))
                     score_dec_b += (score_blue_t - int(score_blue_t))
 
-                    score_red += int(score_red_t + score_dec_r)
-                    score_blue += int(score_blue_t + score_dec_b)
+                    if victory == False:
+                        score_red += int(score_red_t + score_dec_r)
+                    if score_red >= score_win:
+                        Player2.red_viruses = {'x':2, 'y':0, 'w':0, 'b':0} 
+                        Player2.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
+                        
+                    if victory == False:
+                        score_blue += int(score_blue_t + score_dec_b)
+                    if score_blue >= score_win:
+                        Player1.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+                        Player1.blue_viruses = {'x':2, 'y':0, 'w':0, 'b':0}
+
+
+
 
                     score_blue_t = 0
                     score_red_t = 0

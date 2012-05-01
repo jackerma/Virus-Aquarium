@@ -67,13 +67,15 @@ class Server(Rect):
             pygame.draw.aaline(self.screen, (255,0,0), self.rect.center, comp.rect.center, 5)
 
     def scrn_change(self):
-        if self.off_state == False:
+        if self.off_state == True:
+            self.screen_img.fill((100,100,100))
+        elif self.off_state == False:
             if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
                 self.screen_img = load_image("macred")
             elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                 self.screen_img = load_image("macblue")
             else:
-                self.scrn_colour = (255,255,255)
+                self.screen_img = load_image("mac1")
 
     def draw_text(self):
 
@@ -144,7 +146,7 @@ class Server(Rect):
         off_chance = randint(0,999)
         if off_chance <= 1 and self.off_state == False:
             self.off_state = True
-            self.scrn_colour = (100,100,100)
+            self.scrn_change()
         if off_chance >= 989 and self.off_state == True:
             self.off_state = False
             self.scrn_change()

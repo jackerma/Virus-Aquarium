@@ -258,3 +258,33 @@ class Home_server(Server):
             lim_rect.center = j, q - 5
             self.screen.blit(limit,lim_rect)
 
+
+    def blue_lose(self):
+        self.lose = True
+        text = bigfont.render("Blue Wins!", True, (0,0,255))
+        loc = text.get_rect()
+        loc.center = self.bounds.center
+        self.screen.blit(text,loc)
+
+        text = midfont.render("Press 'esc' to return to menu", True, (0,0,255))
+        loc = text.get_rect()
+        (x, y)= self.bounds.center
+        loc.center = (x, y + 100)
+        self.screen.blit(text,loc)
+
+
+    def red_lose(self):
+        self.lose = True
+        text = bigfont.render("Red Wins!", True, (255,0,0))
+        loc = text.get_rect()
+        loc.center = self.bounds.center
+        self.screen.blit(text,loc)
+
+        text = midfont.render("Press 'esc' to return to menu", True, (255,0,0))
+        loc = text.get_rect()
+        (x, y)= self.bounds.center
+        loc.center = (x, y + 100)
+        self.screen.blit(text,loc)
+
+
+
