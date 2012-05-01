@@ -56,6 +56,7 @@ while not quitting:
     Player1 = gamemap.Player1     
     Player2 = gamemap.Player2
     comps = gamemap.comps
+    gates = gamemap.gates
 
 
         #Virus
@@ -285,7 +286,6 @@ while not quitting:
             for comp in comps:
                 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
                 comp.wipe()
-                comp.onoff()
 
                 if comp.blue_viruses['w'] == 0 and not Player1.lose:
                     for virus in red_virus_list:
@@ -338,6 +338,9 @@ while not quitting:
 
                 bred = 0
                 bblue = 0
+
+            for gate in gates:
+                gate.onoff()
 
             for comp in comps:
                 bred += comp.red_viruses['b']

@@ -29,6 +29,7 @@ class Map(object):
             comp2 = Server(screen, (575, 350))
             comp3 = Server(screen, (850, 350))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3]
+            self.gates = [comp2]
       
     #X-R0ads
         elif self.num == 1:
@@ -43,7 +44,8 @@ class Map(object):
             comp5 = Server(screen, (750, 470))
             comp6 = Server(screen, (1000, 305))
             comp7 = Server(screen, (350, 470))
-            self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7]
+            self.comps = [self.Player1, self.Player2, comp1, comp2, comp3, comp4, comp5,comp6, comp7]
+            self.gates = [comp2,comp3,comp4,comp5, comp7]
     #Bridge
         elif self.num == 2:
             self.Player1 = Home_server(self.screen, (20,20))
@@ -60,6 +62,7 @@ class Map(object):
             comp8 = Server(screen, (150, 505))
             comp9 = Server(screen, (990, 505))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9]
+            self.gates = [comp4]
             
     #Centipede
         elif self.num == 3:
@@ -78,6 +81,7 @@ class Map(object):
             comp9 = Server(screen, (1002, 500))
             comp10 = Server(screen, (1003, 300))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10]
+            self.gates = [comp5, comp6]
 
 
    #Neighbors
@@ -99,7 +103,7 @@ class Map(object):
             comp11 = Server(screen, (360,80))
             comp12 = Server(screen, (580,80))
             self.comps = [self.Player1, self.Player2, comp1,comp2,  comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10, comp11, comp12]
-
+            self.gates = [comp12, comp4]
 
    #Circle
         elif self.num == 5:
@@ -118,7 +122,7 @@ class Map(object):
             comp11 = Server(screen, (360, 100))
             comp12 = Server(screen, (580, 80))
             self.comps = [self.Player1, self.Player2, comp2,  comp3, comp4, comp5, comp6, comp8, comp9, comp10, comp11, comp12]
-
+            self.gates = [comp12, comp4]
 
         else:
             self.num = str(randint(0,5))
