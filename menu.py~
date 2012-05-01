@@ -67,7 +67,7 @@ class Menu(object):
             self.draw_back()
             self.screen.blit(title, loc) 
             self.rects =[]
-            self.items = ["1.Linear", "2.X-Roads", "3.Bridge", "4.Centipede"]
+            self.items = ["1. Linear", "2. X-Roads", "3. Bridge", "4. Centipede", "5. Neighbors", "6.Circle"]
             
             for item in self.items:
                 option = self.maps_font.render(item, True, (0, 255, 0))
@@ -407,17 +407,10 @@ def draw_rules4(screen, back_color, font_color, title):
     cbigfont = pygame.font.Font(None, 170)
     csmallfont = pygame.font.Font(None, 30)
     rules_list = ["",
-<<<<<<< HEAD
-                  "Bombs:",
-                  "The most powerful, but most difficult to construct, Bombs are slow to spread, but devastating once unleashed.",
-                  "Not only can they not be killed, but once in place, the hacker can 'detonate' it removing every single enemy",
-                  "virus (including bombs) and temporarily crashing the computer.",
-=======
                   "Ad Bombs:",
                   "The most powerful, but most difficult to construct, Ad Bombs are slow to spread, but devastating once unleashed.",
                   "Not only can they not be killed, but once in place, the hacker can 'detonate' it, flooding the system with pop-ups.",
                   "This removes every single enemy virus (including other Bombs) and temporarily crashes the computer.",
->>>>>>> e8c675c19dde822b9605308c55eb4acfce913d93
                   "",
                   "Hardware Upgrade:",
                   "Eventually any good hacker will find that they just need more viruses than their server can support. While",

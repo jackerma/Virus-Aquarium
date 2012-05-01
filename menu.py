@@ -12,7 +12,7 @@ from maps import *
 
 class Menu(object):
 
-    def __init__(self, screen):
+    def __init__(self, screen, mute):
         self.screen = screen
         self.bounds = self.screen.get_rect()
         self.title_font = pygame.font.Font(None, 170)
@@ -26,16 +26,24 @@ class Menu(object):
         self.controls = False
         self.rules = False
         play_song("Chopin")
-
+        self.mute = mute
         self.items = ["Play", "Controls","Rules"]
         self.rects = []
         while self.menu_off == False:
             self.update()
         pygame.mixer.music.stop()
 
+       
+
     def update(self):
         self.draw()
         self.inputs()
+
+        if self.mute == True:
+            pygame.mixer.music.pause()
+
+        if self.mute == False:
+            pygame.mixer.music.unpause()
 
     def draw(self):
         if self.main == True:
@@ -202,6 +210,11 @@ class Menu(object):
                 elif event.type == KEYDOWN and event.key== K_ESCAPE:
                     self.menu_off = True
 
+                if event.type == KEYDOWN and event.key== K_m:
+                    if self.mute == False:
+                        self.mute = True
+                    elif self.mute == True:
+                        self.mute = False
 
 
 def draw_controls(screen, back_color, font_color, title):
@@ -212,9 +225,9 @@ def draw_controls(screen, back_color, font_color, title):
                    "Add X-Virus:", "Subtract X-Virus:",
                    "Add Y-Virus:", "Subtract Y-Virus:",
                    "Add/Detonate Bomb:", "Hardware Upgrade:",
-                   "Pause:", "Quit Game:"]
-    p1_list = ["","Q", "A", "W", "S", "E", "D", "R", "F", "Spacebar", "Escape"]
-    p2_list = ["","Y", "H", "U", "J", "I", "K", "O", "L", "Spacebar", "Escape"]
+                   "Pause:", "Quit Game:", "Mute:"]
+    p1_list = ["","Q", "A", "W", "S", "E", "D", "R", "F", "Spacebar", "Escape", "M"]
+    p2_list = ["","Y", "H", "U", "J", "I", "K", "O", "L", "Spacebar", "Escape", "M"]
                    
     backrect = pygame.Rect((0,0),(700,600))
     bounds = screen.get_rect()

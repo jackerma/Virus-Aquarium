@@ -168,6 +168,9 @@ class Server(Rect):
 
 class Home_server(Server):
 
+
+
+
     def draw_rect(self):
         scrn_thick = 8
         comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
@@ -198,7 +201,6 @@ class Home_server(Server):
 
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                     self.screen_img = load_image("macblue")
-                    time.sleep(.2)
                     self.lose = True
                     text = bigfont.render("Blue Wins!", True, (0,0,255))
                     loc = text.get_rect()
@@ -218,7 +220,6 @@ class Home_server(Server):
             if self.team == 2:
                 if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
                     self.screen_img = load_image("macred")
-                    time.sleep(.2)
                     self.lose = True
                     text = bigfont.render("Red Wins!", True, (255,0,0))
                     loc = text.get_rect()
