@@ -82,9 +82,9 @@ while not quitting:
 
     while not done:
 
+        #Victory by points
         screen.fill(background_colour)
         if score_red >= score_win:
-            print 'r'
             victory = True
             text = bigfont.render("Red Wins!", True, (255,0,0))
             loc = text.get_rect()
@@ -97,13 +97,7 @@ while not quitting:
             loc.center = (x, y + 100)
             screen.blit(text,loc)
 
-
-#                        Player2.red_viruses = {'x':2, 'y':0, 'w':0, 'b':0} 
-#                        Player2.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
-                        
-
         if score_blue >= score_win:
-            print 'b'
             victory = True
             text = bigfont.render("Blue Wins!", True, (0,0,255))
             loc = text.get_rect()
@@ -116,9 +110,6 @@ while not quitting:
             loc.center = (x, y + 100)
             screen.blit(text,loc)
 
-
-#                        Player1.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
-#                        Player1.blue_viruses = {'x':2, 'y':0, 'w':0, 'b':0}
 
         #Connects computers
         for com1 in comps:
