@@ -36,6 +36,12 @@ bomb_count_red = 0
 bomb_count_blue = 0
 
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
+
+x_start = 3
+y_start = 0
+w_start = 0
+b_start = 0
+
 bounds = screen.get_rect()
 score_red_t = 0.0
 score_blue_t = 0.0
@@ -44,6 +50,7 @@ score_dec_r = 0.0
 
 paused = False
 victory = False
+mute = False
 
 sfx_boom = load_sfx("explosion")
 sfx_add = load_sfx("addvirus")
@@ -52,7 +59,7 @@ sfx_minus = load_sfx("minusvirus")
 
 while not quitting:
     #Menu
-    menu = Menu(screen)
+    menu = Menu(screen, mute)
     if menu.map == None:
         sys.exit()
 
@@ -80,12 +87,20 @@ while not quitting:
     blue_virus_list = [blue_xvirus, blue_yvirus, blue_wvirus, blue_bvirus] 
 
 
+    #starting virus counts
+    Player1.red_viruses = {'x':x_start, 'y':y_start, 'w':w_start, 'b':b_start} 
+    Player2.blue_viruses = {'x':x_start, 'y':y_start, 'w':w_start, 'b':b_start}  
+
+
     while not done:
+
 
         #Victory by points
         screen.fill(background_colour)
         if score_red >= score_win:
             victory = True
+            Player1.lose = True
+            Player2.lose = True
             text = bigfont.render("Red Wins!", True, (255,0,0))
             loc = text.get_rect()
             loc.center = bounds.center
@@ -99,6 +114,8 @@ while not quitting:
 
         if score_blue >= score_win:
             victory = True
+            Player2.lose = True
+            Player1.lose = True
             text = bigfont.render("Blue Wins!", True, (0,0,255))
             loc = text.get_rect()
             loc.center = bounds.center
@@ -173,14 +190,29 @@ while not quitting:
         pygame.display.flip()
 
 ##Music
-        if Player1.lose or Player2.lose:
-            if victory == False:
-                pygame.mixer.music.stop()
-                play_song("Epic Sax")
-                victory = True
+        if mute == False:
+            if Player1.lose or Player2.lose:
+                if victory == False:
+                    pygame.mixer.music.stop()
+                    play_song("Epic Sax")
+                    victory = True
+
+            elif Player1.lose and Player2.lose:
+                if victory == False:
+                    pygame.mixer.music.stop()
+                    play_song("Epic Sax")
+                    victory = True
   
-        elif pygame.mixer.music.get_busy() == False:
+            elif pygame.mixer.music.get_busy() == False:
                 play_song("Shadows_Vigilante")
+
+        #Muting
+        if mute == True:
+            pygame.mixer.music.pause()
+
+        if mute == False:
+            pygame.mixer.music.unpause()
+
 
 ##Keys
         for event in pygame.event.get():
@@ -314,6 +346,13 @@ while not quitting:
                 elif event.type == KEYDOWN and event.key== K_ESCAPE:
                     done = True
 
+#Muting
+                if event.type == KEYDOWN and event.key== K_m:
+                    if mute == False:
+                        mute = True
+                    elif mute == True:
+                        mute = False
+
 #Update
         if not paused:
             for comp in comps:
@@ -410,9 +449,6 @@ while not quitting:
                         score_blue += int(score_blue_t + score_dec_b)
 
 
-
-
-
                     score_blue_t = 0
                     score_red_t = 0
 
@@ -422,15 +458,11 @@ while not quitting:
                         score_dec_b = 0
 
 
-
-
-
             time.sleep(.2)
     done = False
     victory = False
     score_red = 200
     score_blue = 200
-#"replay" splash screen?
 
     for event in pygame.event.get():
 
