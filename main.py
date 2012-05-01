@@ -12,6 +12,12 @@ from maps import *
 
 pygame.init()
 
+pygame.font.init()
+smallfont = pygame.font.Font(None, 20)
+scorefont = pygame.font.Font(None, 45)
+bigfont = pygame.font.Font(None, 250)
+midfont = pygame.font.Font(None, 80)
+
 #Globals
 quitting = False
 done = False
@@ -19,8 +25,8 @@ width = 1300
 height = 700
 screen = pygame.display.set_mode((width, height))
 background_colour = (150,150,150)
-score_red = 200
-score_blue = 200
+score_red = 900
+score_blue = 900
 
 score_win = 1000
 
@@ -30,7 +36,7 @@ bomb_count_red = 0
 bomb_count_blue = 0
 
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
-
+bounds = screen.get_rect()
 score_red_t = 0.0
 score_blue_t = 0.0
 score_dec_b = 0.0
@@ -77,6 +83,42 @@ while not quitting:
     while not done:
 
         screen.fill(background_colour)
+        if score_red >= score_win:
+            print 'r'
+            victory = True
+            text = bigfont.render("Red Wins!", True, (255,0,0))
+            loc = text.get_rect()
+            loc.center = bounds.center
+            screen.blit(text,loc)
+
+            text = midfont.render("Press 'esc' to return to menu", True, (255,0,0))
+            loc = text.get_rect()
+            (x, y)= bounds.center
+            loc.center = (x, y + 100)
+            screen.blit(text,loc)
+
+
+#                        Player2.red_viruses = {'x':2, 'y':0, 'w':0, 'b':0} 
+#                        Player2.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
+                        
+
+        if score_blue >= score_win:
+            print 'b'
+            victory = True
+            text = bigfont.render("Blue Wins!", True, (0,0,255))
+            loc = text.get_rect()
+            loc.center = bounds.center
+            screen.blit(text,loc)
+
+            text = midfont.render("Press 'esc' to return to menu", True, (0,0,255))
+            loc = text.get_rect()
+            (x, y)= bounds.center
+            loc.center = (x, y + 100)
+            screen.blit(text,loc)
+
+
+#                        Player1.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+#                        Player1.blue_viruses = {'x':2, 'y':0, 'w':0, 'b':0}
 
         #Connects computers
         for com1 in comps:
@@ -368,15 +410,10 @@ while not quitting:
 
                     if victory == False:
                         score_red += int(score_red_t + score_dec_r)
-                    if score_red >= score_win:
-                        Player2.red_viruses = {'x':2, 'y':0, 'w':0, 'b':0} 
-                        Player2.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
-                        
+
                     if victory == False:
                         score_blue += int(score_blue_t + score_dec_b)
-                    if score_blue >= score_win:
-                        Player1.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
-                        Player1.blue_viruses = {'x':2, 'y':0, 'w':0, 'b':0}
+
 
 
 
@@ -388,6 +425,10 @@ while not quitting:
                         score_dec_r = 0
                     if score_dec_b >= .9:
                         score_dec_b = 0
+
+
+
+
 
             time.sleep(.2)
     done = False
