@@ -95,7 +95,6 @@ while not quitting:
     while not done:
 
         screen.fill(background_colour)
-       
 
         #Connects computers
         for com1 in comps:
@@ -414,11 +413,15 @@ while not quitting:
 
                 bred = 0
                 bblue = 0
-
+            #On/off
             for gate in gates:
                 gate.onoff()
 
             for comp in comps:
+                if comp.off_state:
+                    comp.onoff()
+
+            #Bomb Stuff
                 bred += comp.red_viruses['b']
                 bblue += comp.blue_viruses['b']
                 bomb_count_red = bred

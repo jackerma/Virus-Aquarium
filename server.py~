@@ -30,6 +30,10 @@ class Server(Rect):
 
         self.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
         self.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}  
+        self.red_viruses_old = {'x':0, 'y':0, 'w':0, 'b':0}
+        self.blue_viruses_old = {'x':0, 'y':0, 'w':0, 'b':0}
+
+
         self.virus_max = 30
                  
         self.off_state = False
@@ -57,8 +61,8 @@ class Server(Rect):
         self.screen.blit(self.screen_img, (self.x+4,self.y+4))
     
     def draw_circle(self):
-#        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
-        pass
+        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+        
         
 
 
@@ -81,6 +85,7 @@ class Server(Rect):
 
         ##Red Virus numbers
         if self.red_viruses['x'] > 0:
+            self.red_viruses_old['x'] = self.red_viruses['x']
             text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0))
             loc = text.get_rect()
             loc.topleft = self.comp_screen.topleft
@@ -134,6 +139,7 @@ class Server(Rect):
             loc = text.get_rect()
             loc.topright = (x, y + loc.height*3)
             self.screen.blit(text,loc)
+
 
     def add_virus(self, virus):
         if virus.team == 1 and self.red_viruses[virus.type] < virus.max and self.off_state == False: 

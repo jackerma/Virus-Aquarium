@@ -19,18 +19,51 @@ class Map(object):
     def drawmap(self):
         screen = self.screen
          
-    #Line
+    #CS112
         if self.num == 0:
-            self.Player1 = Home_server(screen, (50,350))
+            self.Player1 = Home_server(screen, (50,575))
             self.Player1.is_team(1)
-            self.Player2 = Home_server(screen, (1100, 350))
+            self.Player2 = Home_server(screen, (1100, 50))
             self.Player2.is_team(2)
-            comp1 = Server(screen, (300, 350))
-            comp2 = Server(screen, (575, 350))
-            comp3 = Server(screen, (850, 350))
-            self.comps = [self.Player1, self.Player2, comp1,comp2, comp3]
-            self.gates = [comp2]
-      
+            comp1 = Server(screen, (300, 575))
+            comp2 = Server(screen, (575, 575))
+            comp3 = Server(screen, (850, 575))
+            comp4 = Server(screen, (1100, 325))
+            comp5 = Server(screen, (1100, 450))
+            comp6 = Server(screen, (1100, 575))
+            comp7 = Server(screen, (1100, 200))
+            comp8 = Server(screen, (435, 100))
+            comp9 = Server(screen, (710, 100))
+            comp10 = Server(screen, (435, 210))
+            comp11 = Server(screen, (710, 210))
+            comp12 = Server(screen, (435, 320))
+            comp13 = Server(screen, (710, 320))
+            
+            self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10, comp11, comp12, comp13]
+            self.gates = [comp2, comp4]
+            comp2.cnct_range -= 15
+            comp3.cnct_range = 2
+
+            comp12.cnct_range -= 10
+            comp13.cnct_range -= 10
+            comp11.cnct_range -= 10
+            comp10.cnct_range -= 10            
+            comp9.cnct_range -= 10
+            comp8.cnct_range -= 10
+
+            comp4.cnct_range -= 30
+            comp5.cnct_range -= 30
+            comp6.cnct_range -= 30
+            comp7.cnct_range -= 30
+            self.Player2.cnct_range -= 30
+            
+            comp3.connected_list = [comp6, comp5, comp2, comp13]
+            comp7.connected_list.append(comp9)
+            comp5.connected_list.append(comp13)
+            comp5.connected_list.append(comp3)
+            comp6.connected_list.append(comp3)
+            comp13.connected_list.append(comp3)
+            comp2.connected_list.append(comp3)
     #X-R0ads
         elif self.num == 1:
             self.Player1 = Home_server(self.screen, (20,20))

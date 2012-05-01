@@ -19,16 +19,27 @@ class Map(object):
     def drawmap(self):
         screen = self.screen
          
-    #Line
+    #CS112
         if self.num == 0:
-            self.Player1 = Home_server(screen, (50,350))
+            self.Player1 = Home_server(screen, (50,575))
             self.Player1.is_team(1)
-            self.Player2 = Home_server(screen, (1100, 350))
+            self.Player2 = Home_server(screen, (1100, 50))
             self.Player2.is_team(2)
-            comp1 = Server(screen, (300, 350))
-            comp2 = Server(screen, (575, 350))
-            comp3 = Server(screen, (850, 350))
-            self.comps = [self.Player1, self.Player2, comp1,comp2, comp3]
+            comp1 = Server(screen, (300, 575))
+            comp2 = Server(screen, (575, 575))
+            comp3 = Server(screen, (875, 575))
+            comp4 = Server(screen, (1100, 325))
+            comp5 = Server(screen, (1100, 450))
+            comp6 = Server(screen, (1100, 575))
+            comp7 = Server(screen, (1100, 200))
+            comp8 = Server(screen, (435, 100))
+            comp9 = Server(screen, (710, 100))
+            comp10 = Server(screen, (435, 210))
+            comp11 = Server(screen, (710, 210))
+            comp12 = Server(screen, (435, 320))
+            comp13 = Server(screen, (710, 320))
+            
+            self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10, comp11, comp12, comp13]
             self.gates = [comp2]
       
     #X-R0ads
@@ -81,7 +92,7 @@ class Map(object):
             comp9 = Server(screen, (1002, 500))
             comp10 = Server(screen, (1003, 300))
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10]
-            self.gates = [comp5, comp 6]
+            self.gates = [comp5, comp6]
 
 
    #Neighbors
