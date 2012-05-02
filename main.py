@@ -28,7 +28,7 @@ background_colour = (150,150,150)
 score_red = 200
 score_blue = 200
 
-score_win = 1000
+score_win = 10000
 
 virus_count_red = 0
 virus_count_blue = 0

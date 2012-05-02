@@ -22,6 +22,8 @@ class Server(Rect):
         self.height = 120
         self.x = x
         self.y = y
+        self.vx = self.x
+        self.vy = self.y
         self.screen = screen
         self.rect = Rect((x,y), (self.width, self.height))
         self.scrn_colour = (255,255,255)
@@ -44,9 +46,10 @@ class Server(Rect):
         self.score_blue = 0.0
         self.score_red = 0.0
 
-        
+        self.xplolist_outer = [(self.vx+ 55,self.vy+ 2), (self.vx+ 60,self.vy+ 10), (self.vx+ 65,self.vy+ 2), (self.vx+ 70,self.vy+ 11), (self.vx+ 75,self.vy+ 15), (self.vx+ 75,self.vy+ 25), (self.vx+ 70,self.vy+ 20), (self.vx+65,self.vy+ 22), (self.vx+ 55,self.vy+ 19), (self.vx+ 50,self.vy+ 13)]
+        self.xplolist_inner = [(self.vx+60, self.vy+5), (self.vx+ 62,self.y+ 7), (self.vx+ 65,self.vy+ 5), (self.vx+ 67,self.vy+ 8), (self.vx+ 70,self.vy+ 10), (self.vx+ 70,self.vy+ 20), (self.vx+ 67,self.vy+ 15), (self.vx+ 65,self.vy+ 18), (self.vx+ 62,self.vy+ 14), (self.vx+ 61,self.vy+ 8)]
+
         self.screen_img = load_image("mac1")
-        
 
     def score_check(self):
         self.score_red = float((self.red_viruses['x']))/10
@@ -75,15 +78,33 @@ class Server(Rect):
             self.screen_img.fill((100,100,100))
         elif self.off_state == False:
             if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
+                self.scrn_colour = (255,0,0)
                 self.screen_img = load_image("macred")
             elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                 self.screen_img = load_image("macblue")
+                self.scrn_colour = (0,0,255)
             else:
+                self.scrn_colour = (255,255,255)
                 self.screen_img = load_image("mac1")
 
     def draw_text(self):
 
         ##Red Virus numbers
+        if self.red_viruses['x'] < self.red_viruses_old['x']:
+            (self.vx, self.vy) = (self.x, self.y)
+            self.xplolist_outer = [(self.vx+ 55,self.vy+ 2), (self.vx+ 60,self.vy+ 10), (self.vx+ 65,self.vy+ 2), (self.vx+ 70,self.vy+ 11), (self.vx+ 75,self.vy+ 15), (self.vx+ 75,self.vy+ 25), (self.vx+ 70,self.vy+ 20), (self.vx+65,self.vy+ 22), (self.vx+ 55,self.vy+ 19), (self.vx+ 50,self.vy+ 13)]
+            self.xplolist_inner = [(self.vx+60, self.vy+5), (self.vx+ 62,self.y+ 7), (self.vx+ 65,self.vy+ 5), (self.vx+ 67,self.vy+ 8), (self.vx+ 70,self.vy+ 10), (self.vx+ 70,self.vy+ 20), (self.vx+ 67,self.vy+ 15), (self.vx+ 65,self.vy+ 18), (self.vx+ 62,self.vy+ 14), (self.vx+ 61,self.vy+ 8)]
+            pygame.draw.polygon(self.screen, (200,0,0), self.xplolist_outer)
+            pygame.draw.polygon(self.screen, (200,200,0), self.xplolist_inner)
+            time.sleep(.1)
+            self.scrn_change()
+
+            self.red_viruses_old['x'] = self.red_viruses['x']
+            text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0))
+            loc = text.get_rect()
+            loc.topleft = self.comp_screen.topleft
+            self.screen.blit(text,loc)
+
         if self.red_viruses['x'] > 0:
             self.red_viruses_old['x'] = self.red_viruses['x']
             text = smallfont.render("Xvirus = " + str(self.red_viruses['x']), True, (255,0,0))
@@ -91,14 +112,50 @@ class Server(Rect):
             loc.topleft = self.comp_screen.topleft
             self.screen.blit(text,loc)
 
-        if self.red_viruses['y'] > 0:
+
+        if self.red_viruses['y'] < self.red_viruses_old['y']:
+            (self.vx, self.vy) = (self.x, self.y+ 10)
+            self.xplolist_outer = [(self.vx+ 55,self.vy+ 2), (self.vx+ 60,self.vy+ 10), (self.vx+ 65,self.vy+ 2), (self.vx+ 70,self.vy+ 11), (self.vx+ 75,self.vy+ 15), (self.vx+ 75,self.vy+ 25), (self.vx+ 70,self.vy+ 20), (self.vx+65,self.vy+ 22), (self.vx+ 55,self.vy+ 19), (self.vx+ 50,self.vy+ 13)]
+            self.xplolist_inner = [(self.vx+60, self.vy+5), (self.vx+ 62,self.y+ 7), (self.vx+ 65,self.vy+ 5), (self.vx+ 67,self.vy+ 8), (self.vx+ 70,self.vy+ 10), (self.vx+ 70,self.vy+ 20), (self.vx+ 67,self.vy+ 15), (self.vx+ 65,self.vy+ 18), (self.vx+ 62,self.vy+ 14), (self.vx+ 61,self.vy+ 8)]
+            pygame.draw.polygon(self.screen, (200,0,0), self.xplolist_outer)
+            pygame.draw.polygon(self.screen, (200,200,0), self.xplolist_inner)
+            time.sleep(.1)
+            self.scrn_change()
+
+            self.red_viruses_old['y'] = self.red_viruses['y']
             x,y = self.comp_screen.topleft
             text = smallfont.render("Yvirus = " + str(self.red_viruses['y']), True, (255,0,0))
             loc = text.get_rect()
             loc.topleft = (x, y + loc.height)
             self.screen.blit(text,loc)
 
+        if self.red_viruses['y'] > 0:
+            self.red_viruses_old['y'] = self.red_viruses['y']
+            x,y = self.comp_screen.topleft
+            text = smallfont.render("Yvirus = " + str(self.red_viruses['y']), True, (255,0,0))
+            loc = text.get_rect()
+            loc.topleft = (x, y + loc.height)
+            self.screen.blit(text,loc)
+
+        if self.red_viruses['w'] < self.red_viruses_old['w']:
+            (self.vx, self.vy) = (self.x, self.y+25)
+            self.xplolist_outer = [(self.vx+ 55,self.vy+ 2), (self.vx+ 60,self.vy+ 10), (self.vx+ 65,self.vy+ 2), (self.vx+ 70,self.vy+ 11), (self.vx+ 75,self.vy+ 15), (self.vx+ 75,self.vy+ 25), (self.vx+ 70,self.vy+ 20), (self.vx+65,self.vy+ 22), (self.vx+ 55,self.vy+ 19), (self.vx+ 50,self.vy+ 13)]
+            self.xplolist_inner = [(self.vx+60, self.vy+5), (self.vx+ 62,self.y+ 7), (self.vx+ 65,self.vy+ 5), (self.vx+ 67,self.vy+ 8), (self.vx+ 70,self.vy+ 10), (self.vx+ 70,self.vy+ 20), (self.vx+ 67,self.vy+ 15), (self.vx+ 65,self.vy+ 18), (self.vx+ 62,self.vy+ 14), (self.vx+ 61,self.vy+ 8)]
+            pygame.draw.polygon(self.screen, (200,0,0), self.xplolist_outer)
+            pygame.draw.polygon(self.screen, (200,200,0), self.xplolist_inner)
+            time.sleep(.1)
+            self.scrn_change()
+
+            self.red_viruses_old['w'] = self.red_viruses['w']
+
+            x,y = self.comp_screen.topleft
+            text = smallfont.render("Wall = " + str(self.red_viruses['w']), True, (255,0,0))
+            loc = text.get_rect()
+            loc.topleft = (x, y + loc.height*2)
+            self.screen.blit(text,loc)
+
         if self.red_viruses['w'] > 0:
+            self.red_viruses_old['w'] = self.red_viruses['w']
             x,y = self.comp_screen.topleft
             text = smallfont.render("Wall = " + str(self.red_viruses['w']), True, (255,0,0))
             loc = text.get_rect()
@@ -106,38 +163,102 @@ class Server(Rect):
             self.screen.blit(text,loc)
 
         if self.red_viruses['b'] > 0:
+            self.red_viruses_old['b'] = self.red_viruses['b']
             x,y = self.comp_screen.topleft
             text = smallfont.render("Bomb = " + str(self.red_viruses['b']), True, (255,0,0))
             loc = text.get_rect()
             loc.topleft = (x, y + loc.height *3)
             self.screen.blit(text,loc)
 
-        ##Blue Virus numbers    
+
+
+        ##Blue Virus numbers  
+        if self.blue_viruses['x'] < self.blue_viruses_old['x']:
+            (self.vx, self.vy) = (self.x+80, self.y)
+            self.xplolist_outer = [(self.vx+ 55,self.vy+ 2), (self.vx+ 60,self.vy+ 10), (self.vx+ 65,self.vy+ 2), (self.vx+ 70,self.vy+ 11), (self.vx+ 75,self.vy+ 15), (self.vx+ 75,self.vy+ 25), (self.vx+ 70,self.vy+ 20), (self.vx+65,self.vy+ 22), (self.vx+ 55,self.vy+ 19), (self.vx+ 50,self.vy+ 13)]
+            self.xplolist_inner = [(self.vx+60, self.vy+5), (self.vx+ 62,self.y+ 7), (self.vx+ 65,self.vy+ 5), (self.vx+ 67,self.vy+ 8), (self.vx+ 70,self.vy+ 10), (self.vx+ 70,self.vy+ 20), (self.vx+ 67,self.vy+ 15), (self.vx+ 65,self.vy+ 18), (self.vx+ 62,self.vy+ 14), (self.vx+ 61,self.vy+ 8)]
+           
+            self.blue_viruses_old['x'] = self.blue_viruses['x']
+            pygame.draw.polygon(self.screen, (200,0,0), self.xplolist_outer)
+            pygame.draw.polygon(self.screen, (200,200,0), self.xplolist_inner)
+            time.sleep(.1)
+            self.scrn_change()
+
+
+            if self.blue_viruses['x'] > 0:
+                self.blue_viruses_old['x'] = self.blue_viruses['x']
+                text = smallfont.render("Xvirus = " + str(self.blue_viruses['x']), True, (0,0,255))
+                loc = text.get_rect()
+                loc.topright = self.comp_screen.topright
+                self.screen.blit(text,loc)
+  
         if self.blue_viruses['x'] > 0:
+            self.blue_viruses_old['x'] = self.blue_viruses['x']
             text = smallfont.render("Xvirus = " + str(self.blue_viruses['x']), True, (0,0,255))
             loc = text.get_rect()
             loc.topright = self.comp_screen.topright
             self.screen.blit(text,loc)
-        
+
+        if self.blue_viruses['y'] < self.blue_viruses_old['y']:
+            (self.vx, self.vy) = (self.x+80, self.y+ 10)
+            self.xplolist_outer = [(self.vx+ 55,self.vy+ 2), (self.vx+ 60,self.vy+ 10), (self.vx+ 65,self.vy+ 2), (self.vx+ 70,self.vy+ 11), (self.vx+ 75,self.vy+ 15), (self.vx+ 75,self.vy+ 25), (self.vx+ 70,self.vy+ 20), (self.vx+65,self.vy+ 22), (self.vx+ 55,self.vy+ 19), (self.vx+ 50,self.vy+ 13)]
+            self.xplolist_inner = [(self.vx+60, self.vy+5), (self.vx+ 62,self.y+ 7), (self.vx+ 65,self.vy+ 5), (self.vx+ 67,self.vy+ 8), (self.vx+ 70,self.vy+ 10), (self.vx+ 70,self.vy+ 20), (self.vx+ 67,self.vy+ 15), (self.vx+ 65,self.vy+ 18), (self.vx+ 62,self.vy+ 14), (self.vx+ 61,self.vy+ 8)]
+
+            self.blue_viruses_old['y'] = self.blue_viruses['y']
+            pygame.draw.polygon(self.screen, (200,0,0), self.xplolist_outer)
+            pygame.draw.polygon(self.screen, (200,200,0), self.xplolist_inner)
+            time.sleep(.1)
+            self.scrn_change()
+
+            if self.blue_viruses['y'] > 0:
+                x, y = self.comp_screen.topright
+                text = smallfont.render("Yvirus = " + str(self.blue_viruses['y']), True, (0,0,255))
+                loc = text.get_rect()
+                loc.topright = (x, y+loc.height)
+                self.screen.blit(text,loc)
+
         if self.blue_viruses['y'] > 0:
+            self.blue_viruses_old['y'] = self.blue_viruses['y']
             x, y = self.comp_screen.topright
             text = smallfont.render("Yvirus = " + str(self.blue_viruses['y']), True, (0,0,255))
             loc = text.get_rect()
             loc.topright = (x, y+loc.height)
             self.screen.blit(text,loc)
 
+        if self.blue_viruses['w'] < self.blue_viruses_old['w']:
+            (self.vx, self.vy) = (self.x+80, self.y+ 25)
+            self.xplolist_outer = [(self.vx+ 55,self.vy+ 2), (self.vx+ 60,self.vy+ 10), (self.vx+ 65,self.vy+ 2), (self.vx+ 70,self.vy+ 11), (self.vx+ 75,self.vy+ 15), (self.vx+ 75,self.vy+ 25), (self.vx+ 70,self.vy+ 20), (self.vx+65,self.vy+ 22), (self.vx+ 55,self.vy+ 19), (self.vx+ 50,self.vy+ 13)]
+            self.xplolist_inner = [(self.vx+60, self.vy+5), (self.vx+ 62,self.y+ 7), (self.vx+ 65,self.vy+ 5), (self.vx+ 67,self.vy+ 8), (self.vx+ 70,self.vy+ 10), (self.vx+ 70,self.vy+ 20), (self.vx+ 67,self.vy+ 15), (self.vx+ 65,self.vy+ 18), (self.vx+ 62,self.vy+ 14), (self.vx+ 61,self.vy+ 8)]
+
+            self.blue_viruses_old['w'] = self.blue_viruses['w']
+            pygame.draw.polygon(self.screen, (200,0,0), self.xplolist_outer)
+            pygame.draw.polygon(self.screen, (200,200,0), self.xplolist_inner)
+            time.sleep(.1)
+            self.scrn_change()
+
+            if self.blue_viruses['w'] > 0:
+                x, y = self.comp_screen.topright
+                text = smallfont.render("Wall = " + str(self.blue_viruses['w']), True, (0,0,255))
+                loc = text.get_rect()
+                loc.topright = (x, y+loc.height*2)
+                self.screen.blit(text,loc)
+
         if self.blue_viruses['w'] > 0:
-            x,y = self.comp_screen.topright
+            self.blue_viruses_old['w'] = self.blue_viruses['w']
+            x, y = self.comp_screen.topright
             text = smallfont.render("Wall = " + str(self.blue_viruses['w']), True, (0,0,255))
             loc = text.get_rect()
-            loc.topright = (x, y + loc.height*2)
+            loc.topright = (x, y+loc.height*2)
             self.screen.blit(text,loc)
 
+
+
         if self.blue_viruses['b'] > 0:
+            self.blue_viruses_old['b'] = self.blue_viruses['b']
             x,y = self.comp_screen.topright
             text = smallfont.render("Bomb = " + str(self.blue_viruses['b']), True, (0,0,255))
             loc = text.get_rect()
-            loc.topright = (x, y + loc.height*3)
+            loc.topright = (x, y + loc.height *3)
             self.screen.blit(text,loc)
 
 
@@ -175,8 +296,6 @@ class Server(Rect):
 class Home_server(Server):
 
 
-
-
     def draw_rect(self):
         scrn_thick = 8
         comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
@@ -203,9 +322,11 @@ class Home_server(Server):
         if self.off_state == False:
             if self.team == 1:
                 if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
+                    self.scrn_colour = (255,0,0)
                     self.screen_img = load_image("macred")
 
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
+                    self.scrn_colour = (0,0,255)
                     self.screen_img = load_image("macblue")
                     self.lose = True
                     text = bigfont.render("Blue Wins!", True, (0,0,255))
@@ -221,10 +342,12 @@ class Home_server(Server):
 
 
                 else:
+                    self.scrn_colour = (255,255,255)
                     self.screen_img = load_image("mac1")
 
             if self.team == 2:
                 if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
+                    self.scrn_colour = (255,0,0)
                     self.screen_img = load_image("macred")
                     self.lose = True
                     text = bigfont.render("Red Wins!", True, (255,0,0))
@@ -239,8 +362,10 @@ class Home_server(Server):
                     self.screen.blit(text,loc)
 
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
+                    self.scrn_colour = (0,0,255)
                     self.screen_img = load_image("macblue")
                 else:
+                    self.scrn_colour = (255,255,255)
                     self.screen_img = load_image("mac1")
 
     def onoff (self):
