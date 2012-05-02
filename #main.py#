@@ -12,6 +12,12 @@ from maps import *
 
 pygame.init()
 
+pygame.font.init()
+smallfont = pygame.font.Font(None, 20)
+scorefont = pygame.font.Font(None, 45)
+bigfont = pygame.font.Font(None, 250)
+midfont = pygame.font.Font(None, 80)
+
 #Globals
 quitting = False
 done = False
@@ -22,6 +28,8 @@ background_colour = (150,150,150)
 score_red = 200
 score_blue = 200
 
+score_win = 10000
+
 virus_count_red = 0
 virus_count_blue = 0
 bomb_count_red = 0
@@ -29,6 +37,12 @@ bomb_count_blue = 0
 
 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
 
+x_start = 3
+y_start = 0
+w_start = 0
+b_start = 0
+
+bounds = screen.get_rect()
 score_red_t = 0.0
 score_blue_t = 0.0
 score_dec_b = 0.0
@@ -36,27 +50,28 @@ score_dec_r = 0.0
 
 paused = False
 victory = False
+mute = False
 
 sfx_boom = load_sfx("explosion")
 sfx_add = load_sfx("addvirus")
 sfx_minus = load_sfx("minusvirus")
 
-
 while not quitting:
     #Menu
-    menu = Menu(screen)
+    menu = Menu(screen, mute)
     if menu.map == None:
         sys.exit()
 
-    #Map init
+        #Map init
         
     gamemap = Map(screen, menu.map)     
     Player1 = gamemap.Player1     
     Player2 = gamemap.Player2
     comps = gamemap.comps
+    gates = gamemap.gates
 
 
-    #Virus
+        #Virus
     red_xvirus = XVirus(1, Player1)
     blue_xvirus = XVirus(2, Player2)
     red_yvirus = YVirus(1, Player1)
@@ -69,6 +84,11 @@ while not quitting:
 
     red_virus_list = [red_xvirus, red_yvirus, red_wvirus, red_bvirus]       
     blue_virus_list = [blue_xvirus, blue_yvirus, blue_wvirus, blue_bvirus] 
+
+
+    #starting virus counts
+    Player1.red_viruses = {'x':x_start, 'y':y_start, 'w':w_start, 'b':b_start} 
+    Player2.blue_viruses = {'x':x_start, 'y':y_start, 'w':w_start, 'b':b_start}  
 
 
     while not done:
@@ -94,20 +114,20 @@ while not quitting:
 
 
         pygame.draw.rect(screen, background_colour, pygame.Rect((350,0), (200,50)))
-        text = scorefont.render("Score = " + str(score_red), True, (255,0,0))
+        text = scorefont.render("Pings = " + str(score_red), True, (255,0,0))
         loc = text.get_rect()
         loc.topleft = (300,0)
         screen.blit(text,loc)
 
         pygame.draw.rect(screen, background_colour, pygame.Rect((800,0), (200,50)))
-        text = scorefont.render("Score = " + str(score_blue), True, (0,0,255))
+        text = scorefont.render("Pings = " + str(score_blue), True, (0,0,255))
         loc = text.get_rect()
         loc.topleft = (750,0)
         screen.blit(text,loc)
 
         #Costs
         pygame.draw.rect(screen, (0,0,0), pygame.Rect((515, 0),(215,65)), 2)
-        cost_list = ["Costs:","X-Virus = " + str(red_xvirus.cost), "Y-Virus = " + str(red_yvirus.cost), "Increase Virus Limit = 2000","Firewall = " + str(red_wvirus.cost), "Ad Bomb = " + str(red_bvirus.cost)]
+        cost_list = ["Costs:","X-Virus = " + str(red_xvirus.cost), "Y-Virus = " + str(red_yvirus.cost), "Hardware Upgrade = 2000","Fyrewall = " + str(red_wvirus.cost), "Ad Bomb = " + str(red_bvirus.cost)]
         for cost in cost_list:
             text = smallfont.render(cost, True, (0, 0, 0))
             loc = text.get_rect()
@@ -133,18 +153,65 @@ while not quitting:
         if paused:
             draw_controls(screen, background_colour, (0,0,0), "<Paused>")
     
+ #Victory by points
+
+        if score_red >= score_win:
+            victory = True
+            Player1.lose = True
+            Player2.lose = True
+            text = bigfont.render("Red Wins!", True, (255,0,0))
+            loc = text.get_rect()
+            loc.center = bounds.center
+            screen.blit(text,loc)
+
+            text = midfont.render("Press 'esc' to return to menu", True, (255,0,0))
+            loc = text.get_rect()
+            (x, y)= bounds.center
+            loc.center = (x, y + 100)
+            screen.blit(text,loc)
+
+        if score_blue >= score_win:
+            victory = True
+            Player2.lose = True
+            Player1.lose = True
+            text = bigfont.render("Blue Wins!", True, (0,0,255))
+            loc = text.get_rect()
+            loc.center = bounds.center
+            screen.blit(text,loc)
+
+            text = midfont.render("Press 'esc' to return to menu", True, (0,0,255))
+            loc = text.get_rect()
+            (x, y)= bounds.center
+            loc.center = (x, y + 100)
+            screen.blit(text,loc)
+
 
         pygame.display.flip()
 
 ##Music
-        if Player1.lose or Player2.lose:
-            if victory == False:
-                pygame.mixer.music.stop()
-                play_song("Epic Sax")
-                victory = True
+        if mute == False:
+            if Player1.lose or Player2.lose:
+                if victory == False:
+                    pygame.mixer.music.stop()
+                    play_song("Epic Sax")
+                    victory = True
+
+            elif Player1.lose and Player2.lose:
+                if victory == False:
+                    pygame.mixer.music.stop()
+                    play_song("Epic Sax")
+                    victory = True
   
-        elif pygame.mixer.music.get_busy() == False:
+            elif pygame.mixer.music.get_busy() == False:
                 play_song("Shadows_Vigilante")
+
+        #Muting
+        if mute == True:
+            pygame.mixer.music.pause()
+
+        if mute == False:
+            pygame.mixer.music.unpause()
+
 
 ##Keys
         for event in pygame.event.get():
@@ -155,7 +222,22 @@ while not quitting:
                     paused = True
                 elif paused == True:
                     paused = False
-    
+
+#Quitting
+            if event.type == pygame.QUIT:
+                done = True
+                quitting = True
+            elif event.type == KEYDOWN and event.key== K_ESCAPE:
+                done = True
+
+#Muting
+            if event.type == KEYDOWN and event.key== K_m:
+                if mute == False:
+                    mute = True
+                elif mute == True:
+                    mute = False    
+
+
             if not paused:
 #Adding XVirus red
                 if not Player1.lose:
@@ -200,15 +282,15 @@ while not quitting:
                             Player1.add_virus(red_bvirus)
                             score_red -= red_bvirus.cost
 
-                    else:
-                        for comp in comps:
-                            if comp.red_viruses['b'] == 1 and comp.off_state == False:
-                                sfx_boom.stop()
-                                sfx_boom.play()
-                                comp.off_state = True
-                                comp.scrn_colour = (100,100,100)
-                                comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
-                                comp.red_viruses ['b'] = 0
+                        else:
+                            for comp in comps:
+                                if comp.red_viruses['b'] == 1 and comp.off_state == False:
+                                    sfx_boom.stop()
+                                    sfx_boom.play()
+                                    comp.off_state = True
+                                    comp.scrn_colour = (100,100,100)
+                                    comp.blue_viruses = {'x':0, 'y':0, 'w':0, 'b':0}
+                                    comp.red_viruses ['b'] = 0
 
 #Limit Up Red
                     if event.type == KEYDOWN and event.key == K_f:
@@ -254,15 +336,15 @@ while not quitting:
                         if score_blue >= blue_bvirus.cost and bomb_count_blue == 0 and sum(Player2.blue_viruses.values()) < Player2.virus_max:
                             Player2.add_virus(blue_bvirus)
                             score_blue -= blue_bvirus.cost
-                    else:
-                        for comp in comps:
-                            if comp.blue_viruses['b'] == 1 and comp.off_state == False:
-                                comp.off_state = True
-                                sfx_boom.stop()
-                                sfx_boom.play()
-                                comp.scrn_colour = (100,100,100)
-                                comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
-                                comp.blue_viruses['b'] = 0
+                        else:
+                            for comp in comps:
+                                if comp.blue_viruses['b'] == 1 and comp.off_state == False:
+                                    comp.off_state = True
+                                    sfx_boom.stop()
+                                    sfx_boom.play()
+                                    comp.scrn_colour = (100,100,100)
+                                    comp.red_viruses = {'x':0, 'y':0, 'w':0, 'b':0} 
+                                    comp.blue_viruses['b'] = 0
 
 #Up Limit blue
                     if event.type == KEYDOWN and event.key == K_l:
@@ -271,72 +353,74 @@ while not quitting:
                             score_blue -= 2000
 
 
-#Quitting
-                if event.type == pygame.QUIT:
-                    done = True
-                    quitting = True
-                elif event.type == KEYDOWN and event.key== K_ESCAPE:
-                    done = True
+
 
 #Update
         if not paused:
             for comp in comps:
                 target_dict = {'x_red':0, 'y_red':0, 'w_red':0, 'b_red':0, 'x_blue':0, 'y_blue':0, 'w_blue':0, 'b_blue':0}
                 comp.wipe()
-                comp.onoff()
 
                 if comp.blue_viruses['w'] == 0 and not Player1.lose:
                     for virus in red_virus_list:
                         virus.spread(comp)
-                    for virus in red_virus_list:
-                        if virus.type == 'y' and not Player1.lose:
-                            virus.target(comp, target_dict)
+                for virus in red_virus_list:
+                    if virus.type == 'y' and not Player1.lose:
+                        virus.target(comp, target_dict)
 
                 if comp.red_viruses['w'] == 0 and not Player2.lose:
                     for virus in blue_virus_list:
                         virus.spread(comp)
-                    for virus in blue_virus_list:
-                        if virus.type == 'y' and not Player2.lose:
-                            virus.target(comp, target_dict)
+                for virus in blue_virus_list:
+                    if virus.type == 'y' and not Player2.lose:
+                        virus.target(comp, target_dict)
                 
 #Killing the target list 
         
-            if comp.off_state == False:
-                comp.red_viruses['x'] -= target_dict['x_red']
-                if comp.red_viruses['x'] < 0:        #So minimum = 0
-                    comp.red_viruses['x'] = 0
+                if comp.off_state == False:
+                    comp.red_viruses['x'] -= target_dict['x_red']
+                    if comp.red_viruses['x'] < 0:        #So minimum = 0
+                        comp.red_viruses['x'] = 0
             
-            comp.red_viruses['y'] -= target_dict['y_red']
-            if comp.red_viruses['y'] < 0:
-                comp.red_viruses['y'] = 0
+                    comp.red_viruses['y'] -= target_dict['y_red']
+                    if comp.red_viruses['y'] < 0:
+                        comp.red_viruses['y'] = 0
 
-            comp.red_viruses['w'] -= target_dict['w_red']
-            if comp.red_viruses['w'] < 0:        
-                comp.red_viruses['w'] = 0
+                    comp.red_viruses['w'] -= target_dict['w_red']
+                    if comp.red_viruses['w'] < 0:        
+                        comp.red_viruses['w'] = 0
             
-            comp.red_viruses['b'] -= target_dict['b_red']
-            if comp.red_viruses['b'] < 0:
-                comp.red_viruses['b'] = 0
+                    comp.red_viruses['b'] -= target_dict['b_red']
+                    if comp.red_viruses['b'] < 0:
+                        comp.red_viruses['b'] = 0
 
-            comp.blue_viruses['x'] -= target_dict['x_blue']
-            if comp.blue_viruses['x'] < 0:
-                comp.blue_viruses['x'] = 0
+                    comp.blue_viruses['x'] -= target_dict['x_blue']
+                    if comp.blue_viruses['x'] < 0:
+                        comp.blue_viruses['x'] = 0
 
-            comp.blue_viruses['y'] -= target_dict['y_blue']
-            if comp.blue_viruses['y'] < 0:
-                comp.blue_viruses['y'] = 0
+                    comp.blue_viruses['y'] -= target_dict['y_blue']
+                    if comp.blue_viruses['y'] < 0:
+                        comp.blue_viruses['y'] = 0
 
-            comp.blue_viruses['w'] -= target_dict['w_blue']
-            if comp.blue_viruses['w'] < 0:
-                comp.blue_viruses['w'] = 0
+                    comp.blue_viruses['w'] -= target_dict['w_blue']
+                    if comp.blue_viruses['w'] < 0:
+                        comp.blue_viruses['w'] = 0
 
-            comp.blue_viruses['b'] -= target_dict['b_blue']
-            if comp.blue_viruses['b'] < 0:
-                comp.blue_viruses['b'] = 0
+                    comp.blue_viruses['b'] -= target_dict['b_blue']
+                    if comp.blue_viruses['b'] < 0:
+                        comp.blue_viruses['b'] = 0
 
-            bred = 0
-            bblue = 0
+                bred = 0
+                bblue = 0
+            #On/off
+            for gate in gates:
+                gate.onoff()
+
             for comp in comps:
+                if comp.off_state:
+                    comp.onoff()
+
+            #Bomb Stuff
                 bred += comp.red_viruses['b']
                 bblue += comp.blue_viruses['b']
                 bomb_count_red = bred
@@ -360,8 +444,12 @@ while not quitting:
                     score_dec_r += (score_red_t - int(score_red_t))
                     score_dec_b += (score_blue_t - int(score_blue_t))
 
-                    score_red += int(score_red_t + score_dec_r)
-                    score_blue += int(score_blue_t + score_dec_b)
+                    if victory == False:
+                        score_red += int(score_red_t + score_dec_r)
+
+                    if victory == False:
+                        score_blue += int(score_blue_t + score_dec_b)
+
 
                     score_blue_t = 0
                     score_red_t = 0
@@ -371,11 +459,12 @@ while not quitting:
                     if score_dec_b >= .9:
                         score_dec_b = 0
 
+
             time.sleep(.2)
     done = False
+    victory = False
     score_red = 200
     score_blue = 200
-#"replay" splash screen?
 
     for event in pygame.event.get():
 

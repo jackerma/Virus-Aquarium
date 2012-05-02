@@ -27,7 +27,7 @@ class Map(object):
             self.Player2.is_team(2)
             comp1 = Server(screen, (300, 575))
             comp2 = Server(screen, (575, 575))
-            comp3 = Server(screen, (875, 575))
+            comp3 = Server(screen, (850, 575))
             comp4 = Server(screen, (1100, 325))
             comp5 = Server(screen, (1100, 450))
             comp6 = Server(screen, (1100, 575))
@@ -40,8 +40,30 @@ class Map(object):
             comp13 = Server(screen, (710, 320))
             
             self.comps = [self.Player1, self.Player2, comp1,comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10, comp11, comp12, comp13]
-            self.gates = [comp2]
-      
+            self.gates = [comp2, comp4]
+            comp2.cnct_range -= 15
+            comp3.cnct_range = 2
+
+            comp12.cnct_range -= 10
+            comp13.cnct_range -= 10
+            comp11.cnct_range -= 10
+            comp10.cnct_range -= 10            
+            comp9.cnct_range -= 10
+            comp8.cnct_range -= 10
+
+            comp4.cnct_range -= 30
+            comp5.cnct_range -= 30
+            comp6.cnct_range -= 30
+            comp7.cnct_range -= 30
+            self.Player2.cnct_range -= 30
+            
+            comp3.connected_list = [comp6, comp5, comp2, comp13]
+            comp7.connected_list.append(comp9)
+            comp5.connected_list.append(comp13)
+            comp5.connected_list.append(comp3)
+            comp6.connected_list.append(comp3)
+            comp13.connected_list.append(comp3)
+            comp2.connected_list.append(comp3)
     #X-R0ads
         elif self.num == 1:
             self.Player1 = Home_server(self.screen, (20,20))

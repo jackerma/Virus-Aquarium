@@ -64,6 +64,9 @@ class Map(object):
             comp6.connected_list.append(comp3)
             comp13.connected_list.append(comp3)
             comp2.connected_list.append(comp3)
+            comp2.connected_list.append(comp1)
+            comp12.connected_list.append(comp1)
+            
     #X-R0ads
         elif self.num == 1:
             self.Player1 = Home_server(self.screen, (20,20))
