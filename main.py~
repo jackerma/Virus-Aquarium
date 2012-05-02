@@ -98,7 +98,6 @@ while not quitting:
         #Victory by points
         screen.fill(background_colour)
         if score_red >= score_win:
-            victory = True
             Player1.lose = True
             Player2.lose = True
             text = bigfont.render("Red Wins!", True, (255,0,0))
@@ -113,7 +112,6 @@ while not quitting:
             screen.blit(text,loc)
 
         if score_blue >= score_win:
-            victory = True
             Player2.lose = True
             Player1.lose = True
             text = bigfont.render("Blue Wins!", True, (0,0,255))

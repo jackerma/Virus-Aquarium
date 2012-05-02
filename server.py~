@@ -57,8 +57,8 @@ class Server(Rect):
         self.screen.blit(self.screen_img, (self.x+4,self.y+4))
     
     def draw_circle(self):
-#        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
-        pass
+        pygame.draw.circle(self.screen, (0,0,255), self.rect.center, self.cnct_range, 1)
+        
         
 
 
@@ -168,6 +168,9 @@ class Server(Rect):
 
 class Home_server(Server):
 
+
+
+
     def draw_rect(self):
         scrn_thick = 8
         comp_screen =  pygame.Rect((self.x+scrn_thick, self.y+scrn_thick), (self.width-scrn_thick*2,self.height-scrn_thick*2))
@@ -198,7 +201,6 @@ class Home_server(Server):
 
                 elif sum(self.blue_viruses.values()) > sum(self.red_viruses.values()):
                     self.screen_img = load_image("macblue")
-                    time.sleep(.2)
                     self.lose = True
                     text = bigfont.render("Blue Wins!", True, (0,0,255))
                     loc = text.get_rect()
@@ -218,7 +220,6 @@ class Home_server(Server):
             if self.team == 2:
                 if sum(self.red_viruses.values()) > sum(self.blue_viruses.values()):
                     self.screen_img = load_image("macred")
-                    time.sleep(.2)
                     self.lose = True
                     text = bigfont.render("Red Wins!", True, (255,0,0))
                     loc = text.get_rect()
@@ -257,4 +258,34 @@ class Home_server(Server):
             lim_rect = limit.get_rect()
             lim_rect.center = j, q - 5
             self.screen.blit(limit,lim_rect)
+
+
+    def blue_lose(self):
+        self.lose = True
+        text = bigfont.render("Blue Wins!", True, (0,0,255))
+        loc = text.get_rect()
+        loc.center = self.bounds.center
+        self.screen.blit(text,loc)
+
+        text = midfont.render("Press 'esc' to return to menu", True, (0,0,255))
+        loc = text.get_rect()
+        (x, y)= self.bounds.center
+        loc.center = (x, y + 100)
+        self.screen.blit(text,loc)
+
+
+    def red_lose(self):
+        self.lose = True
+        text = bigfont.render("Red Wins!", True, (255,0,0))
+        loc = text.get_rect()
+        loc.center = self.bounds.center
+        self.screen.blit(text,loc)
+
+        text = midfont.render("Press 'esc' to return to menu", True, (255,0,0))
+        loc = text.get_rect()
+        (x, y)= self.bounds.center
+        loc.center = (x, y + 100)
+        self.screen.blit(text,loc)
+
+
 

@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
 import pygame
+from pygame import Surface
 from pygame.locals import *
 from virus import *
 from random import randint
 import time
 from resources import load_image
+from pygame.sprite import Sprite, Group
 
 pygame.font.init()
 smallfont = pygame.font.Font(None, 20)
@@ -287,5 +289,4 @@ class Home_server(Server):
         loc.center = (x, y + 100)
         self.screen.blit(text,loc)
 
-
-
+                      

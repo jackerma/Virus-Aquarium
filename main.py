@@ -55,6 +55,7 @@ mute = False
 sfx_boom = load_sfx("explosion")
 sfx_add = load_sfx("addvirus")
 sfx_minus = load_sfx("minusvirus")
+boom = load_image("Ultimate_Explosion")
 
 
 while not quitting:
@@ -185,6 +186,7 @@ while not quitting:
             draw_controls(screen, background_colour, (0,0,0), "<Paused>")
     
 
+        
         pygame.display.flip()
 
 ##Music
@@ -408,6 +410,7 @@ while not quitting:
 
                 bred = 0
                 bblue = 0
+
             #On/off
             for gate in gates:
                 gate.onoff()
